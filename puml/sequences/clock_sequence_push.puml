@@ -1,0 +1,13 @@
+@startuml
+title "【Clock MVC PUSH】 シーケンス図"
+
+Clock -> Min : tick()
+
+Min -> Min_ang : updateMin()
+
+Min -> Hour : updateMin()
+activate Hour
+Hour -> Hour_ang : updateHour()
+deactivate Hour
+
+@enduml

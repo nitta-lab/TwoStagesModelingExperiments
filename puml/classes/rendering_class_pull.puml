@@ -1,5 +1,5 @@
 @startuml
-title "Rendering MVC Pullクラス図"
+title "【Rendering MVC Pull】クラス図"
 
 skinparam Linetype ortho
 

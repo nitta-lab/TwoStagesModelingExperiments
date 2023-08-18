@@ -1,0 +1,31 @@
+@startuml
+title "CFD適用後 【Rendering MVC Pull】 シーケンス図"
+
+Rendering ->  SpecularSurfaceColor : rendering()
+
+activate SpecularSurfaceColor
+SpecularSurfaceColor -> Dot : getValue()
+
+activate Dot
+Dot -> RightVector : getValue()
+
+activate RightVector
+RightVector --> Dot
+deactivate RightVector
+
+Dot -> SurfaceNormal : getValue()
+activate SurfaceNormal
+SurfaceNormal --> Dot
+deactivate SurfaceNormal
+
+deactivate Dot
+
+SpecularSurfaceColor -> SpecularColor : getValue()
+activate SpecularColor
+SpecularColor --> SpecularSurfaceColor
+deactivate SpecularColor
+
+SpecularSurfaceColor --> Rendering
+deactivate SpecularSurfaceColor
+
+@enduml
