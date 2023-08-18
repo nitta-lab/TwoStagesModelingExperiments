@@ -1,0 +1,23 @@
+@startuml
+title "CFD適用後 【Clock MVC Push】 シーケンス図"
+
+Clock -> Presenter : tick()
+activate Presenter
+
+Presenter -> Min : tick()
+
+activate Min
+Min -> Hour : updateMin()
+activate Hour
+Hour --> Min
+deactivate Hour
+
+Min --> Presenter
+deactivate Min
+
+deactivate Presenter
+
+Presenter -> Min_ang  : updateMin()
+Presenter -> Hour_ang : updateHour()
+
+@enduml
