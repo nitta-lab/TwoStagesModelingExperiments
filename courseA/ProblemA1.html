@@ -8,6 +8,46 @@
 
 <h1>課題1-(1)の概要</h1>
 
+<p>
+    この Clockプログラムは，実際のアナログ時計と一部で動作が異なっています．<br>
+    通常のアナログ時計では，時間の経過にしたがって短針は少しづつ動いていきますが，この Clockプログラムでは短針が1時間に1回しか動きません．<br>
+    そこで，Clockプログラムの動作をできる限り実際のアナログ時計に近付けるために，短針も1分に1回動くよう針の更新機能を変更することを考えます．<br>
+</p>
+<p>
+    ただし現在の設計では，以下のように<code>Min</code> オブジェクトが <code>Min_ang</code> オブジェクトを，<code>Hour</code> オブジェクトが <code>Hour_ang</code> オブジェクトを<br>
+    それぞれ独立に更新するようになっており，このような機能変更に柔軟に対応することができません．<br>
+    新しい機能では，<code>Hour_ang</code> が保持している短針の角度を計算するために，<code>Hour</code> オブジェクトと <code>Min</code> オブジェクトの両方の情報が必要になるからです．
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+<pre class="brush:java; gutter:false" id="E">
+public class Hour {
+	private Hour_ang hour_ang;
+	private double value;
+	  :
+	public void updateMin(double min) {
+		  :
+		this.hour_ang.updateHour(this.value);
+	}
+}
+</pre>
+</div>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+<pre class="brush:java; gutter:false" id="E">
+public class Hour_ang {
+	private double value;
+	  :
+	public void updateHour(double hour) {
+		this.value = ((hour/6)*Math.PI);
+	}
+}
+</pre>
+</div>
+<p>
+    そこで，図のように新たに <code>Presenter</code> オブジェクトを導入して，
+    このオブジェクトが <code>Min</code> オブジェクトや <code>Hour</code> オブジェクトから，<br>
+    <code>Min_ang</code> オブジェクトや <code>Hour_ang</code> オブジェクトへの更新を一括して行えるように設計変更を行います．
+</p>
+
 <div class="links-manual-A">
 <a href="https://docs.google.com/forms/d/e/1FAIpQLSf9q6nV6QeOgQoArCy-0TUx2xGHWhABn8hiLAHsFOyBpFAWIw/viewform?usp=sharing" target="_blank">
     アンケート回答
