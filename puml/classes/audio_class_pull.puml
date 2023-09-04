@@ -1,0 +1,34 @@
+@startuml 【Audio】 Class-Diagram
+title "【Audio】クラス図"
+
+left to right direction
+
+class AudioVolume{
+
+}
+
+class SoundVolume{
+
+}
+
+class BGMVolume{
+
+}
+
+class OutputSoundVolume{
+
+}
+
+class OutputBGMVolume{
+
+}
+
+AudioVolume <---o OutputBGMVolume
+AudioVolume <---o OutputSoundVolume
+
+SoundVolume <---o OutputSoundVolume
+BGMVolume <---o OutputBGMVolume
+
+
+'---------------------------------------------------------
+@enduml
