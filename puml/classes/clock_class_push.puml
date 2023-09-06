@@ -1,4 +1,4 @@
-@startuml 【Clock】 Class-Diagram
+@startuml clock_class_push
 title "【Clock】クラス図"
 
 together {
@@ -10,7 +10,6 @@ together {
     }
 
     class "Min"{
-        -hour : Hour
         -value : int
         +Min(hour: Hour, min_ang : Min_ang)
         +getValue() : int
@@ -30,9 +29,8 @@ class "Hour_ang"{
     +updateHour(hour : int) : void
 }
 
-Min "1" o-down-> "1" Hour : hour_ang
-Min o-right-> Min_ang : min_ang
-Hour o-right-> Hour_ang : hour_ang
-
+Min  o-down-> "1 " Hour : hour
+Min  o-right-> "1 " Min_ang : "  min_ang  "
+Hour o-right-> "1 " Hour_ang : "  hour_ang  "
 
 @enduml

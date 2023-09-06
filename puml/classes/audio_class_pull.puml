@@ -1,34 +1,42 @@
-@startuml 【Audio】 Class-Diagram
+@startuml audio_class_pull
 title "【Audio】クラス図"
 
 left to right direction
 
 class AudioVolume{
-
+    - value : double
+    + getValue() : double
+    + setVolume(volume : double) : void
 }
 
 class SoundVolume{
-
+    - value : double 
+    + getValue() : double
+    + setVolume(volume : double) : void
 }
 
 class BGMVolume{
-
-}
-
-class OutputSoundVolume{
-
+    - value : double
+    + getValue() : double
+    + setVolume(volume : double) : void
 }
 
 class OutputBGMVolume{
-
+    + OutputBGMVolume(...)
+    + getValue() : double
 }
 
-AudioVolume <---o OutputBGMVolume
-AudioVolume <---o OutputSoundVolume
-
-SoundVolume <---o OutputSoundVolume
-BGMVolume <---o OutputBGMVolume
-
+class OutputSoundVolume{
+    + OutputSoundVolume(...)
+    + getValue() : double
+}
 
 '---------------------------------------------------------
+SoundVolume"1" <---o OutputSoundVolume : soundVolume
+
+AudioVolume"1" <---o OutputBGMVolume : audioVolume
+AudioVolume"1" <---o OutputSoundVolume : audioVolume
+
+BGMVolume"1" <---o OutputBGMVolume : bgmVolume
+
 @enduml

@@ -1,0 +1,37 @@
+@startuml audio_seq_pull
+title "【Audio】 シーケンス図（リファクタリング前）"
+
+-> OutputBGMVolume : getValue()
+activate OutputBGMVolume
+
+OutputBGMVolume -> BGMVolume : getValue()
+activate BGMVolume
+BGMVolume --> OutputBGMVolume
+deactivate BGMVolume
+
+OutputBGMVolume -> AudioVolume : getValue()
+activate AudioVolume
+AudioVolume --> OutputBGMVolume
+deactivate AudioVolume
+
+<-- OutputBGMVolume 
+deactivate OutputBGMVolume
+
+-> OutputSoundVolume : getValue()
+activate OutputSoundVolume
+
+OutputSoundVolume -> SoundVolume : getValue()
+activate SoundVolume
+SoundVolume --> OutputSoundVolume
+deactivate SoundVolume
+
+OutputSoundVolume -> AudioVolume : getValue()
+activate AudioVolume
+AudioVolume --> OutputSoundVolume
+deactivate AudioVolume
+
+<-- OutputSoundVolume
+deactivate OutputSoundVolume
+
+
+@enduml
