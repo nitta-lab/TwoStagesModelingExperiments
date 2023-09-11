@@ -1,61 +1,36 @@
-@startuml
-title "【Clock MVC Push】クラス図"
+@startuml clock_class_push
+title "【Clock】クラス図"
 
-skinparam Linetype ortho
+together {
+    class "Hour"{
+        -value : int
+        +Hour()
+        +getValue() : int
+        +updateMin(min : int) : void
+    }
 
-class Clock{
-    -hour_ang : Hour_ang
-    -hour : Hour
-    -min_ang : Min_ang
-    -min : Min
-    +Clock()
-    +getHour_ang() : double
-    +getHour() : int
-    +getMin_ang() : double
-    +getMin() : int
-    +tick() : void
+    class "Min"{
+        -value : int
+        +Min(hour: Hour, min_ang : Min_ang)
+        +getValue() : int
+        +tick() : void
+    }
 }
 
-class Hour_ang{
-    -value : double
-    +getValue() : double
-    +updateHour(hour : int) : void
-}
-
-class Hour{
-    -hour_ang : Hour_ang
-    -value : int
-    +Hour()
-    +getValue() : int
-    +updateMin(min : int) : void
-}
-
-class Min_ang{
+class "Min_ang"{
     -value : double
     +getValue() : double
     +updateMin(min : int) : double
 }
 
-class Min{
-    -hour : Hour
-    -min_ang : Min_ang
-    -value : int
-    +Min(hour: Hour, min_ang : Min_ang)
-    +getValue() : int
-    +tick() : void
+class "Hour_ang"{
+    -value : double
+    +getValue() : double
+    +updateHour(hour : int) : void
 }
 
-'---------------------------------------------------------
-Clock o-left-> Min
-Clock o-right-> Hour
-
-Min o----> Hour
-
-Clock o--down-> Hour_ang
-Clock o--down-> Min_ang
-
-Min o-down-> Min_ang
-
-Hour o-down-> Hour_ang
+Min  o-down-> "1 " Hour : hour
+Min  o-right-> "1 " Min_ang : "  min_ang  "
+Hour o-right-> "1 " Hour_ang : "  hour_ang  "
 
 @enduml

@@ -1,5 +1,5 @@
-@startuml
-title "【Clock MVC PUSH】 シーケンス図"
+@startuml clock_seq_push
+title "【Clock】 シーケンス図（リファクタリング前）"
 
 Clock -> Min : tick()
 
