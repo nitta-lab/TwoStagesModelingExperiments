@@ -1,5 +1,8 @@
-@startuml
-title "CFD適用後 【Clock MVC Push】クラス図"
+@startuml clock_class_push_CFD
+title "【Clock】クラス図（CFD適用後）"
+
+left to right direction
+
 
 class Hour_ang{
     -value : double
@@ -33,11 +36,9 @@ class Presenter{
 }
 
 '---------------------------------------------------------
-Presenter o-down-> "1" Min : min
-Presenter o-left-> "1" Min_ang : min_ang
-Presenter o-right-> "1" Hour_ang : hour_ang
-Presenter o--down--> "1" Hour : hour
-
-Min o-down-> "1" Hour : hour
+Presenter o--r-> "1  " Min : \nmin\n
+Presenter o--d--> "1" Hour_ang : hour_ang
+Presenter o--d--> "1" Min_ang : min_ang
+Min o--r--> "1  " Hour : \nhour\n
 
 @enduml

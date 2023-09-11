@@ -1,35 +1,43 @@
-@startuml 【Audio】 Class-Diagram
-title "【Audio】クラス図"
-
+@startuml audio_class_pull_CFD
+title "【Audio】クラス図（CFD適用後）"
 left to right direction
 
 class AudioVolume{
-
+    - value : double
+    + getValue() : double
+    + getAudioVolumeSoundVolumeValuse() : Map.Entry
+    + getAudioVolumeBGMVolumeValuse() : Map.Entry
+    + setVolume(volume : double) :
 }
 
 class SoundVolume{
+    - value : double
+    + getValue() : double
 
+    + setVolume(volume : double) : void
 }
 
 class BGMVolume{
-
+    - value : double
+    + getValue() : double
+    + setVolume(volume : double) : void
 }
 
 class OutputSoundVolume{
-
+    + OutputSoundVolume(...)
+    + getValue() : double
 }
 
 class OutputBGMVolume{
-
+    + OutputBGMVolume()
+    + getValue() : double
 }
 
-AudioVolume <---o OutputBGMVolume
-AudioVolume <---o OutputSoundVolume
-
-SoundVolume <-right-o AudioVolume
-BGMVolume <-left-o AudioVolume
-
-
-
 '---------------------------------------------------------
+AudioVolume  o--r--> "1 "BGMVolume : \nbgmVolume    \n
+AudioVolume  o--l--> "1 "SoundVolume : \nsoundVolume       \n
+
+AudioVolume "1" <---o OutputSoundVolume : audioVolume
+AudioVolume "1" <---o OutputBGMVolume : audioVolume
+
 @enduml
