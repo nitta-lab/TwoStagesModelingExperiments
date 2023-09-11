@@ -30,9 +30,9 @@ class "Hour_ang"{
     +updateHour(hour : int) : void
 }
 
-Min "1" o-down-> "1" Hour : hour_ang
-Min o-right-> Min_ang : min_ang
-Hour o-right-> Hour_ang : hour_ang
+Min "1" o-down-> Hour : hour
+Min "1" o-right-> Min_ang : min_ang
+Hour "1" o-right-> Hour_ang : hour_ang
 
 
 @enduml

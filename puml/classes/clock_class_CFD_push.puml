@@ -1,18 +1,6 @@
 @startuml
 title "CFD適用後 【Clock MVC Push】クラス図"
 
-skinparam Linetype ortho
-
-class Clock{
-    -presenter : Presenter
-    +Clock()
-    +getHour_ang() : double
-    +getHour() : int
-    +getMin_ang() : double
-    +getMin() : int
-    +tick() : void
-}
-
 class Hour_ang{
     -value : double
     +getValue() : double
@@ -33,8 +21,6 @@ class Min_ang{
 }
 
 class Min{
-    -hour : Hour
-    -min_ang : Min_ang
     -value : int
     +Min(hour: Hour)
     +getValue() : int
@@ -47,12 +33,11 @@ class Presenter{
 }
 
 '---------------------------------------------------------
-Clock o--down-> Presenter
+Presenter o-down-> "1" Min : min
+Presenter o-left-> "1" Min_ang : min_ang
+Presenter o-right-> "1" Hour_ang : hour_ang
+Presenter o--down--> "1" Hour : hour
 
-Presenter o-down-> Min
-Presenter o-left-> Min_ang
-Presenter o-right-> Hour_ang
-
-Min o-down-> Hour
+Min o-down-> "1" Hour : hour
 
 @enduml
