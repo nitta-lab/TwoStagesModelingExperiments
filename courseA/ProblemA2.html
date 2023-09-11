@@ -6,6 +6,45 @@
 </head>
 <body>
 <h1>課題2-(1)の概要</h1>
+<p>
+    この Audio プログラムに，オーディオのミュート機能を付けることを考えます．<br>
+</p>
+<p>
+    現在の設計では，<code>AudioVolume</code> オブジェクトからオーディオ全体の音量，<code>SoundVolume</code> オブジェクトからサウンドの音量，<br>
+    <code>BGMVolume</code> オブジェクトからBGMの音量を取得し，<code>OutputSoundVolume</code> オブジェクトと <code>OutputSoundVolume</code> オブジェクトの内部で<br>
+    これらの値を使って出力の音量を計算しています．<br>
+    ここで，オーディオにミュート機能を持たせるとすれば <code>AudioVolume</code> オブジェクト辺りが適当と考えられますが，<br>
+    <code>AudioVolume</code> オブジェクトに機能を追加した場合，<code>OutputSoundVolume</code> オブジェクトと <code>OutputSoundVolume</code> オブジェクトの両方の実装を<br>
+    書き換えなければなりません．<br>
+    <code>OutputSoundVolume</code> オブジェクトと <code>OutputSoundVolume</code> オブジェクトのそれぞれの内部で，以下のように出力の音量の計算を別々に行っているためです．<br>
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+<pre class="brush:java; gutter:false" id="E">
+public class OutputSound {
+	private Sound sound;
+	private Audio audio;
+	  :
+	public double getValue() {
+		return (this.audio.getValue()*this.sound.getValue());
+	}
+}</pre>
+</div>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+<pre class="brush:java; gutter:false" id="E">
+public class OutputBGM {
+	private BGM BGM;
+	private Audio audio;
+	  :
+	public double getValue() {
+		return (this.audio.getValue()*this.BGM.getValue());
+	}
+}</pre>
+</div>
+<p>
+    そこで，<code>OutputSoundVolume</code> オブジェクトと <code>OutputSoundVolume</code> オブジェクトの内部で行っている出力の音量の計算を<br>
+    <code>AudioVolume</code> オブジェクトの中で一括して行うように設計変更を行います．<br>
+
+</p>
 
 <div class="links-manual-A">
     <a href="https://docs.google.com/forms/d/e/1FAIpQLSeTqmSdDGLtdfBmHdUbdmN_90mBs9xMJX-LIXat8Z_HmFuZUg/viewform?usp=sharing" target="_blank">
