@@ -1,5 +1,6 @@
-@startuml
-title "CFD適用後 【Clock MVC Push】 シーケンス図"
+@startuml clock_seq_push_refactor
+title "【Clock】 シーケンス図（リファクタリング後）"
+
 
 Clock -> Presenter : tick()
 activate Presenter
