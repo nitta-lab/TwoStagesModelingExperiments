@@ -2,32 +2,87 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>ツール課題A2-(2)：実装</title>
+    <title>【Audio-機能追加課題】</title>
 </head>
 <body>
     <h1 class="title-A">【Audio】
         <br/>
-        機能変更課題
+        機能追加課題
     </h1>
     <hr/>
     <h2>課題の概要：</h2>
     <p>
-        本課題では， 先ほど本ツール上で作成したモデルから出力されたプロトタイプを用いて，追加仕様の実装を行っていただきます．
+        本課題では，
     </p>
-    <p>
-        出力されるJavaプロトタイプのソースコードについての詳細は以下で説明します．
         <strong class="purpose-A">
-            「」
+            「先ほどツール上で作成したモデルから出力されたプロトタイプを用いて，リファクタリング課題同様の追加機能実装を行うこと」
         </strong>
-        を目的とします。
+    <p>
+        を目的とし，以下の詳細な手順にしたがい課題に取り組んでいただきます．
     </p>
-    <p>実装に関する作業手順は以下で説明します．</p>
     <hr/>
 
-    <h2>実装作業：</h2>
+    <h2>課題概要：</h2>
+        <p>
+            この Audio プログラムに，オーディオのミュート機能を付けることを考えます．<br>
+        </p>
+        <p>
+            現在の設計では，<code>AudioVolume</code> オブジェクトからオーディオ全体の音量，<code>SoundVolume</code> オブジェクトからサウンドの音量，<br>
+            <code>BGMVolume</code> オブジェクトからBGMの音量を取得し，<code>OutputSoundVolume</code> オブジェクトと <code>OutputSoundVolume</code> オブジェクトの内部で<br>
+            これらの値を使って出力の音量を計算しています．
+        </p>
+        <p>
+            ここで，オーディオにミュート機能を持たせるとすれば
+            <code>AudioVolume</code>
+            オブジェクト辺りが適当と考えられますが，
+            <code>AudioVolume</code>
+            オブジェクトに機能を追加した場合，
+            <code>OutputSoundVolume</code>
+            オブジェクトと
+            <code>OutputSoundVolume</code>
+            オブジェクトの両方の実装を書き換えなければなりません．
+        </p>
+        <code>OutputSoundVolume</code> オブジェクトと <code>OutputSoundVolume</code> オブジェクトのそれぞれの内部で，以下のように出力の音量の計算を別々に行っているためです．<br>
 
+    <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+        <pre class="brush:java; gutter:false">
+        public class OutputSoundVolume {
+            private SoundVolume soundVolume;
+            private AudioVolume audioVolume;
+              :
+            public double getValue() {
+                return (this.audioVolume.getValue()*this.soundVolume.getValue());
+            }
+        }
+        </pre>
+    </div>
+    <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+    <pre class="brush:java; gutter:false">
+        public class OutputBGMVolume {
+            private BGM BGMVolume;
+            private Audio audioVolume;
+              :
+            public double getValue() {
+                return (this.audioVolume.getValue()*this.BGMVolume.getValue());
+            }
+        }
+        </pre>
+        </div>
+            <p>
+                そこで，<code>OutputSoundVolume</code> オブジェクトと <code>OutputSoundVolume</code> オブジェクトの内部で行っている出力の音量の計算を<br>
+                <code>AudioVolume</code> オブジェクトの中で一括して行うように設計変更を行います．<br>
+            </p>
     <hr/>
 
+    <h2>作業手順：</h2>
+    <p>
+        <ol>
+            <li>AudioVolume</li>
+        </ol>
+
+    </p>
+
+    <hr/>
     <div class="links-tool-A">
         <a href="../DescriptionTool.html" target="_blank">ツールの操作説明</a>
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSc_4RfxYDFSv8P02hG5JkTc9W_gPPNTSTQY5j4hEELWaPIB1w/viewform?usp=sharing" target="_blank">
@@ -35,6 +90,7 @@
         </a>
         <a href="../Closing.html">実験終了説明へ</a>
     </div>
+
 </body>
 
 <style>
@@ -43,8 +99,7 @@
     }
 
     .purpose-A{
-        display: flex;
-        justify-content: center;
+        text-align: center;
     }
 
     .links-tool-A{
