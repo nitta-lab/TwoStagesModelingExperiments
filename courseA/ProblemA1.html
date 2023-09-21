@@ -4,49 +4,120 @@
     <meta charset="UTF-8">
     <title>手動課題A1</title>
 </head>
+<style>
+    .image_size{
+        width: 600px;
+        height: 400px;
+    }
+</style>
 <body>
 
 <h1>課題1-(1)の概要</h1>
 
 <p>
-    この Clockプログラムは，実際のアナログ時計と一部で動作が異なっています．<br>
-    通常のアナログ時計では，時間の経過にしたがって短針は少しづつ動いていきますが，この Clockプログラムでは短針が1時間に1回しか動きません．<br>
-    そこで，Clockプログラムの動作をできる限り実際のアナログ時計に近付けるために，短針も1分に1回動くよう針の更新機能を変更することを考えます．<br>
+    この Map プログラムでは，GPSの位置情報が更新されるたびに，それに合わせて地図の表示位置も自動で更新されます．しかしながら，地図アプリのユーザはいつでも自分の周辺の地図を閲覧したいというわけではありません．
+    例えば，電車に乗りながら目的地周辺の地図情報を確認したい場合，電車の動きに合わせて地図の表示位置が勝手に動いてしまうと困ります．<br>
+    そこで，GPSに合わせて地図の表示位置を自動更新するか否かを切り替えられる機能(自動更新のON/OFF機能)を追加することを考えます．
+    この機能では自動更新をいつでもON/OFFすることができ，自動更新がONのときは常にGPSの位置情報と地図の表示位置が連動し，OFFのときはGPSの位置情報が更新されても地図の表示位置は変わらないものとします．
+    また手動更新ボタンを用意し，自動更新がOFFのときでもこのボタンが押されると，その時点でのGPSの位置情報が地図の表示位置に反映されるようにします．
 </p>
 <p>
-    ただし現在の設計では，以下のように<code>Min</code> オブジェクトが <code>Min_ang</code> オブジェクトを，<code>Hour</code> オブジェクトが <code>Hour_ang</code> オブジェクトを<br>
-    それぞれ独立に更新するようになっており，このような機能変更に柔軟に対応することができません．<br>
-    新しい機能では，<code>Hour_ang</code> が保持している短針の角度を計算するために，<code>Hour</code> オブジェクトと <code>Min</code> オブジェクトの両方の情報が必要になるからです．
+    現在の設計では，以下のクラス図のようにGPSの緯度情報を保持している <code>Latitude</code> オブジェクトが地図の中心位置の緯度成分を表す <code>MapLatitude</code> オブジェクトを，
+    GPSの経度情報を保持している <code>Longitude</code> オブジェクトが地図の中心位置の経度成分を表す <code>MapLongitude</code> オブジェクトをそれぞれ更新するようになっています．<br>
+</p>
+<img src="../img/classes/clock_class_push.png", class ="image_size"><br>
+<p>
+    具体的には以下のコードのように，GPSの位置情報の変化をセンサーが検知するたびに <code>Map</code> クラスの <code>updateGPS()</code> メソッドが呼び出され，
+    その中から <code>Longitude</code> クラスの <code>updateGPS()</code> メソッドと <code>Latitude</code> クラスの <code>updateGPS()</code> メソッドが呼ばれてGPSの緯度と経度の情報が更新されます．
 </p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
 <pre class="brush:java; gutter:false" id="E">
-public class Hour {
-	private Hour_ang hour_ang;
-	private double value;
+public class Map {
 	  :
-	public void updateMin(double min) {
-		  :
-		this.hour_ang.updateHour(this.value);
-	}
-}
-</pre>
-</div>
-<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
-<pre class="brush:java; gutter:false" id="E">
-public class Hour_ang {
-	private double value;
+	private Longitude longitude;
+	private Latitude latitude;
 	  :
-	public void updateHour(double hour) {
-		this.value = ((hour/6)*Math.PI);
+	public void updateGPS(double lat2, double long2) {
+		this.longitude.updateGPS(lat2, long2);
+		this.latitude.updateGPS(lat2, long2);
 	}
+	  :
 }
 </pre>
 </div>
 <p>
-    そこで，図のように新たに <code>Presenter</code> オブジェクトを導入して，
-    このオブジェクトが <code>Min</code> オブジェクトや <code>Hour</code> オブジェクトから，<br>
-    <code>Min_ang</code> オブジェクトや <code>Hour_ang</code> オブジェクトへの更新を一括して行えるように設計変更を行います．
+    そして，それらのメソッドの中からさらに以下のコードのように，<code>MapLongitude</code> クラスの <code>updateLongitude()</code> メソッドと
+    <code>MapLatitude</code> クラスの <code>updateLatitude()</code> メソッドがそれぞれ呼ばれて，
+    地図の中心位置の情報も同時に更新されます．そのためこのままの設計では，GPSの位置情報だけが更新されて地図の中心位置は更新されないという，自動更新がOFFの状態の振る舞いを上手く実装することができません．
 </p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+<pre class="brush:java; gutter:false" id="E">
+public class Longitude {
+	private MapLongitude mapLongitude;
+	private double value;
+	  :
+	public void updateGPS(double lat2, double long2) {
+		this.value = long2;
+		this.mapLongitude.updateLongitude(this.value);
+	}
+}
+
+public class Latitude {
+	private MapLatitude mapLatitude;
+	private double value;
+	  :
+	public void updateGPS(double lat2, double long2) {
+		this.value = lat2;
+		this.mapLatitude.updateLatitude(this.value);
+	}
+}
+</pre>
+</div>
+<p>
+    そこで，以下の図のように新たに <code>Presenter</code> オブジェクトを導入し，<code>Longitude</code> オブジェクトも <code>Latitude</code> オブジェクトも，
+    このオブジェクトを経由して <code>MapLatitude</code> オブジェクトや <code>MapLongitude</code> オブジェクトを更新するように設計変更を行います．
+    そうすることによって，<code>Longitude</code> オブジェクトや <code>Latitude</code> オブジェクトの状態の更新に伴って
+    <code>MapLatitude</code> オブジェクトや <code>MapLongitude</code> オブジェクトの状態の更新をするか否かを，<code>Presenter</code> オブジェクトで制御することができるようになります．
+</p>
+<img src="../img/classes/clock_class_push_CFD.png", class ="image_size"><br>
+<p>
+    具体的にこの設計の中では，以下のように <code>Map</code> クラスの <code>updateGPS()</code> メソッドは，
+    <code>Longitude</code> クラスと <code>Latitude</code> クラスの <code>updateGPS()</code> メソッドを呼び出す代わりに <code>Presenter</code> クラスの <code>updateGPS()</code> メソッドを呼び出します．
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+<pre class="brush:java; gutter:false" id="E">
+public class Map {
+	  :
+	private Presenter presenter;
+	  :
+	public void updateGPS(double lat2, double long2) {
+		this.presenter.updateGPS(lat2, long2);
+	}
+}
+</pre>
+</div>
+<p>
+    そして，<code>Presenter</code> クラスの <code>updateGPS()</code> メソッドは，
+    <code>Longitude</code> オブジェクトや <code>Latitude</code> オブジェクトの状態の更新と，
+    <code>MapLatitude</code> オブジェクトや <code>MapLongitude</code> オブジェクトの状態の更新を，以下のように切り離して実行します．
+    そのため，この <code>updateGPS()</code> メソッドを書き換えることによって，自動更新のON/OFFを制御することができるようになります．
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+<pre class="brush:java; gutter:false" id="E">
+public class Presenter {
+	private Longitude longitude;
+	private Latitude latitude;
+	private MapLongitude mapLongitude;
+	private MapLatitude mapLatitude;
+	  :
+	public void updateGPS(double lat2, double long2) {
+		double longitude = this.longitude.updateGPS(lat2, long2);
+		double latitude = this.latitude.updateGPS(lat2, long2);
+		this.mapLongitude.updateLongitude(longitude);
+		this.mapLatitude.updateLatitude(latitude);
+	}
+}</pre>
+</div>
 
 <div class="links-manual-A">
 <a href="https://docs.google.com/forms/d/e/1FAIpQLSf9q6nV6QeOgQoArCy-0TUx2xGHWhABn8hiLAHsFOyBpFAWIw/viewform?usp=sharing" target="_blank">
