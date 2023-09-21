@@ -10,39 +10,64 @@
     この Audio プログラムに，オーディオのミュート機能を付けることを考えます．<br>
 </p>
 <p>
-    現在の設計では，<code>AudioVolume</code> オブジェクトからオーディオ全体の音量，<code>SoundVolume</code> オブジェクトからサウンドの音量，<br>
-    <code>BGMVolume</code> オブジェクトからBGMの音量を取得し，<code>OutputSoundVolume</code> オブジェクトと <code>OutputSoundVolume</code> オブジェクトの内部で<br>
-    これらの値を使って出力の音量を計算しています．<br>
-    ここで，オーディオにミュート機能を持たせるとすれば <code>AudioVolume</code> オブジェクト辺りが適当と考えられますが，<br>
-    <code>AudioVolume</code> オブジェクトに機能を追加した場合，<code>OutputSoundVolume</code> オブジェクトと <code>OutputSoundVolume</code> オブジェクトの両方の実装を<br>
-    書き換えなければなりません．<br>
-    <code>OutputSoundVolume</code> オブジェクトと <code>OutputSoundVolume</code> オブジェクトのそれぞれの内部で，以下のように出力の音量の計算を別々に行っているためです．<br>
+    現在の設計では，以下のように <code>OutputSoundVolume</code> オブジェクトと <code>OutputBGMVolume</code> オブジェクトが，
+    それぞれの <code>getValue()</code> メソッド内部で，<code>AudioVolume</code> オブジェクトからオーディオ全体の音量，<code>SoundVolume</code> オブジェクトからサウンドの音量，
+    <code>BGMVolume</code> オブジェクトからBGMの音量を取得し，取得した値を使ってそれぞれの最終出力の音量を計算しています．<br>
 </p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
 <pre class="brush:java; gutter:false" id="E">
-public class OutputSound {
-	private Sound sound;
-	private Audio audio;
+public class OutputSoundVolume {
+	private SoundVolume soundVolume;
+	private AudioVolume audioVolume;
 	  :
 	public double getValue() {
-		return (this.audio.getValue()*this.sound.getValue());
+		return (this.audioVolume.getValue()*this.soundVolume.getValue());
 	}
 }</pre>
 </div>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
 <pre class="brush:java; gutter:false" id="E">
-public class OutputBGM {
-	private BGM BGM;
-	private Audio audio;
+public class OutputBGMVolume {
+	private BGMVolume BGMVolume;
+	private AudioVolume audioVolume;
 	  :
 	public double getValue() {
-		return (this.audio.getValue()*this.BGM.getValue());
+		return (this.audioVolume.getValue()*this.BGMVolume.getValue());
 	}
 }</pre>
 </div>
 <p>
-    そこで，<code>OutputSoundVolume</code> オブジェクトと <code>OutputSoundVolume</code> オブジェクトの内部で行っている出力の音量の計算を<br>
-    <code>AudioVolume</code> オブジェクトの中で一括して行うように設計変更を行います．<br>
+    ここで，このオーディオにミュート機能を追加することを考えた場合，<code>AudioVolume</code> オブジェクト辺りに追加の実装をするのが適当と考えられますが，
+    たとえば <code>AudioVolume</code> オブジェクトに <code>isMute()</code> メソッドを追加したとすると，
+    それに伴って <code>OutputSoundVolume</code> オブジェクトと <code>OutputSoundVolume</code> オブジェクトの両方の <code>getValue()</code> メソッドの実装を，たとえば以下のように書き換えなければならなくなります．
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+<pre class="brush:java; gutter:false" id="E">
+public class OutputSoundVolume {
+	private SoundVolume soundVolume;
+	private AudioVolume audioVolume;
+	  :
+	public double getValue() {
+		if (this.audioVolume.isMute()) return 0.0;
+		return (this.audioVolume.getValue()*this.soundVolume.getValue());
+	}
+}</pre>
+</div>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+<pre class="brush:java; gutter:false" id="E">
+public class OutputBGMVolume {
+	private BGMVolume BGMVolume;
+	private AudioVolume audioVolume;
+	  :
+	public double getValue() {
+		if (this.audioVolume.isMute()) return 0.0;
+		return (this.audioVolume.getValue()*this.BGMVolume.getValue());
+	}
+}</pre>
+</div>
+<p>
+    そこで，<code>OutputSoundVolume</code> オブジェクトと <code>OutputSoundVolume</code> オブジェクトの内部で個別に行っている出力の音量の計算を
+    <code>AudioVolume</code> オブジェクトの中で一括して行うように設計変更を行って，ミュート機能の実装が複数個所に散らばらないようにします．<br>
 
 </p>
 
