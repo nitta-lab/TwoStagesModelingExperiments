@@ -85,7 +85,7 @@ public class Latitude {
     <code>Longitude</code> クラスと <code>Latitude</code> クラスの <code>updateGPS()</code> メソッドの代わりに <code>Presenter</code> クラスの <code>updateGPS()</code> メソッドを呼び出すようにします．
 </p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
-<pre class="brush:java; gutter:false" id="A">
+<pre class="brush:java; gutter:false" id="C">
 public class Map {
 	  :
 	private Presenter presenter;
@@ -103,7 +103,7 @@ public class Map {
     そのため，この <code>updateGPS()</code> メソッドを書き換えることによって，自動更新のON/OFFを制御することができるようになります．
 </p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
-<pre class="brush:java; gutter:false" id="B">
+<pre class="brush:java; gutter:false" id="D">
 public class Presenter {
 	private Longitude longitude;
 	private Latitude latitude;
