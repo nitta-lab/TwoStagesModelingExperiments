@@ -7,8 +7,25 @@
 <body>
 
 <h1>Map の概要説明</h1>
-<p>Map はGPSを利用する地図アプリの一部を，Javaで実装したものです．</p>
-<p>Map には，UIや地図表示に関わる部分は実装されていません．実行はテストケースを使って確認することができます</p>
+<p>
+    Map はGPSを利用する地図アプリの一部を，Javaで実装したものです．<br>
+    Map には，UIや地図表示に関わる部分は実装されていません．なお実行はテストケースを使って確認することができます．
+    この Map アプリでは，GPSの位置情報が更新されるたびに，それに合わせて地図の表示位置も自動で更新されます．
+</p>
+<p>
+    Mapは次のように設計されています．
+    まず，<code>Map</code> オブジェクトがアプリ全体のインターフェースの役割を担っており，テストケース <code>TestGPSUpdate</code> もこの <code>Map</code> オブジェクトを通じてアプリの操作を行います．<br>
+    <code>Latitude</code> オブジェクトはGPSの緯度情報を保持しており，<code>Longitude</code> オブジェクトはGPSの経度情報を保持しています．
+    <code>MapLatitude</code> オブジェクトは地図の中心位置の緯度成分を，<code>MapLongitude</code> オブジェクトは経度成分をそれぞれ保持しています．<br>
+    GPSが移動を検知するたびに，<code>Map</code> オブジェクトの <code>updateGPS()</code> が呼び出され，さらにそのメソッドから <code>Latitude</code> オブジェクトと
+    <code>Longitude</code> オブジェクトの <code>updateGPS()</code> が順番に呼び出されてGPSの位置情報が更新されます．<br>
+    この Map アプリでは，GPSの位置情報の変化に合わせて地図の表示位置が自動更新されるため，
+    <code>Latitude</code> オブジェクトは <code>updateGPS()</code> が呼ばれて自分の状態が更新されたら，
+    即座に <code>MapLatitude</code> オブジェクトの <code>updateLatitude()</code> メソッドを呼び出して地図の表示位置の経度成分を更新し，
+    同様に <code>Longitude</code> オブジェクトは自分の状態が更新されたら，
+    即座に <code>MapLongitude</code> オブジェクトの <code>updateLongitude()</code> メソッドを呼び出して地図の表示位置の経度成分を更新します．
+</p>
+
 <a href="EnvironmentMap.html">「Map」の環境構築の説明へ</a>
 </body>
 </html>
