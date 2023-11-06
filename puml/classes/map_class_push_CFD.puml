@@ -1,0 +1,43 @@
+@startuml map_class_push_CFD
+title "【Map】クラス図（CFD適用後）"
+
+skinparam dpi 300
+
+top to bottom direction
+
+class "Longitude"{
+    -value : double
+    +getValue() : double
+    +updateMin(lat2 : double, long2 : double) : double
+}
+
+class "Latitude"{
+    -value : double
+    +getValue() : double
+    +updateGPS(lat2 : double, long2 : double) : double
+}
+
+class "Presenter"{
+    +Presenter()
+    +updateGPS(lat2:double, long2:double) : void
+}
+
+class "MapLongitude"{
+    -value : double
+    +getValue() : double
+    +updateLongitude(longitude : double) : void
+}
+
+class "MapLatitude"{
+    -value : double
+    +getValue() : double
+    +updateLatitude(latitude : double) : void
+}
+
+'---------------------------------------------
+Presenter  o--> "1 " MapLatitude
+Presenter  o--> "1 " MapLongitude
+Presenter o--> "1 " Longitude
+Presenter o--> "1 " Latitude
+
+@enduml
