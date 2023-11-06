@@ -1,6 +1,8 @@
 @startuml map_class_push
 title "【Map】クラス図"
 
+skinparam dpi 300
+
 together {
     class "Longitude"{
         -value : double
@@ -20,7 +22,7 @@ together {
 class "MapLongitude"{
     -value : double
     +getValue() : double
-    +updateLongitude(longitude : double) : double
+    +updateLongitude(longitude : double) : void
 }
 
 class "MapLatitude"{

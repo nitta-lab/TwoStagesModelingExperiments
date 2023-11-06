@@ -1,38 +1,43 @@
 @startuml map_class_push_CFD
-title "【Clock】クラス図"
+title "【Map】クラス図（CFD適用後）"
 
-together {
-    class "Longitude"{
-        -value : int
-        +Hour()
-        +getValue() : int
-        +updateMin(min : int) : void
-    }
+skinparam dpi 300
 
-    class "Latitude"{
-        -value : int
-        +Min(hour: Hour, min_ang : Min_ang)
-        +getValue() : int
-        +tick() : void
-    }
+top to bottom direction
+
+class "Longitude"{
+    -value : double
+    +getValue() : double
+    +updateMin(lat2 : double, long2 : double) : double
+}
+
+class "Latitude"{
+    -value : double
+    +getValue() : double
+    +updateGPS(lat2 : double, long2 : double) : double
+}
+
+class "Presenter"{
+    +Presenter()
+    +updateGPS(lat2:double, long2:double) : void
 }
 
 class "MapLongitude"{
     -value : double
     +getValue() : double
-    +updateMin(min : int) : double
+    +updateLongitude(longitude : double) : void
 }
 
 class "MapLatitude"{
     -value : double
     +getValue() : double
-    +updateHour(hour : int) : void
+    +updateLatitude(latitude : double) : void
 }
 
-
-Longitude  o-right-> "1 " MapLatitude
-Longitude  -[hidden]-     Latitude
-
-Latitude   o-right-> "1 " MapLongitude
+'---------------------------------------------
+Presenter  o--> "1 " MapLatitude
+Presenter  o--> "1 " MapLongitude
+Presenter o--> "1 " Longitude
+Presenter o--> "1 " Latitude
 
 @enduml
