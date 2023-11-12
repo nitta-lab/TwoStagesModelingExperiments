@@ -1,0 +1,55 @@
+@startuml ssdStore_class_pull_CFD
+title "【SSDStore 設計変更後】"
+
+left to right direction
+
+class "Price"{
+    - value : int
+    + getValue() : int
+    + setPrice(cur_price : int) : void
+}
+
+class "SiteA"{
+    - value : List<Map<String, Object>>
+    + getValue() : List<Map<String, Object>>
+    + addProductToSiteA(capacity : int, price : int) : void
+}
+
+class "SiteB"{
+    - value : List<Map<String, Object>>
+    + getValue() : List<Map<String, Object>>
+    + addProductToSiteB(capacity : int, price : int) : void
+}
+
+class "Capacity"{
+    - value : int
+    + getValue() : int
+    + setCapacity(cur_capacity : int) : void
+}
+
+class "ItemsByPrice"{
+    + ItemsByPrice(...)
+    + getValue() : List<Map<String, Object>>
+}
+
+class "ItemsByCapacity"{
+    + ItemsByCapacity(...)
+    + getValue() : List<Map<String, Object>>
+}
+
+class "SiteWrapper"{
+    + SiteWrapper(...)
+    + getSiteValue() : List<Map<String, Object>>
+}
+
+'---------------------------------------------------------
+"SiteA" "1" <---o "SiteWrapper" : "siteA"
+"SiteB" "1" <---o "SiteWrapper" : "siteB"
+
+"SiteWrapper" "1" <---o "ItemsByPrice" : "siteWrapper"
+"Price" "1" <---o "ItemsByPrice" : "price"
+
+"SiteWrapper" "1" <---o "ItemsByCapacity" : "siteWrapper"
+"Capacity" "1" <---o "ItemsByCapacity" : "capacity"
+
+@enduml

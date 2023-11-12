@@ -1,38 +1,39 @@
 @startuml map_class_push_CFD
-title "【Clock】クラス図"
+title "【Map 設計変更後】"
 
-together {
-    class "Longitude"{
-        -value : int
-        +Hour()
-        +getValue() : int
-        +updateMin(min : int) : void
-    }
-
-    class "Latitude"{
-        -value : int
-        +Min(hour: Hour, min_ang : Min_ang)
-        +getValue() : int
-        +tick() : void
-    }
+class "Longitude"{
+    -value : double
+    +getValue() : double
+    +updateGPS(lat2 : double, long2 : double) : double
 }
+
+class "Latitude"{
+    -value : double
+    +getValue() : double
+    +updateGPS(lat2 : double, long2 : double) : double
+}
+
 
 class "MapLongitude"{
     -value : double
     +getValue() : double
-    +updateMin(min : int) : double
+    +updateLongitude(longitude : double) : double
 }
 
 class "MapLatitude"{
     -value : double
     +getValue() : double
-    +updateHour(hour : int) : void
+    +updateLatitude(longitude : double) : void
 }
 
+class "Presenter"{
+    +Presenter(...)
+    +updateGPS(lat2 : double, long2 : double)
+}
 
-Longitude  o-right-> "1 " MapLatitude
-Longitude  -[hidden]-     Latitude
-
-Latitude   o-right-> "1 " MapLongitude
+"Presenter" o--left-> "1" "Longitude" : longitude
+"Presenter" o---> "1" "Latitude" : latitude
+"Presenter" o--right-> "1" "MapLongitude" : mapLongitude
+"Presenter" o---> "1" "MapLatitude" : mapLatitude
 
 @enduml

@@ -1,0 +1,41 @@
+@startuml ssdStore_class_pull
+title "【SSDStore】クラス図"
+
+left to right direction
+
+class "Price"{
+    - value : int
+    + getValue() : int
+    + setPrice(cur_price : int) : void
+}
+
+class "SiteA"{
+    - value : List<Map<String, Object>>
+    + getValue() : List<Map<String, Object>>
+    + addProductToSiteA(capacity : int, price : int) : void
+}
+
+class "Capacity"{
+    - value : int
+    + getValue() : int
+    + setCapacity(cur_capacity : int) : void
+}
+
+class "ItemsByPrice"{
+    + ItemsByPrice(...)
+    + getValue() : List<Map<String, Object>>
+}
+
+class "ItemsByCapacity"{
+    + ItemsByCapacity(...)
+    + getValue() : List<Map<String, Object>>
+}
+
+'---------------------------------------------------------
+"SiteA" "1" <---o "ItemsByPrice" : "siteA"
+"Price" "1" <---o "ItemsByPrice" : "price"
+
+"SiteA" "1" <---o "ItemsByCapacity" : "siteA"
+"Capacity" "1" <---o "ItemsByCapacity" : "capacity"
+
+@enduml
