@@ -1,14 +1,10 @@
 @startuml map_class_push_CFD
-title "【Map】クラス図（CFD適用後）"
-
-skinparam dpi 300
-
-top to bottom direction
+title "【Map 設計変更後】"
 
 class "Longitude"{
     -value : double
     +getValue() : double
-    +updateMin(lat2 : double, long2 : double) : double
+    +updateGPS(lat2 : double, long2 : double) : double
 }
 
 class "Latitude"{
@@ -17,27 +13,27 @@ class "Latitude"{
     +updateGPS(lat2 : double, long2 : double) : double
 }
 
-class "Presenter"{
-    +Presenter()
-    +updateGPS(lat2:double, long2:double) : void
-}
 
 class "MapLongitude"{
     -value : double
     +getValue() : double
-    +updateLongitude(longitude : double) : void
+    +updateLongitude(longitude : double) : double
 }
 
 class "MapLatitude"{
     -value : double
     +getValue() : double
-    +updateLatitude(latitude : double) : void
+    +updateLatitude(longitude : double) : void
 }
 
-'---------------------------------------------
-Presenter  o--> "1 " MapLatitude
-Presenter  o--> "1 " MapLongitude
-Presenter o--> "1 " Longitude
-Presenter o--> "1 " Latitude
+class "Presenter"{
+    +Presenter(...)
+    +updateGPS(lat2 : double, long2 : double)
+}
+
+"Presenter" o--left-> "1" "Longitude" : longitude
+"Presenter" o---> "1" "Latitude" : latitude
+"Presenter" o--right-> "1" "MapLongitude" : mapLongitude
+"Presenter" o---> "1" "MapLatitude" : mapLatitude
 
 @enduml
