@@ -19,7 +19,7 @@
 <h1>課題1-(1)の概要</h1>
 
 <p>
-    この Map プログラムでは，GPSの位置情報が更新されるたびに，それに合わせて地図の表示位置も自動で更新されます．しかしながら，地図アプリのユーザはいつでも自分の周辺の地図を閲覧したいわけではありません．
+    このMapプログラムでは，GPSの位置情報が更新されるたびに，それに合わせて地図の表示位置も自動で更新されます．しかしながら，地図アプリのユーザはいつでも自分の周辺の地図を閲覧したいわけではありません．
     例えば，電車に乗りながら目的地周辺の地図情報を確認したい場合，電車の動きに合わせて地図の表示位置が勝手に動いてしまうと困ります．<br>
     そこで，GPSに合わせて地図の表示位置を自動更新するか否かを切り替えられる機能(自動更新のON/OFF機能)を追加することを考えます．
     この機能では自動更新をいつでもON/OFFすることができ，自動更新がONのときは常にGPSの位置情報と地図の表示位置が連動するようにし，OFFのときはGPSの位置情報が更新されても地図の表示位置が変わらないようにします．
@@ -41,9 +41,9 @@ public class Map {
 	private Longitude longitude;
 	private Latitude latitude;
 	  :
-	public void updateGPS(double lat2, double long2) {
-		this.longitude.updateGPS(lat2, long2);
-		this.latitude.updateGPS(lat2, long2);
+	public void updateGPS(double cur_lat, double cur_long) {
+		this.longitude.updateGPS(cur_lat, cur_long);
+		this.latitude.updateGPS(cur_lat, cur_long);
 	}
 	  :
 }
@@ -60,8 +60,8 @@ public class Longitude {
 	private MapLongitude mapLongitude;
 	private double value;
 	  :
-	public void updateGPS(double lat2, double long2) {
-		this.value = long2;
+	public void updateGPS(double cur_lat, double cur_long) {
+		this.value = cur_long;
 		this.mapLongitude.updateLongitude(this.value);
 	}
 }
@@ -70,8 +70,8 @@ public class Latitude {
 	private MapLatitude mapLatitude;
 	private double value;
 	  :
-	public void updateGPS(double lat2, double long2) {
-		this.value = lat2;
+	public void updateGPS(double cur_lat, double cur_long) {
+		this.value = cur_lat;
 		this.mapLatitude.updateLatitude(this.value);
 	}
 }
@@ -94,8 +94,8 @@ public class Map {
 	  :
 	private Presenter presenter;
 	  :
-	public void updateGPS(double lat2, double long2) {
-		this.presenter.updateGPS(lat2, long2);
+	public void updateGPS(double cur_lat, double cur_long) {
+		this.presenter.updateGPS(cur_lat, cur_long);
 	}
 }
 </pre>
@@ -114,9 +114,9 @@ public class Presenter {
 	private MapLongitude mapLongitude;
 	private MapLatitude mapLatitude;
 	  :
-	public void updateGPS(double lat2, double long2) {
-		double longitude = this.longitude.updateGPS(lat2, long2);
-		double latitude = this.latitude.updateGPS(lat2, long2);
+	public void updateGPS(double cur_lat, double cur_long) {
+		double longitude = this.longitude.updateGPS(cur_lat, cur_long);
+		double latitude = this.latitude.updateGPS(cur_lat, cur_long);
 		this.mapLongitude.updateLongitude(longitude);
 		this.mapLatitude.updateLatitude(latitude);
 	}
