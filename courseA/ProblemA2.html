@@ -2,7 +2,7 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>手動課題2</title>
+    <title>手動課題A2</title>
 </head>
 <body>
 <h1>課題2-(1)の概要</h1>
@@ -13,10 +13,10 @@
     現在の設計では，以下のクラス図ように <code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトが，それぞれ <code>SiteA</code> オブジェクトから直接SSDの商品情報を取得し，
 	さらに <code>Price</code> オブジェクトから価格を，<code>Capacity</code> オブジェクトから容量を取得して，それらの値を使って別々に検索を行い検索結果を出力しています．
 </p>
-<img src="../img/classes/audio_class_pull.png", class ="image_size"><br>
+<img src="../img/classes/ssdStore_class_pull.png", class ="image_size"><br>
 <p>
-    具体的には以下のコードように，<code>ItemsByPrice</code> オブジェクトの <code>getValue()</code> メソッド内部で，サイトAから取得したSSDのリストの中から <code>Price</code> オブジェクトで指定された価格以下の商品を検索し，
-    <code>ItemsByCapacity</code> オブジェクトの <code>getValue()</code> メソッド内部で，サイトAから取得したSSDのリストの中から <code>Capacity</code> オブジェクトで指定された容量以上の商品を検索しています．<br>
+    具体的には以下のコードように，<code>ItemsByPrice</code> オブジェクトの <code>getValue()</code> メソッド内部で，サイトAからSSDのリストを取得してその中から <code>Price</code> オブジェクトで指定された価格以下の商品を検索し，
+	同様に <code>ItemsByCapacity</code> オブジェクトの <code>getValue()</code> メソッド内部で，サイトAからSSDのリストを取得してその中から <code>Capacity</code> オブジェクトで指定された容量以上の商品を検索しています．<br>
 </p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
 <pre class="brush:java; gutter:false" id="E">
@@ -64,11 +64,11 @@ public class ItemsByCapacity {
 	今後，より多くのサイトを扱えるように拡張していくことを考えると，このように <code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトが直接，個々のサイトのオブジェクトを参照しているような現在の設計では，拡張作業が煩雑になってしまいます．
 </p>
 <p>
-    そこで，複数のサイトを同時に参照することができる <code>SiteWrapper</code> オブジェクトを導入し，
-	<code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトは，<code>SiteWrapper</code> オブジェクトを通じて，間接的に <code>SiteA</code> オブジェクトや <code>SiteB</code> オブジェクトにアクセスするように設計変更を行います．
+    そこで，以下のクラス図のように複数のサイトを同時に参照することができる <code>SiteWrapper</code> オブジェクトを新たに導入し，
+	<code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトが，<code>SiteWrapper</code> オブジェクトを通じて，間接的に <code>SiteA</code> オブジェクトや <code>SiteB</code> オブジェクトにアクセスするように設計変更を行います．
     そうすることによって，<code>SiteWrapper</code> にいくつサイトを追加しても，<code>ItemsByPrice</code> オブジェクトや <code>ItemsByCapacity</code> オブジェクトの実装に影響が及ばないようにすることができます．
 </p>
-<img src="../img/classes/audio_class_pull_CFD.png", class ="image_size"><br>
+<img src="../img/classes/ssdStore_class_pull_CFD.png", class ="image_size"><br>
 <p>
     具体的に変更後の設計の中では，以下のように <code>SiteWrapper</code> クラスが <code>SiteA</code> を参照し，
 	<code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトは，この <code>SiteWrapper</code> の <code>getSiteValue()</code> メソッドを呼び出して，最新のSSDの一覧を得るようにします．

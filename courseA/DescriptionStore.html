@@ -15,9 +15,9 @@
     SSDStoreは次のように設計されています．
     まず，<code>SSDStore</code> オブジェクトがオンライン販売サイト全体のインターフェースの役割を担っており，テストケース <code>TestSSDStoreUpdate</code> も，この <code>SSDStore</code> オブジェクトを通じて販売サイトの操作を行います．<br>
     <code>SiteA</code> オブジェクトは別のサイトAに登録されているSSDの商品情報を保持しています．
-    <code>Price</code> オブジェクトにはユーザが指定した商品価格が保持されており，<code>ItemsByPrice</code> オブジェクトがサイトAから最新のSSDの一覧を取得し，指定した価格以下のSSDを検索して結果を一覧で返します．
-    <code>Capacity</code> オブジェクトにはユーザが指定した容量が保持されており，<code>ItemsByCapacity</code> オブジェクトがサイトAから最新のSSDの一覧を取得し，指定した容量以上のSSDを検索して結果を一覧で返します．<br>
-    このオンライン販売サイトでは，ユーザが更新ボタンを押すたびに <code>ItemsByPrice</code> オブジェクトもしくは<code>ItemsByCapacity</code> オブジェクトの <code>getValue()</code> のメソッドが呼び出されて検索が行われ，常に最新の検索結果が確認できるようになっています．
+    <code>Price</code> オブジェクトにはユーザが指定した商品価格が保持されており，<code>ItemsByPrice</code> オブジェクトが <code>SiteA</code> オブジェクトから最新のSSDの一覧を取得し，指定した価格以下のSSDを検索して結果を一覧で返します．
+    <code>Capacity</code> オブジェクトにはユーザが指定した容量が保持されており，<code>ItemsByCapacity</code> オブジェクトが <code>SiteA</code> オブジェクトから最新のSSDの一覧を取得し，指定した容量以上のSSDを検索して結果を一覧で返します．<br>
+    このオンライン販売サイトでは，ユーザが更新ボタンを押すたびに <code>ItemsByPrice</code> オブジェクトもしくは<code>ItemsByCapacity</code> オブジェクトの <code>getValue()</code> のメソッドが呼び出されて検索が行われ，常に最新の検索結果を確認できるようになっています．
 </p>
 <a href="EnvironmentStore.html">SSDStoreの環境構築の説明</a>
 </body>

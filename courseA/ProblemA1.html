@@ -29,7 +29,7 @@
     現在の設計では，以下のクラス図のようにGPSの緯度情報を保持している <code>Latitude</code> オブジェクトが地図の中心位置の緯度成分を表す <code>MapLatitude</code> オブジェクトを，
     GPSの経度情報を保持している <code>Longitude</code> オブジェクトが地図の中心位置の経度成分を表す <code>MapLongitude</code> オブジェクトをそれぞれ更新するようになっています．<br>
 </p>
-<img src="../img/classes/map_class_push.png", class ="before-image-size"><br>
+<img src="../img/classes/map_class_push.png", class ="image-size"><br>
 <p>
     具体的には以下のコードのように，GPSの位置情報の変化をセンサーが検知するたびに <code>Map</code> クラスの <code>updateGPS()</code> メソッドが呼び出され，
     その中から <code>Longitude</code> クラスの <code>updateGPS()</code> メソッドと <code>Latitude</code> クラスの <code>updateGPS()</code> メソッドが呼ばれて，まずGPSの緯度と経度の情報が更新されます．
@@ -83,7 +83,7 @@ public class Latitude {
     そうすることによって，<code>Longitude</code> オブジェクトや <code>Latitude</code> オブジェクトの状態の更新後に
     <code>MapLatitude</code> オブジェクトや <code>MapLongitude</code> オブジェクトの状態の更新をするか否かを，<code>Presenter</code> オブジェクト上で制御することができるようになります．
 </p>
-<img src="../img/classes/map_class_push_CFD.png", class ="after-image-size"><br>
+<img src="../img/classes/map_class_push_CFD.png", class ="image-size"><br>
 <p>
     具体的に変更後の設計の中では，以下のように <code>Map</code> クラスの <code>updateGPS()</code> メソッドは，
     <code>Longitude</code> クラスと <code>Latitude</code> クラスの <code>updateGPS()</code> メソッドの代わりに <code>Presenter</code> クラスの <code>updateGPS()</code> メソッドを呼び出すようにします．
