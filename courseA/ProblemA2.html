@@ -7,69 +7,86 @@
 <body>
 <h1>課題2-(1)の概要</h1>
 <p>
-    この Audio プログラムに，オーディオのミュート機能を付けることを考えます．<br>
+    このSSDStoreプログラムが，サイトA以外のサイトからも商品情報を収集して扱えるようにすることを考えます．<br>
 </p>
 <p>
-    現在の設計では，以下のように <code>OutputSoundVolume</code> オブジェクトと <code>OutputBGMVolume</code> オブジェクトが，
-    それぞれの <code>getValue()</code> メソッド内部で，<code>AudioVolume</code> オブジェクトからオーディオ全体の音量，<code>SoundVolume</code> オブジェクトからサウンドの音量，
-    <code>BGMVolume</code> オブジェクトからBGMの音量を取得し，取得した値を使ってそれぞれの最終出力の音量を計算しています．<br>
+    現在の設計では，以下のクラス図ように <code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトが，それぞれ <code>SiteA</code> オブジェクトから直接SSDの商品情報を取得し，
+	さらに <code>Price</code> オブジェクトから価格を，<code>Capacity</code> オブジェクトから容量を取得して，それらの値を使って別々に検索を行い検索結果を出力しています．
+</p>
+<img src="../img/classes/audio_class_pull.png", class ="image_size"><br>
+<p>
+    具体的には以下のコードように，<code>ItemsByPrice</code> オブジェクトの <code>getValue()</code> メソッド内部で，サイトAから取得したSSDのリストの中から <code>Price</code> オブジェクトで指定された価格以下の商品を検索し，
+    <code>ItemsByCapacity</code> オブジェクトの <code>getValue()</code> メソッド内部で，サイトAから取得したSSDのリストの中から <code>Capacity</code> オブジェクトで指定された容量以上の商品を検索しています．<br>
 </p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
 <pre class="brush:java; gutter:false" id="E">
-public class OutputSoundVolume {
-	private SoundVolume soundVolume;
-	private AudioVolume audioVolume;
+public class ItemsByPrice {
+	private Price price;
+	private SiteA siteA;
 	  :
 	public double getValue() {
-		return (this.audioVolume.getValue()*this.soundVolume.getValue());
+		List<Map<String, Object>> temp_l1 = new ArrayList<>();
+		{
+			for (Map<String, Object> item: this.siteA.getValue()) {
+				if ((Integer) item.get("price") <= this.price.getValue()) {
+					temp_l1.add(item);
+				}
+			}
+		}
+		return temp_l1;
 	}
-}</pre>
+}
+</pre>
 </div>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
 <pre class="brush:java; gutter:false" id="E">
-public class OutputBGMVolume {
-	private BGMVolume BGMVolume;
-	private AudioVolume audioVolume;
+public class ItemsByCapacity {
+	private Capacity capacity;
+	private SiteA siteA;
 	  :
 	public double getValue() {
-		return (this.audioVolume.getValue()*this.BGMVolume.getValue());
+		List<Map<String, Object>> temp_l1 = new ArrayList<>();
+		{
+			for (Map<String, Object> item: this.siteA.getValue()) {
+				if ((Integer) item.get("capacity") >= this.capacity.getValue()) {
+					temp_l1.add(item);
+				}
+			}
+		}
+		return temp_l1;
 	}
-}</pre>
+}
+</pre>
 </div>
 <p>
-    ここで，このオーディオにミュート機能を追加することを考えた場合，<code>AudioVolume</code> オブジェクト辺りに追加の実装をするのが適当と考えられますが，
-    たとえば <code>AudioVolume</code> オブジェクトに <code>isMute()</code> メソッドを追加したとすると，
-    それに伴って <code>OutputSoundVolume</code> オブジェクトと <code>OutputSoundVolume</code> オブジェクトの両方の <code>getValue()</code> メソッドの実装を，たとえば以下のように書き換えなければならなくなります．
+    ここで，このSSDStoreプログラムがサイトBからも商品情報を収集して扱えるように拡張することを考えた場合，<code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトの両方の実装を，
+	<code>SiteA</code> オブジェクトと <code>SiteB</code> オブジェクトを同時に扱えるように書き換えなければならなくなります．
+	今後，より多くのサイトを扱えるように拡張していくことを考えると，このように <code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトが直接，個々のサイトのオブジェクトを参照しているような現在の設計では，拡張作業が煩雑になってしまいます．
 </p>
-<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
-<pre class="brush:java; gutter:false" id="E">
-public class OutputSoundVolume {
-	private SoundVolume soundVolume;
-	private AudioVolume audioVolume;
-	  :
-	public double getValue() {
-		if (this.audioVolume.isMute()) return 0.0;
-		return (this.audioVolume.getValue()*this.soundVolume.getValue());
-	}
-}</pre>
-</div>
-<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
-<pre class="brush:java; gutter:false" id="E">
-public class OutputBGMVolume {
-	private BGMVolume BGMVolume;
-	private AudioVolume audioVolume;
-	  :
-	public double getValue() {
-		if (this.audioVolume.isMute()) return 0.0;
-		return (this.audioVolume.getValue()*this.BGMVolume.getValue());
-	}
-}</pre>
-</div>
 <p>
-    そこで，<code>OutputSoundVolume</code> オブジェクトと <code>OutputSoundVolume</code> オブジェクトの内部で個別に行っている出力の音量の計算を
-    <code>AudioVolume</code> オブジェクトの中で一括して行うように設計変更を行って，ミュート機能の実装が複数個所に散らばらないようにします．<br>
-
+    そこで，複数のサイトを同時に参照することができる <code>SiteWrapper</code> オブジェクトを導入し，
+	<code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトは，<code>SiteWrapper</code> オブジェクトを通じて，間接的に <code>SiteA</code> オブジェクトや <code>SiteB</code> オブジェクトにアクセスするように設計変更を行います．
+    そうすることによって，<code>SiteWrapper</code> にいくつサイトを追加しても，<code>ItemsByPrice</code> オブジェクトや <code>ItemsByCapacity</code> オブジェクトの実装に影響が及ばないようにすることができます．
 </p>
+<img src="../img/classes/audio_class_pull_CFD.png", class ="image_size"><br>
+<p>
+    具体的に変更後の設計の中では，以下のように <code>SiteWrapper</code> クラスが <code>SiteA</code> を参照し，
+	<code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトは，この <code>SiteWrapper</code> の <code>getSiteValue()</code> メソッドを呼び出して，最新のSSDの一覧を得るようにします．
+	そして，新しいサイトを追加する際は，この <code>SiteWrapper</code> クラスを変更するようにします．
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+<pre class="brush:java; gutter:false" id="E">
+public class SiteWrapper {
+	private SiteA siteA;
+	public SiteWrapper(SiteA siteA) {
+		this.siteA = siteA;
+	}
+	public List<Map<String, Object>> getSiteValue() {
+		return this.siteA.getValue();
+	}
+}
+</pre>
+</div>
 
 <div class="links-manual-A">
     <a href="https://docs.google.com/forms/d/e/1FAIpQLSeTqmSdDGLtdfBmHdUbdmN_90mBs9xMJX-LIXat8Z_HmFuZUg/viewform?usp=sharing" target="_blank">
