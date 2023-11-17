@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>【SSDStore-環境構築とテスト】</title>
+</head>
+
+<body>
+<h1>【SSDStore-環境構築とテスト】</h1>
+<hr/>
+<h2>GitHub Repository：</h2>
+<a href="https://github.com/nitta-lab/SSDStore">
+    こちら
+</a>
+です．
+<p>Clone してお手元の開発環境でビルドし，動作環境を行ってください．</p>
+<h3>プロジェクトのインポート方法：</h3>
+<ul>
+    <li>
+        <strong>eclipse：</strong>
+        <ol>
+            <li> 上部メニューから<strong>Window>Perspective>Open Perspective>Other>Git</strong> を選択。</li>
+            <li> 画面左の<strong>「Git Repository」</strong>の上部メニューから<strong>Git Clone</strong>を選択。</li>
+            <li> Clone 完了後、Clone したプロジェクト（今回は<strong>Map</strong>）を右クリックし、<strong>「Import Projects...」</strong>を選択。</li>
+            <li> インポート完了後、<strong>「Package Explorer」</strong>から該当のプロジェクトを選び右クリック。</li>
+            <li> メニューから<strong>「Configure>Add Gradle Nature」</strong>を選択すれば完了です。</li>
+        </ol>
+    </li>
+    </br>
+    <li>
+        <strong>IntelliJ IDEA：</strong>
+        <ol>
+            <li> 上部メニューから<strong>File>New>Project From Version Control...</strong> を選択。</li>
+            <li> URIに <strong>GitHubのClone URI</strong>を入力。</li>
+            <li> Clone 完了後、自動で Build が実行されたら完了です。</li>
+        </ol>
+    </li>
+</ul>
+<hr/>
+
+<h2>テストコードについて：</h2>
+<p>【SSDStore】のテストコードは <strong>/src/test/java/</strong>以下にあります． </p>
+<ul>
+    <li>
+        <strong>TestSSDStoreUpdate.java：</strong> 設計変更対象の動作確認用のテストコードです。
+    </li>
+    <li>
+        <strong>TestMultiSSDStoreUpdate.java：</strong> 設計変更後、機能追加を行った後のテストコードです。
+    </li>
+</ul>
+<h3>実行方法：</h3>
+<ul>
+    <li>
+        <strong>eclipse：</strong> 対象のテストコードを<strong>「Gradle Test」</strong>として実行してください。
+    </li>
+    <li>
+        <strong>IntelliJ IDEA：</strong> 対象のテストコードを開き、実行ボタンをクリックして実行してください。
+    </li>
+</ul>
+<hr/>
+<br/>
+    <a href="ProblemB1.html">【SSDStore-リファクタリング課題】の説明へ</a>
+</body>
+</html>
