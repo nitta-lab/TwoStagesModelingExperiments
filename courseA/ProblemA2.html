@@ -25,9 +25,9 @@ public class ItemsByPrice {
 	private SiteA siteA;
 	  :
 	public double getValue() {
-		List<Map<String, Object>> temp_l1 = new ArrayList<>();
+		List&lt;Map&lt;String, Object&gt;&gt; temp_l1 = new ArrayList&lt;&gt;();
 		{
-			for (Map<String, Object> item: this.siteA.getValue()) {
+			for (Map&lt;String, Object&gt; item: this.siteA.getValue()) {
 				if ((Integer) item.get("price") <= this.price.getValue()) {
 					temp_l1.add(item);
 				}
@@ -45,9 +45,9 @@ public class ItemsByCapacity {
 	private SiteA siteA;
 	  :
 	public double getValue() {
-		List<Map<String, Object>> temp_l1 = new ArrayList<>();
+		List&lt;Map&lt;String, Object&gt;&gt; temp_l1 = new ArrayList&lt;&gt;();
 		{
-			for (Map<String, Object> item: this.siteA.getValue()) {
+			for (Map&lt;String, Object&gt; item: this.siteA.getValue()) {
 				if ((Integer) item.get("capacity") >= this.capacity.getValue()) {
 					temp_l1.add(item);
 				}
@@ -81,7 +81,7 @@ public class SiteWrapper {
 	public SiteWrapper(SiteA siteA) {
 		this.siteA = siteA;
 	}
-	public List<Map<String, Object>> getSiteValue() {
+	public List&lt;Map&lt;String, Object&gt;&gt; getSiteValue() {
 		return this.siteA.getValue();
 	}
 }
