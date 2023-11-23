@@ -10,8 +10,8 @@
     このSSDStoreプログラムが，サイトA以外のサイトからも商品情報を収集して扱えるようにすることを考えます．<br>
 </p>
 <p>
-    現在の設計では，以下のクラス図ように <code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトが，それぞれ <code>SiteA</code> オブジェクトから直接SSDの商品情報を取得し，
-	さらに <code>Price</code> オブジェクトから価格を，<code>Capacity</code> オブジェクトから容量を取得して，それらの値を使って別々に検索を行い検索結果を出力しています．
+    現在の設計では，以下のクラス図ように <code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトが，それぞれ <code>SiteA</code> オブジェクトから直接SSDの商品情報をPULL型のデータ転送で取得し，
+	さらに <code>Price</code> オブジェクトから価格を，<code>Capacity</code> オブジェクトから容量をPULL型のデータ転送で取得して，それらの値を使って別々に検索を行い検索結果を出力しています．
 </p>
 <img src="../img/classes/ssdStore_class_pull.png", class ="image_size"><br>
 <p>
@@ -25,9 +25,9 @@ public class ItemsByPrice {
 	private SiteA siteA;
 	  :
 	public double getValue() {
-		List<Map<String, Object>> temp_l1 = new ArrayList<>();
+		List&lt;Map&lt;String, Object&gt;&gt; temp_l1 = new ArrayList&lt;&gt;();
 		{
-			for (Map<String, Object> item: this.siteA.getValue()) {
+			for (Map&lt;String, Object&gt; item: this.siteA.getValue()) {
 				if ((Integer) item.get("price") <= this.price.getValue()) {
 					temp_l1.add(item);
 				}
@@ -45,9 +45,9 @@ public class ItemsByCapacity {
 	private SiteA siteA;
 	  :
 	public double getValue() {
-		List<Map<String, Object>> temp_l1 = new ArrayList<>();
+		List&lt;Map&lt;String, Object&gt;&gt; temp_l1 = new ArrayList&lt;&gt;();
 		{
-			for (Map<String, Object> item: this.siteA.getValue()) {
+			for (Map&lt;String, Object&gt; item: this.siteA.getValue()) {
 				if ((Integer) item.get("capacity") >= this.capacity.getValue()) {
 					temp_l1.add(item);
 				}
@@ -81,7 +81,7 @@ public class SiteWrapper {
 	public SiteWrapper(SiteA siteA) {
 		this.siteA = siteA;
 	}
-	public List<Map<String, Object>> getSiteValue() {
+	public List&lt;Map&lt;String, Object&gt;&gt; getSiteValue() {
 		return this.siteA.getValue();
 	}
 }
