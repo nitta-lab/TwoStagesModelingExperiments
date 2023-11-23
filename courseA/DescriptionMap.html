@@ -19,12 +19,12 @@
     <code>MapLatitude</code> オブジェクトは地図の中心位置の緯度成分を，<code>MapLongitude</code> オブジェクトは経度成分をそれぞれ保持しています．<br>
     GPSが移動を検知するたびに，<code>Map</code> オブジェクトの <code>updateGPS()</code> が呼び出され，さらにそのメソッドから <code>Latitude</code> オブジェクトと
     <code>Longitude</code> オブジェクトの <code>updateGPS()</code> が順番に呼び出されてGPSの位置情報が更新されます．<br>
-    このMapアプリでは，GPSの位置情報の変化に合わせて地図の表示位置が自動更新されるため，
-    <code>Latitude</code> オブジェクトは <code>updateGPS()</code> が呼ばれて自分の状態が更新されたら，
+    このMapアプリでは，GPSの位置情報の変化に合わせて地図の表示位置も自動で更新されるため，<code>Latitude</code> オブジェクトは <code>updateGPS()</code> が呼ばれて自分の状態が更新されたら，
     即座に <code>MapLatitude</code> オブジェクトの <code>updateLatitude()</code> メソッドを呼び出して地図の表示位置の経度成分を更新し，
-    同様に <code>Longitude</code> オブジェクトは自分の状態が更新されたら，
-    即座に <code>MapLongitude</code> オブジェクトの <code>updateLongitude()</code> メソッドを呼び出して地図の表示位置の経度成分を更新します．
+    同様に <code>Longitude</code> オブジェクトは自分の状態が更新されたら，即座に <code>MapLongitude</code> オブジェクトの <code>updateLongitude()</code> メソッドを呼び出して地図の表示位置の経度成分を更新します．<br>
+    すなわち，<code>Latitude</code> オブジェクトから<code>MapLatitude</code> オブジェクトに，<code>Longitude</code> オブジェクトから<code>MapLongitude</code> オブジェクトに，それぞれPUSH型のデータ転送が行われます．
 </p>
+<img src="../img/classes/map_class_push.png", class ="image-size"><br>
 
 <a href="EnvironmentMap.html">Mapの環境構築の説明へ</a>
 </body>
