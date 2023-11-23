@@ -1,0 +1,11 @@
+@startuml map_class_push_CFD
+title "【仲介者オブジェクトの導入 実行前】"
+
+class "A"
+class "B"
+class "Sample"<<facade>>
+
+"Sample" -right-> "A" : <<update>>
+"A" -right-> "B" : <<update>>
+
+@enduml

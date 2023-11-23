@@ -1,0 +1,25 @@
+@startuml map_class_push_CFD
+title "【仲介者オブジェクトへの依存 実行後】"
+left to right direction
+
+together {
+    class "A"
+    class "B"
+    class "C"
+}
+class "D"
+class "E"
+class "F"<<wrapper>>
+class "Sample"<<facade>>
+
+"A" <--- "F" 
+"B" <--- "F" 
+"C" <--- "F"
+
+"F" <--- "D"
+"F" <--- "E"
+
+"D" <--- "Sample"
+"E" <--- "Sample"
+
+@enduml
