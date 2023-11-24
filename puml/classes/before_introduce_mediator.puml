@@ -3,12 +3,17 @@ title "【仲介者オブジェクトの導入 実行前】"
 left to right direction
 
 class "A"{
-    update(value: int):void
+    update(value: int): void
 }
 class "B"{
-    update(value: int):void
+    updateA(a: int): void
 }
 
-"A" ---> "1" "B"
+class "C"{
+    updateB(b: int): void
+}
+
+"A" o--> "1" "B"
+"B" o--> "1" "C"
 
 @enduml
