@@ -1,17 +1,19 @@
 @startuml map_class_push_CFD
 title "【仲介者オブジェクトの導入 実行後】"
 
-class "A"
-class "B"
-
-class "Sample"<<facade>>
-
-class "Presenter"{
+class "A"{
+    update(value: int):int
+}
+class "B"{
+    update(value: int):void
 }
 
-"Sample" -right-> "Presenter" : <<update>>
+class "C"<<Mediator>>{
+    update(value: int):void
+}
 
-"Presenter" -down-> "1 " "A" : "<<update & get state>>"
-"Presenter" -down-> "             1" "B" : <<update>>
+"C" <... "A" : value
+"C" "1  " ---> "A" 
+"C" ---> "1" "B"
 
 @enduml

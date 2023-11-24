@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>【SamplePush】「仲介者オブジェクトの導入」実行後</title>
+    <!--    <link rel="stylesheet" href="sample.css">-->
+    <!-- XRegExp is bundled with the final shCore.js during build -->
+    <script type="text/javascript" src="../syntaxhighlighter-3.0.83/scripts/XRegExp.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter-3.0.83/scripts/shCore.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter-3.0.83/scripts/shBrushJava.js"></script>
+    <link rel="stylesheet" href="../syntaxhighlighter-3.0.83/styles/shCoreEclipse.css" type="text/css" />
+    <link rel="stylesheet" href="../syntaxhighlighter-3.0.83/styles/shThemeEclipse.css" type="text/css" />
+    <script type="text/javascript">
+        SyntaxHighlighter.all();
+    </script>
+</head>
+
+<body>
+<h1 class="title">
+    【SamplePush】<br>
+    「制御の流れの委譲 (CFD)」実行後
+</h1>
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+<pre class="brush:java; gutter:false" id="E">
+    public class Main {
+        public static void main(String[] args) {
+            B b = new B();      // value = 10;
+            C c = new C(b);     // value = 20;
+    		D d = new D(b, c);
+            A a = new A(c);     // value =  0;
+
+            a.update(10);
+            System.out.println(a.getValue());  // out -> 10
+            System.out.println(b.getValue());  // out -> 20
+            System.out.println(c.getValue());  // out -> 40
+
+            d.update(20);
+            System.out.println(a.getValue());  // out -> 10
+            System.out.println(b.getValue());  // out -> 40
+            System.out.println(c.getValue());  // out -> 60
+    }
+
+    public class B {
+        private int value = 10;
+        public int getValue() {
+            return this.value;
+        }
+        public int updateA(int a) {
+            this.value = (a+this.value);
+            return this.value;
+        }
+    }
+
+    public class C {
+        private int value = 20;
+        public int getValue() {
+            return this.value;
+        }
+        public void updateB(int b) {
+            this.value = (b+this.value);
+        }
+    }
+
+    public class D {
+        private B b;
+        private C c;
+        public D(B b, C c) {
+            this.b = b;
+            this.c = c;
+        }
+        public void updateA(int a) {
+            int b = this.b.updateA(a);
+            this.c.updateB(b);
+        }
+    }
+
+    public class A {
+        private D d;
+        private int value = 0;
+        public A(D d) {
+            this.d = d;
+        }
+        public int getValue() {
+            return this.value;
+        }
+        public void update(int value) {
+            this.value = value;
+            this.d.updateA(this.value);
+        }
+    }
+
+</pre>
+</div>
+</body>
+
+<style>
+    h1.title{
+        text-align: center;
+    }
+</style>
+
+</html>

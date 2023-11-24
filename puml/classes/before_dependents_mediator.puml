@@ -2,22 +2,21 @@
 title "【仲介者オブジェクトへの依存 実行前】"
 left to right direction
 
-together {
-    class "A"
-    class "B"
-    class "C"
+class "A"{
+    getA():int
 }
-class "D"
-class "E"
-class "Sample"<<facade>>
+class "B"{
+    calcB():int
+}
+class "C"{
+    calcC():int
+}
 
-"A" <--- "D" 
-"B" <--- "D" 
+"A" ...> "B" : value
+"A" "1" <--- "B"
 
-"B" <--- "E"
-"C" <--- "E"
+"A" "1"<--- "C" 
+"A" ...> "C" : value
 
-"D" <--- "Sample"
-"E" <--- "Sample"
 
 @enduml

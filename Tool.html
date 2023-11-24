@@ -1,56 +1,142 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>【ビジュアルモデリングツール -説明-】</title>
+    <title>【ビジュアルモデリングツール 説明】</title>
 </head>
 <body>
-<h1>【ビジュアルモデリングツール - 操作説明】</h1>
+<h1>【ビジュアルモデリングツール 操作説明】</h1>
 <hr/>
+<h2>専用モデルファイルの読み込み：</h2>
+<p>
+    <strong>ビジュアルモデリングツール</strong>では専用の<strong>モデルファイル(.dtram)</strong>を読みこみ，ツール上でモデリングを行います．<br>
+    モデルファイルの読み込み手順は以下の通りです．
+    <ol>
+        <li>ツールを起動後，上部メニューから<strong>「ファイル>開く」</strong>を選択．</li>
+        <li>ポップアップから<strong>「~/models/*.dtram」</strong>を選択．</li>
+        <li>モデルファイル選択後，ツール上にグラフが描画されれば完了です．</li>
+    </ol>
+</p>
+
 <h2>モデリングステージ：</h2>
 <p>今回の実験では
     <ol>
-    <li><strong>PUSH/PULLの選択</strong></li>
-    <li><strong>PUSH/PULLの拡張</strong></li>
+        <li><strong>PUSH/PULLの選択</strong></li>
+        <li><strong>PUSH/PULLの拡張</strong></li>
     </ol>
 の2つのモデリングステージ上で操作していただきます．
 </p>
 <hr/>
-<h2>1. PUSH/PULLの選択</h2>
-    <h3>概要：</h3>
-    <p>このモデリングステージでは，オブジェクト間のデータ転送方式がPUSH/PULL型のどちらかを選択をしていただきます．</p>
 
-    <h3>操作方法：</h3>
-    <ol>
-        <li>図にある赤色の矢印の上にあるプルダウンメニューを選択します．</li>
-        <li>プルダウンから任意のデータ転送方式を選択します．</li>
-    </ol>
+<h2>1. PUSH/PULLの選択</h2>
+<ul>
+    <li>
+        <h3>概要：</h3>
+        <p>このモデリングステージでは，オブジェクト間のデータ転送方式がPUSH/PULL型のどちらかを選択をしていただきます．</p>
+    </li>
+    <li>
+        <h3>操作方法：</h3>
+        <ol>
+            <li>図にある赤色の矢印の上にあるプルダウンメニューを選択します．</li>
+            <li>プルダウンから任意のデータ転送方式を選択します．</li>
+        </ol>
+    </li>
+</ul>
 <hr/>
 
-<h2>2. PUSH/PULLの拡張</h2>
+<h2>2. PUSH/PULL 拡張ステージ</h2>
+<ul>
+<li>
     <h3>概要：</h3>
     <p>
-        このモデリングステージでは，元のデータ転送方式を満たす範囲で呼び出し関係のを変更可能にし，
-        その変更に応じて設計された実行可能なJavaプロトタイプが出力されます．
+        このモデリングステージでは，オブジェクト間の呼び出し関係を以下の手順を組み合わせることで変更します．
         <br/>
-        オブジェクト間の呼び出し関係を以下の手順を組み合わせることで変更します．
+         このモデリングステージの変更によって，元のデータの流れ、データ転送方式を満たす範囲で呼び出しを変更可能にし，
+        その変更に応じて設計された実行可能なJavaプロトタイプが出力されます．
     </p>
-    <hr/>
-    <ul>
+</li>
+<li>
+    <h3>操作方法：</h3>
+    <ol>
+        <hr>
+        <!-- 仲介オブジェクトの導入 -->
         <li>
-            <h3>仲介オブジェクトの導入</h3>
-            <h3>概要：</h3>
-            <p>オブジェクト間の制御を仲介するだけのオブジェクトを挿入する操作です．</p>
+            <h3>仲介オブジェクトの導入：</h3>
+            <ul>
+                <!-- 概要 -->
+                <li>
+                    <h3>概要：</h3>
+                    <p>オブジェクト間の制御を仲介するだけのオブジェクトを挿入する操作です．</p>
+                </li>
+
+                <!-- 操作手順 -->
+                <li>
+                    <h3>操作手順：</h3>
+                    <ol>
+                        <li>仲介オブジェクトを挿入したい呼び出しを右クリック．<br></li>
+                        <li>ポップアップメニューから「仲介オブジェクトの導入」を選択．</li>
+                    </ol>
+                </li>
+
+                <!-- コードサンプル -->
+                <li>
+                    <h3>コードサンプル：</h3>
+                    <p>以下，操作適用前後のサンプルコードのクラス図，及びそのリンクです．</p>
+                    <ul>
+                        <li>
+                            <h3>適用前：(<a href="programs/SamplePush.html" target="_blank">サンプルコード</a>)</h3>
+                            <img class="img-before-introduce-mediator" src="img/classes/tools/ex_introduce_mediator_before.png"/><br>
+                        </li>
+                        <br>
+                        <li>
+                            <h3>適用前：(<a href="programs/ApplyIntroduceMediator.html" target="_blank">サンプルコード</a>)</h3>
+                            <img class="img-after-introduce-mediator" src="img/classes/tools/ex_introduce_mediator_after.png"/><br>
+                    </ul>
+                </li>
+            </ul>
         </li>
 
+        <hr>
+        <!-- 制御の流れの委譲 -->
         <li>
-            <hr/>
             <h3>制御の流れの委譲（CFD）：</h3>
-            <h3>概要：</h3>
-            <p>ある呼び出しの，その呼び出し元オブジェクトを別のオブジェクトに変更する操作です．</p>
+            <ul>
+                <!-- 概要 -->
+                <li>
+                    <h3>概要：</h3>
+                    <p>ある呼び出しの，呼び出し元オブジェクトを別のオブジェクトに変更する操作．</p>
+                </li>
+
+                <!-- 操作手順 -->
+                <li>
+                    <h3>操作手順：</h3>
+                    <ol>
+                        <li>呼び出し元を変更したい呼び出しを左でダブルクリックします．<br></li>
+                        <li>選択した呼び出しにおいてCFD(本操作)が<strong>適用可能な場合，オブジェクトは緑色，適用不可能な場合は黒色</strong>で表示されます．</li>
+                        <li>呼び出し元にしたい緑色のオブジェクトを左でダブルクリックすることで，呼び出し元が変更されます．</li>
+                    </ol>
+                </li>
+
+                <!-- コードサンプル -->
+                <li>
+                    <h3>コードサンプル：</h3>
+                    <p>以下，操作適用前後のサンプルコードのクラス図，及びそのリンクです．</p>
+                    <ul>
+                        <li>
+                            <h3>適用前：(<a href="programs/ApplyDependsOnMediator.html" target="_blank">サンプルコード</a>)</h3>
+                            <img class="img-before-cfd" src="img/classes/tools/ex_introduce_mediator_before.png"/><br>
+                        </li>
+                        <br>
+                        <li>
+                            <h3>適用前：(<a href="programs/ApplyCFD.html" target="_blank">サンプルコード</a>)</h3>
+                            <img class="img-after-cfd" src="img/classes/tools/ex_introduce_mediator_after.png"/><br>
+                    </ul>
+                </li>
+            </ul>
         </li>
 
         <hr/>
+        <!-- 仲介オブジェクトへの依存 -->
         <li>
             <h3>仲介オブジェクトへの依存：</h3>
             <h3>概要：</h3>
@@ -60,8 +146,26 @@
                 PULL型転送によるデータの取得を，仲介者オブジェクトを通して行えるようにする操作です．
             </p>
         </li>
-    </ul>
+    </ol>
+</li>
+</ul>
 <hr/>
-
 </body>
+
+<style>
+    .img-introduce-mediator{
+        display:flex;
+        display-content: center;
+    }
+
+    .img-before-introduce-mediator{
+        max-width: 100%;
+        height:50%;
+    }
+    .img-after-introduce-mediator{
+        max-width: 80%;
+        height: auto;
+    }
+</style>
+
 </html>

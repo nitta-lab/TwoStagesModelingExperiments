@@ -2,24 +2,24 @@
 title "【仲介者オブジェクトへの依存 実行後】"
 left to right direction
 
-together {
-    class "A"
-    class "B"
-    class "C"
+class "A"{
+    getA():int
 }
-class "D"
-class "E"
-class "F"<<wrapper>>
-class "Sample"<<facade>>
+class "B"{
+    calcB():int
+}
+class "C"{
+    calcC():int
+}
+class "D"<<Mediator>>{
+    getA():int
+}
 
-"A" <--- "F" 
-"B" <--- "F" 
-"C" <--- "F"
+"A" "1" <--- "D"
+"A" ...> "D" : value
 
-"F" <--- "D"
-"F" <--- "E"
+"D" "1" <--- "B"
+"D" "1" <--- "C" 
 
-"D" <--- "Sample"
-"E" <--- "Sample"
 
 @enduml

@@ -1,0 +1,24 @@
+model {
+    init{
+        a := 0
+    }
+	channel setAChannel {
+		 out a(aValue:Int, setA(value)) == value
+	}
+	channel outBChannel {
+		 in  a(aValue:Int, calcB(aValue)) == aValue
+	 	 out b(bValue:Int ,calcB(aValue)) == aValue * 2
+	}
+	channel outCChannel {
+		 in  a(aValue:Int, calcC(aValue)) == aValue
+		 out c(cValue:Int, calcC(aValue)) == aValue + 1
+	}
+}
+geometry {
+	node r a:250,170,80,30
+	node r b:580,80,80,30
+	node r c:590,280,80,30
+	node ioc setAChannel:90,170,30,30
+	node c outBChannel:430,80,30,30
+	node c outCChannel:440,280,30,30
+}

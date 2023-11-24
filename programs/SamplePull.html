@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>PULL型データ転送のサンプルプログラム</title>
+    <!--    <link rel="stylesheet" href="sample.css">-->
+    <!-- XRegExp is bundled with the final shCore.js during build -->
+    <script type="text/javascript" src="../syntaxhighlighter-3.0.83/scripts/XRegExp.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter-3.0.83/scripts/shCore.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter-3.0.83/scripts/shBrushJava.js"></script>
+    <link rel="stylesheet" href="../syntaxhighlighter-3.0.83/styles/shCoreEclipse.css" type="text/css" />
+    <link rel="stylesheet" href="../syntaxhighlighter-3.0.83/styles/shThemeEclipse.css" type="text/css" />
+    <script type="text/javascript">
+        SyntaxHighlighter.all();
+    </script>
+</head>
+
+<body>
+<h1 class="title">【SamplePull】<br>
+    PULL型データ転送のサンプルプログラム
+</h1>
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+<pre class="brush:java; gutter:false" id="E">
+    public class Main {
+        public static void main(String[] args) {
+            A a = new A();  // value = 0;
+            B b = new B(a);
+            C c = new C(a);
+
+            a.setA(10);
+            System.out.println(b.getValue());  // out -> 20;
+            System.out.println(c.getValue());  // out -> 11;
+        }
+    }
+
+    public class A {
+        private int value;
+
+        public A() {
+        }
+
+        public int getValue() {
+            return this.value;
+        }
+
+        public void setA(int value) {
+            this.value = value;
+        }
+    }
+
+    public class C {
+        private A a;
+
+        public C(A a) {
+            this.a = a;
+        }
+
+        public int getValue() {
+            return (this.a.getValue()+1);
+        }
+    }
+
+    public class B {
+        private A a;
+
+        public B(A a) {
+            this.a = a;
+        }
+
+        public int getValue() {
+            return (this.a.getValue()*2);
+        }
+    }
+</pre>
+</div>
+</body>
+
+<style>
+    h1.title{
+        text-align: center;
+    }
+</style>
+</html>
