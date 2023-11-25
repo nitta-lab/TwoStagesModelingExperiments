@@ -1,4 +1,4 @@
-@startuml map_class_push_CFD
+@startuml before_introduce_mediator
 title "【仲介者オブジェクトの導入 実行前】"
 left to right direction
 

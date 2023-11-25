@@ -1,6 +1,6 @@
 @startuml map_seq_push_refactor
-title "【Map】 シーケンス図（リファクタリング後）"
 skinparam SequenceMessageAlignment center
+
 -> Presenter : updateGPS() : void
 activate Presenter
 

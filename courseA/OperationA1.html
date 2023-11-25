@@ -50,8 +50,16 @@
         操作方法のページを参照し，<strong>各操作の目的，操作によってコードがどのように変化するかを意識しながら</strong>目的のJavaプロトタイプを生成できるようツール上でモデリングを行っていただきます．
         <br>
         <div class="img-map">
-            <img class="img-purpose" src="/img/classes/map_class_push_CFD.png">
-            <img class="img-purpose" src="/img/sequences/map_seq_push_refactor.png">
+        <ol>
+            <li>
+                <p><strong>【Map】</strong>全体のクラス図</p>
+                <img class="img-purpose" src="/img/classes/map_class_push_CFD.png">
+            </li>
+            <li>
+                <p><code>Presenter.updateGPS(...)</code>を実行した際のシーケンス図</p>
+                <img class="img-purpose" src="/img/sequences/map_seq_push_refactor.png">
+            </li>
+        </ol>
         </div>
     </p>
     <p>
@@ -59,21 +67,22 @@
         ただし，<span style="color: red; "><strong>main</strong>ブランチには決してマージをしないように，また自分専用のブランチを決して削除しないように</span>注意してください．<br>
         全ての作業が完了した後，<strong>必ず以下のアンケートにご回答ください．</strong>
     </p>
-    <div class="links-tool-A">
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfWHRx9hgvdHWiLYaY1BEt-sZ5WJw_UZzMnqDpAZv1JeLXL8g/viewform?usp=sharing" target="_blank">アンケートフォーム</a>
-    </div>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfWHRx9hgvdHWiLYaY1BEt-sZ5WJw_UZzMnqDpAZv1JeLXL8g/viewform?usp=sharing" target="_blank">アンケートフォーム</a>
+
     <hr>
-    <a href="ImplementationA1.html">【Map 機能追加課題】の説明へ</a>
+    <div class="links-tool-A">
+        <a href="ImplementationA1.html">【Map 機能追加課題】の説明へ</a>
+    </div>
+
 </body>
 
 <style>
     .title-A{
-         text-align: center;
+        text-align: center;
     }
 
     .links-tool-A{
-          display: flex;
-          flex-direction: column;
+        text-align: right;
     }
 
     img.img-purpose{

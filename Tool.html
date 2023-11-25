@@ -1,11 +1,18 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>【ビジュアルモデリングツール 説明】</title>
 </head>
 <body>
 <h1>【ビジュアルモデリングツール 操作説明】</h1>
+<p>
+    ここではビジュアルモデリングツールの操作について説明します．ツール課題を行う際に参照しながら作業をすすめてください．<br>
+    特に，後述する<strong>PUSH/PULLの拡張</strong>ステージの操作について，各種操作毎にサンプルのモデルファイル，およびサンプルプログラムのリンクを用意しておりますので，<span style="color:red">各種操作によってソースコードがどう変化するかについて，<strong>じっくりと</strong>ご理解を深めていただいた上で</span>課題に取り組んでください．<br>
+    <br>
+    操作ができない，描画が正しく行えない等の不具合が発生した場合は<strong>一度ツールを停止させ，もう一度起動して再び１から作業を行っていただきます．</strong><br>
+    大変お手数ですが，ご理解のほどよろしくお願いいたします．
+</p>
 <hr/>
 <h2>専用モデルファイルの読み込み：</h2>
 <p>
@@ -29,147 +36,207 @@
 <hr/>
 
 <h2>1. PUSH/PULLの選択</h2>
-<ul>
-    <li>
-        <h3>概要：</h3>
-        <p>このモデリングステージでは，オブジェクト間のデータ転送方式がPUSH/PULL型のどちらかを選択をしていただきます．</p>
-    </li>
-    <li>
-        <h3>操作方法：</h3>
-        <ol>
-            <li>図にある赤色の矢印の上にあるプルダウンメニューを選択します．</li>
-            <li>プルダウンから任意のデータ転送方式を選択します．</li>
-        </ol>
-    </li>
-</ul>
+<h3>概要：</h3>
+<p>このモデリングステージでは，オブジェクト間のデータ転送方式がPUSH/PULL型のどちらかを選択をしていただきます．</p>
+<h3>操作方法：</h3>
+<ol>
+    <li>図にある赤色の矢印の上にあるプルダウンメニューを選択します．</li>
+    <li>プルダウンから任意のデータ転送方式を選択します．</li>
+</ol>
 <hr/>
 
 <h2>2. PUSH/PULLの拡張</h2>
-<ul>
-<li>
-    <h3>概要：</h3>
-    <p>
-        このモデリングステージでは，オブジェクト間の呼び出し関係を以下の手順を組み合わせることで変更します．
-        <br/>
-         このモデリングステージの変更によって，元のデータの流れ、データ転送方式を満たす範囲で呼び出しを変更可能にし，
-        その変更に応じて設計された実行可能なJavaプロトタイプが出力されます．
-    </p>
-</li>
-<li>
-    <h3>操作方法：</h3>
-    <ol>
-        <hr>
-        <!-- 仲介オブジェクトの導入 -->
-        <li>
-            <h3>仲介オブジェクトの導入：</h3>
-            <ul>
-                <!-- 概要 -->
-                <li>
-                    <h3>概要：</h3>
-                    <p>オブジェクト間の制御を仲介するだけのオブジェクトを挿入する操作です．</p>
-                </li>
+<h3>概要：</h3>
+<p>
+    このモデリングステージでは，オブジェクト間の呼び出し関係を以下の手順を組み合わせることで変更します．<br>
+    このモデリングステージの変更によって，元のデータの流れ、データ転送方式を満たす範囲で呼び出しを変更可能にし，
+    その変更に応じて設計された実行可能なJavaプロトタイプが出力されます．<br>
+    <br>
+    各種操作毎にサンプルのモデルファイル，およびサンプルプログラムのリンクを用意しておりますので，<span style="color:red">各種操作によってソースコードがどう変化するかについて，<strong>じっくりと</strong>ご理解を深めていただいた上で</span>課題に取り組んでください．<br>
+    <br>
+    ただし，本ステージにおける操作状態を保存，及び操作の取り消し等ができないため，一度操作を失敗してしまった場合はもう一度ツールを再起動して再びモデルファイルを読み込んでいただく必要があります．<br>
+    大変お手数ですが，ご理解のほどよろしくお願いいたします．
+</p>
+<h3>操作方法：</h3>
+<ol>
+    <hr>
+    <!-- 仲介オブジェクトの導入 -->
+    <li>
+        <h3>仲介オブジェクトの導入：</h3>
+        <!-- 概要 -->
+        <h3>概要：</h3>
+        <p>オブジェクト間の制御を仲介するだけのオブジェクトを挿入する操作です．</p>
 
-                <!-- 操作手順 -->
-                <li>
-                    <h3>操作手順：</h3>
-                    <ol>
-                        <li>仲介オブジェクトを挿入したい呼び出しを右クリック．<br></li>
-                        <li>ポップアップメニューから「仲介オブジェクトの導入」を選択．</li>
-                    </ol>
-                </li>
-
-                <!-- コードサンプル -->
-                <li>
-                    <h3>コードサンプル：</h3>
-                    <p>以下，操作適用前後のサンプルコードのクラス図，及びそのリンクです．</p>
-                    <ul>
-                        <li>
-                            <h3>適用前：(<a href="programs/SamplePush.html" target="_blank">サンプルコード</a>)</h3>
-                            <img class="img-before-introduce-mediator" src="img/classes/tools/ex_introduce_mediator_before.png"/><br>
-                        </li>
-                        <br>
-                        <li>
-                            <h3>適用後：(<a href="programs/ApplyIntroduceMediator.html" target="_blank">サンプルコード</a>)</h3>
-                            <img class="img-after-introduce-mediator" src="img/classes/tools/ex_introduce_mediator_after.png"/><br>
-                    </ul>
-                </li>
-            </ul>
+        <!-- 操作手順 -->
+        <h3>操作手順：</h3>
+            <ol>
+                <li>仲介オブジェクトを挿入したい呼び出しを右クリック．<br></li>
+                <li>ポップアップメニューから「仲介オブジェクトの導入」を選択．</li>
+            </ol>
         </li>
 
-        <hr>
-        <!-- 制御の流れの委譲 -->
-        <li>
-            <h3>制御の流れの委譲（CFD）：</h3>
-            <ul>
-                <!-- 概要 -->
-                <li>
-                    <h3>概要：</h3>
-                    <p>ある呼び出しの，呼び出し元オブジェクトを別のオブジェクトに変更する操作．</p>
-                </li>
+        <!-- コードサンプル -->
+        <h3>コードサンプル：</h3>
+        <p>以下，操作適用前後のサンプルコードのクラス図，及びそのリンクです．</p>
+        <ul>
+            <li>
+                <h3>適用前：(<a href="programs/SamplePush.html" target="_blank">サンプルコード</a>)</h3>
+                <img class="img-size" src="img/classes/tools/ex_introduce_mediator_before.png"/><br>
+            </li>
+            <br>
+            <li>
+                <h3>適用後：(<a href="programs/AppliedIntroduceMediator.html" target="_blank">サンプルコード</a>)</h3>
+                <img class="img-size" src="img/classes/tools/ex_introduce_mediator_after.png"/><br>
+        </ul>
+    </li>
 
-                <!-- 操作手順 -->
-                <li>
-                    <h3>操作手順：</h3>
-                    <ol>
-                        <li>呼び出し元を変更したい呼び出しを左でダブルクリックします．<br></li>
-                        <li>選択した呼び出しにおいてCFD(本操作)が<strong>適用可能な場合，オブジェクトは緑色，適用不可能な場合は黒色</strong>で表示されます．</li>
-                        <li>呼び出し元にしたい緑色のオブジェクトを左でダブルクリックすることで，呼び出し元が変更されます．</li>
-                    </ol>
-                </li>
+    <hr>
+    <!-- 制御の流れの委譲 -->
+    <li>
+        <h3>制御の流れの委譲（CFD）：</h3>
+        <!-- 概要 -->
+        <h3>概要：</h3>
+        <p>ある呼び出しの，呼び出し元オブジェクトを別のオブジェクトに変更する操作．</p>
 
-                <!-- コードサンプル -->
-                <li>
-                    <h3>コードサンプル：</h3>
-                    <p>以下，操作適用前後のサンプルコードのクラス図，及びそのリンクです．</p>
-                    <ul>
-                        <li>
-                            <h3>適用前：(<a href="programs/ApplyDependsOnMediator.html" target="_blank">サンプルコード</a>)</h3>
-                            <img class="img-after-introduce-mediator" src="img/classes/tools/ex_introduce_mediator_after.png"/><br>
-                        </li>
-                        <br>
-                        <li>
-                            <h3>適用後：(<a href="programs/ApplyCFD.html" target="_blank">サンプルコード</a>)</h3>
-                            <img class="img-after-cfd" src="img/classes/tools/ex_cfd_after.png"/><br>
-                    </ul>
-                </li>
-            </ul>
-        </li>
+        <!-- 操作手順 -->
+        <h3>操作手順：</h3>
+        <ol>
+            <li>呼び出し元を変更したい呼び出しを左でダブルクリックします．<br></li>
+            <li>選択した呼び出しにおいてCFD(本操作)が<strong>適用可能なオブジェクトは緑色，適用不可能なオブジェクトは黒色</strong>で表示されます．</li>
+            <li>呼び出し元にしたい緑色のオブジェクトを左でダブルクリックすることで，呼び出し元が変更されます．</li>
+        </ol>
 
-        <hr/>
-        <!-- 仲介オブジェクトへの依存 -->
-        <li>
-            <h3>仲介オブジェクトへの依存：</h3>
+        <!-- コードサンプル -->
+        <h3>コードサンプル：</h3>
+        <p>以下，操作適用前後のサンプルコードのクラス図，及びそのリンクです．</p>
+        <ul>
+            <li>
+                <h3>適用前：(<a href="programs/AppliedIntroduceMediator.html" target="_blank">サンプルコード</a>)</h3>
+                <ul>
+                    <li>
+                        <p>クラス図：<p>
+                        <img class="img-size" src="img/classes/tools/ex_introduce_mediator_after.png"/><br>
+                    </li>
+                    <li>
+                        <p>シーケンス図：</p>
+                        <img class="img-size" src="/img/sequences/tools/ex_cfd_before_seq.png">
+                    </li>
+                </ul>
+            </li>
+            <br>
+            <li>
+                <h3>適用後：(<a href="programs/AppliedCFD.html" target="_blank">サンプルコード</a>)</h3>
+                <ul>
+                    <li>
+                        <p>クラス図：<p>
+                        <img class="img-size" src="img/classes/tools/ex_cfd_after.png"/><br>
+                    </li>
+                    <li>
+                        <p>シーケンス図：</p>
+                        <img class="img-size" src="/img/sequences/tools/ex_cfd_after_seq.png">
+                    </li>
+                </ul>
+
+            </li>
+        </ul>
+    </li>
+    <hr/>
+    <!-- 仲介オブジェクトへの依存 -->
+    <li>
+        <h3>仲介オブジェクトへの依存：</h3>
+            <!-- 概要 -->
             <h3>概要：</h3>
             <p>あるPULL型の呼び出しの，その呼び出し元オブジェクトを仲介者オブジェクトに変更する操作です．
                 <br/>
-                この操作はPULL型のデータ転送を変更する際にのみ実行できる操作で，
+                この操作は<strong>PULL型のデータ転送を変更する際にのみ</strong>実行できる操作で，
                 PULL型転送によるデータの取得を，仲介者オブジェクトを通して行えるようにする操作です．
             </p>
+
+            <!-- 操作手順 -->
+            <h3>操作手順：</h3>
+            <ol>
+                <li>仲介者オブジェクトの呼び出し先と接続している別の呼び出しの上で右クリック．<br></li>
+                <li>選択した呼び出しにおいて本操作 (仲介者オブジェクトへの依存) が<strong>適用可能な仲介者オブジェクトは緑色，適用不可能なオブジェクトは黒色</strong>で表示されます．</li>
+                <li>呼び出し元にしたい緑色のオブジェクトを左でダブルクリックすることで，呼び出し元が変更されます．</li>
+            </ol>
+
+    <!-- コードサンプル -->
+    <h3>コードサンプル：</h3>
+    <p>以下，操作適用前後のサンプルコードのクラス図，及びそのリンクです．</p>
+    <ul>
+        <li>
+            <h3>適用前：(<a href="programs/BeforeApplyDependsOnMediator.html" target="_blank">サンプルコード</a>)</h3>
+            <ol>
+                <li>
+                    <p>クラス図：</p>
+                    <img class="img-size" src="img/classes/tools/ex_dependents_mediator_before.png"/><br>
+                </li>
+                <li>
+                    <p>シーケンス図：</p>
+                    <div class="img-seq">
+                        <img class="img-seq-size-B" src="/img/sequences/tools/ex_dependents_mediator_seq_before_B.png">
+                        <img class="img-seq-size-C" src="/img/sequences/tools/ex_dependents_mediator_seq_after_C.png">
+                    </div>
+                </li>
+            </ol>
         </li>
-    </ol>
-</li>
+        <br>
+        <li>
+            <h3>適用後：(<a href="programs/AppliedDependsOnMediator.html" target="_blank">サンプルコード</a>)</h3>
+            <ol>
+                <li>
+                    <p>クラス図：</p>
+                    <img class="img-size" src="img/classes/tools/ex_dependents_mediator_after.png"/><br>
+                </li>
+                <li>
+                    <p>シーケンス図：</p>
+                    <div class="img-seq">
+                        <img class="img-seq-size-B" src="/img/sequences/tools/ex_dependents_mediator_seq_after_B.png">
+                        <img class="img-seq-size-C" src="/img/sequences/tools/ex_dependents_mediator_seq_after_C.png">
+                    </div>
+                </li>
+            </ol>
+        </ul>
+    </li>
+</ol>
+
+<hr>
+<h3>不具合について：</h3>
+<p>
+    <strong>PUSH/PULLの拡張</strong>ステージにおいて，下記の不具合が生じることを確認しています．<br>
+    不具合が発生した場合は<strong>一度ツールを停止させ，もう一度起動して再び１から作業を行ってください．</strong><br>
+</p>
+<ul>
+    <li>
+        一度<strong>PUSH/PULLの拡張</strong>ステージで呼び出し関係のモデリング操作を行った状態であるとき，<br>
+        ナビゲーションウィンドウで，<strong>PUSH/PULLの拡張</strong>ステージから<strong>PUSH/PULLの選択</strong>ステージを選択する．<br>
+        このとき，もう一度<strong>PUSH/PULLの拡張</strong>ステージを選択すると正しくグラフが描画されない．
+    </li>
 </ul>
-<hr/>
 </body>
 
 <style>
-    .img-introduce-mediator{
+    .img-seq{
         display:flex;
         display-content: center;
     }
 
-    .img-before-introduce-mediator{
-        max-width: 100%;
-        height:auto;
+    .img-seq-size-B{
+        max-width: 40%;
+        height: auto;
+
+        padding-left: 0;
+        padding-right: 2.2rem;
     }
-    .img-after-introduce-mediator{
-        max-width: 100%;
+
+    .img-seq-size-C{
+        max-width: 40%;
         height: auto;
     }
 
-    .img-after-cfd{
+    .img-size{
         max-width: 100%;
-        height: auto;
+        height:auto;
     }
 </style>
 

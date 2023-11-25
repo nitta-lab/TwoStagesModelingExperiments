@@ -9,14 +9,17 @@ class "B"{
     calcB():int
 }
 class "C"{
-    calcC():int
+    calcC(): int
+}
+class "D"<<Mediator>>{
+    getA(): int
 }
 
+"A" "1"<--- "B" 
 "A" ...> "B" : value
-"A" "1" <--- "B"
-
-"A" "1"<--- "C" 
-"A" ...> "C" : value
+"A" ...> "D" : value
+"A" "1" <--- "D"
+"D" <--- "C"
 
 
 @enduml

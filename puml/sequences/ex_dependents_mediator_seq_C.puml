@@ -1,0 +1,20 @@
+@startuml ex_dependents_mediator_seq_after_C
+skinparam SequenceMessageAlignment center
+
+-> C : calcC() : value
+activate C
+C -> D : getValue() : int
+activate D
+D -> A : getA() : int
+activate A
+A --> D : value
+deactivate A
+
+D --> C : value
+deactivate D
+<-- C : value
+deactivate C
+
+ 
+
+@enduml
