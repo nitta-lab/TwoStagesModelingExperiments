@@ -1,0 +1,25 @@
+@startuml after_cfd
+title "【制御の流れの委譲 (CFD) 実行後】"
+
+together {
+    class "A"{
+        update(value: int): void
+    }
+    class "B"{
+        updateA(a: int): int
+    }
+}
+class "C"{
+    updateB(b: int): void
+}
+
+class "D"<<Mediator>>{
+    updateA(a: int): void
+}
+
+"A" o--up-> "1" "D"
+"D" o--down-> "1" "B"
+"D" <..up. "B" : <<return>>
+"D" o--right--> "1" "C"
+
+@enduml

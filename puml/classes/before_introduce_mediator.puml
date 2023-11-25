@@ -1,0 +1,19 @@
+@startuml map_class_push_CFD
+title "【仲介者オブジェクトの導入 実行前】"
+left to right direction
+
+class "A"{
+    update(value: int): void
+}
+class "B"{
+    updateA(a: int): void
+}
+
+class "C"{
+    updateB(b: int): void
+}
+
+"A" o--> "1" "B"
+"B" o--> "1" "C"
+
+@enduml

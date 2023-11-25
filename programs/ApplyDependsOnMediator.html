@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>【SamplePull】「仲介者オブジェクトへの依存」実行後</title>
+    <!--    <link rel="stylesheet" href="sample.css">-->
+    <!-- XRegExp is bundled with the final shCore.js during build -->
+    <script type="text/javascript" src="../syntaxhighlighter-3.0.83/scripts/XRegExp.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter-3.0.83/scripts/shCore.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter-3.0.83/scripts/shBrushJava.js"></script>
+    <link rel="stylesheet" href="../syntaxhighlighter-3.0.83/styles/shCoreEclipse.css" type="text/css" />
+    <link rel="stylesheet" href="../syntaxhighlighter-3.0.83/styles/shThemeEclipse.css" type="text/css" />
+    <script type="text/javascript">
+        SyntaxHighlighter.all();
+    </script>
+</head>
+
+<body>
+<h1 class="title">【SamplePull】<br>
+    「仲介者オブジェクトへの依存」実行後
+</h1>
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+<pre class="brush:java; gutter:false" id="E">
+    public class Main {
+        public static void main(String[] args) {
+            A a = new A();  // value = 10;
+            D d = new D(a);
+            B b = new B(d);
+            C c = new C(d);
+
+            a.setA(10);
+            System.out.println(b.getValue());  // out: 20
+            System.out.println(c.getValue());  // out: 11
+        }
+    }
+
+    public class A {
+        private int value = 0;
+        public int getValue() {
+            return this.value;
+        }
+        public void setA(int value) {
+            this.value = value;
+        }
+    }
+
+    public class D {
+        private A a;
+        public D(A a) {
+            this.a = a;
+        }
+        public int getAValue() {
+            return this.a.getValue();
+        }
+    }
+
+    public class B {
+        private D d;
+        public B(D d) {
+            this.d = d;
+        }
+        public int getValue() {
+            return (this.d.getAValue()*2);
+        }
+    }
+
+    public class C {
+        private D d;
+        public C(D d) {
+            this.d = d;
+        }
+        public int getValue() {
+            return (this.d.getAValue()+1);
+        }
+    }
+</pre>
+</div>
+</body>
+
+<style>
+    h1.title{
+        text-align: center;
+    }
+</style>
+</html>

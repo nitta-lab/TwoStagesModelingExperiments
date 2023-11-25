@@ -1,0 +1,22 @@
+@startuml map_class_push_CFD
+title "【仲介者オブジェクトへの依存 実行前】"
+left to right direction
+
+class "A"{
+    getA():int
+}
+class "B"{
+    calcB():int
+}
+class "C"{
+    calcC():int
+}
+
+"A" ...> "B" : value
+"A" "1" <--- "B"
+
+"A" "1"<--- "C" 
+"A" ...> "C" : value
+
+
+@enduml

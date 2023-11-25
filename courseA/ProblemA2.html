@@ -23,13 +23,13 @@
     現在の設計では，以下のクラス図ように <code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトが，それぞれ <code>SiteA</code> オブジェクトから直接SSDの商品情報をPULL型のデータ転送で取得し，
 	さらに <code>Price</code> オブジェクトから価格を，<code>Capacity</code> オブジェクトから容量をPULL型のデータ転送で取得して，それらの値を使って別々に検索を行い検索結果を出力しています．
 </p>
-<img src="../img/classes/ssdStore_class_pull.png", class ="image_size"><br>
+<img class="before-image-size" src="/img/classes/ssdStore_class_pull.png"><br>
 <p>
     具体的には以下のコードように，<code>ItemsByPrice</code> オブジェクトの <code>getValue()</code> メソッド内部で，サイトAからSSDのリストを取得してその中から <code>Price</code> オブジェクトで指定された価格以下の商品を検索し，
 	同様に <code>ItemsByCapacity</code> オブジェクトの <code>getValue()</code> メソッド内部で，サイトAからSSDのリストを取得してその中から <code>Capacity</code> オブジェクトで指定された容量以上の商品を検索しています．<br>
 </p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
-<pre class="brush:java; gutter:false" id="E">
+<pre class="brush:java; gutter:false">
 public class ItemsByPrice {
 	private Price price;
 	private SiteA siteA;
@@ -49,7 +49,7 @@ public class ItemsByPrice {
 </pre>
 </div>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
-<pre class="brush:java; gutter:false" id="E">
+<pre class="brush:java; gutter:false">
 public class ItemsByCapacity {
 	private Capacity capacity;
 	private SiteA siteA;
@@ -78,7 +78,7 @@ public class ItemsByCapacity {
 	<code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトが，<code>SiteWrapper</code> オブジェクトを通じて，間接的に <code>SiteA</code> オブジェクトや <code>SiteB</code> オブジェクトにアクセスするように設計変更を行います．
     そうすることによって，<code>SiteWrapper</code> にいくつサイトを追加しても，<code>ItemsByPrice</code> オブジェクトや <code>ItemsByCapacity</code> オブジェクトの実装に影響が及ばないようにすることができます．
 </p>
-<img src="../img/classes/ssdStore_class_pull_CFD.png", class ="image_size"><br>
+<img class ="after-image-size" src="/img/classes/ssdStore_class_pull_CFD.png"><br>
 <p>
     具体的に変更後の設計の中では，以下のように <code>SiteWrapper</code> クラスが <code>SiteA</code> を参照し，
 	<code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトは，この <code>SiteWrapper</code> の <code>getSiteValue()</code> メソッドを呼び出して，最新のSSDの一覧を得るようにします．
@@ -117,11 +117,19 @@ public class SiteWrapper {
 <a href="OperationA2.html">SSDStoreツール課題の説明へ</a>
 </div>
 </body>
-</html>
-
 <style>
-.links-manual-A{
-    display: flex;
-    flex-direction: column;
-}
+	.links-manual-A{
+        display: flex;
+        flex-direction: column;
+    }
+    .before-image-size{
+        max-width: 100%;
+        height: auto;
+    }
+    .after-image-size{
+        max-width: 100%;
+        height: auto;
+    }
 </style>
+
+</html>

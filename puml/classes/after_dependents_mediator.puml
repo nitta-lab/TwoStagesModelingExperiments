@@ -1,0 +1,25 @@
+@startuml map_class_push_CFD
+title "【仲介者オブジェクトへの依存 実行後】"
+left to right direction
+
+class "A"{
+    getA():int
+}
+class "B"{
+    calcB():int
+}
+class "C"{
+    calcC():int
+}
+class "D"<<Mediator>>{
+    getA():int
+}
+
+"A" "1" <--- "D"
+"A" ...> "D" : value
+
+"D" "1" <--- "B"
+"D" "1" <--- "C" 
+
+
+@enduml

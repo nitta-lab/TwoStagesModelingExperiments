@@ -1,0 +1,28 @@
+@startuml map_seq_push_refactor
+title "【Map】 シーケンス図（リファクタリング後）"
+skinparam SequenceMessageAlignment center
+-> Presenter : updateGPS() : void
+activate Presenter
+
+Presenter ->  Longitude : updateGPS() : double
+activate Longitude
+Longitude --> Presenter : longitude
+deactivate Longitude
+
+Presenter --> Latitude : updateGPS() : double
+activate Latitude
+Latitude --> Presenter : latitude
+deactivate Latitude
+
+Presenter -> MapLongitude  : updateLongitude() : void
+activate MapLongitude
+deactivate MapLongitude
+
+Presenter -> MapLatitude : updateLatitude() : void
+activate MapLatitude
+deactivate MapLatitude
+
+deactivate Presenter
+
+
+@enduml

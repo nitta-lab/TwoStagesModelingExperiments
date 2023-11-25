@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>PUSH型データ転送のサンプルプログラム(SamplePush)</title>
+    <!--    <link rel="stylesheet" href="sample.css">-->
+    <!-- XRegExp is bundled with the final shCore.js during build -->
+    <script type="text/javascript" src="../syntaxhighlighter-3.0.83/scripts/XRegExp.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter-3.0.83/scripts/shCore.js"></script>
+    <script type="text/javascript" src="../syntaxhighlighter-3.0.83/scripts/shBrushJava.js"></script>
+    <link rel="stylesheet" href="../syntaxhighlighter-3.0.83/styles/shCoreEclipse.css" type="text/css" />
+    <link rel="stylesheet" href="../syntaxhighlighter-3.0.83/styles/shThemeEclipse.css" type="text/css" />
+    <script type="text/javascript">
+        SyntaxHighlighter.all();
+    </script>
+</head>
+
+<body>
+<h1 class="title">
+    【SamplePush】<br>
+    PUSH型データ転送のサンプルプログラム
+</h1>
+
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+<pre class="brush:java; gutter:false" id="E">
+    public class Main {
+        public static void main(String[] args) {
+            C c = new C();  // value = 20
+            B b = new B(c); // value = 10
+            A a = new A(b); // value = 0
+
+            a.update(10);
+
+            System.out.println(a.getValue());  // out: 10
+            System.out.println(b.getValue());  // out: 20
+            System.out.println(c.getValue());  // out: 40
+        }
+    }
+
+    public class C {
+        private int value = 20;
+
+        public C() {
+        }
+
+        public int getValue() {
+            return this.value;
+        }
+
+        public void updateB(int b) {
+            this.value = (b+this.value);
+        }
+    }
+
+    public class B {
+        private C c;
+        private int value = 10;
+
+        public B(C c) {
+            this.c = c;
+        }
+
+        public int getValue() {
+            return this.value;
+        }
+
+        public void updateA(int a) {
+            this.value = (a+this.value);
+            this.c.updateB(this.value);
+        }
+    }
+
+    public class A {
+        private B b;
+        private int value = 0;
+
+        public A(B b) {
+            this.b = b;
+        }
+        public int getValue() {
+            return this.value;
+        }
+        public void update(int value) {
+            this.value = value;
+            this.b.updateA(this.value);
+        }
+    }
+
+</pre>
+</div>
+</body>
+
+<style>
+    h1.title{
+        text-align: center;
+    }
+</style>
+</html>
