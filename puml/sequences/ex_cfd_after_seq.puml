@@ -1,0 +1,21 @@
+@startuml ex_cfd_after_seq
+skinparam SequenceMessageAlignment center
+
+-> A : update(...) : void
+activate A
+A -> D : updateA(...) : void
+activate D
+D -> B : updateA(...) : int
+activate B
+B --> D : value 
+deactivate B
+
+D -> C : updateB(...) : void
+activate C
+deactivate C
+
+deactivate D
+deactivate A
+
+
+@enduml
