@@ -1,0 +1,23 @@
+model {
+	channel GPS_In {
+		out longitude(prev_long: Double, updateGPS(cur_long, cur_lat)) == cur_long
+		out latitude(prev_lat: Double, updateGPS(cur_long, cur_lat)) == cur_lat
+	}
+	channel LongUpdate {
+		in longitude(prev_long, updateLong(cur_long)) == cur_long
+		out mapLongitude(prev_mapLong, updateLong(cur_long)) == cur_long
+	}
+	channel LatUpdate {
+		in latitude(prev_lat, updateLat(cur_lat)) == cur_lat
+		out mapLatitude(prev_mapLat, updateLat(cur_lat)) == cur_lat
+	}
+}
+geometry {
+	node r mapLatitude:580,310,80,30
+	node r latitude:190,310,80,30
+	node r mapLongitude:580,170,80,30
+	node r longitude:190,170,80,30
+	node ioc GPS_In:40,60,30,30
+	node c LongUpdate:410,170,30,30
+	node c LatUpdate:410,310,30,30
+}

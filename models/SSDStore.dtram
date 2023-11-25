@@ -1,0 +1,33 @@
+model {
+	channel capacity_In {
+		out capacity(prev_capacity:Int, setCapacity(cur_capacity)) == cur_capacity
+	}
+	channel price_In {
+		out price(prev_price:Int, setPrice(cur_price)) == cur_price
+	}
+	channel siteA_Add {
+		out siteA(prev_products:List, addProductToSiteA(price:Int, capacity:Int)) == cons({"price": price, "capacity": capacity}, prev_products)
+	}
+	channel capacity_Update {
+		in siteA(prev_products:List, updateList(cur_products, cur_capacity)) == cur_products
+		in capacity(prev_capacity:Int, updateList(cur_products, cur_capacity)) == cur_capacity
+		out itemsByCapacity(prev_items:List, updateList(cur_products, cur_capacity)) == selectGE(cur_products, "capacity", cur_capacity)
+	}
+	channel price_Update {
+		in siteA(prev_products:List, updateList(cur_products, cur_price)) == cur_products
+		in price(prev_price:Int, updateList(cur_products, cur_price)) == cur_price
+		out itemsByPrice(prev_items:List, updateList(cur_products, cur_price)) == selectLE(cur_products, "price", cur_price)
+	}
+}
+geometry {
+	node r price:250,40,80,30
+	node r itemsByPrice:650,110,80,30
+	node r itemsByCapacity:650,280,80,30
+	node r siteA:250,200,80,30
+	node r capacity:250,370,80,30
+	node ioc capacity_In:100,370,30,30
+	node ioc price_In:100,40,30,30
+	node ioc siteA_Add:100,200,30,30
+	node c capacity_Update:500,280,30,30
+	node c price_Update:500,110,30,30
+}

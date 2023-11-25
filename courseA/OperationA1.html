@@ -39,20 +39,37 @@
     </ul>
 
     <hr>
-    <h2>ツール作業：</h2>
+    <h2>ツール作業内容：</h2>
+    <h3>はじめに：</h3>
     <p>
-        はじめに，本ツールによって生成したいJavaプロトタイプのクラス図，及びシーケンス図を以下に示します．<br>
-
+        作業に着手する前に，<strong>main</strong>ブランチから，メッセージでお伝えした自分専用のブランチ (user??Generated)を新規に作成し，ブランチのpushを行ってください．<br>
+        本課題では本ツールによって出力されたJavaプロトタイプのソースコードを用いて，<strong>【Map】</strong>のテストプログラムが正常に動作するまでは作業完了とは見なされませんのでご注意ください．
     </p>
-
-    <hr>
+    <h3>ビジュアルモデリングツールでの作業：</h3>
+    <p>
+        はじめに，<a href="/models/Map.dtram">こちら</a>から<strong>【Map】</strong>プログラムのモデルファイルをDLしていただきます．<br>
+        DLしていただいたモデルファイルは，本ツールを起動し読み込んでいただきます．操作方法については上記の<strong>ビジュアルモデリングツール</strong>の項をご参照ください．<br>
+        モデルファイルを読み込んだ後，本ツール右下のナビゲーションウィンドウが<strong>PUSH/PULLの選択</strong>になっていることを確認してください．<br>
+        確認ができたら，<code>Longitude</code>と<code>MapLongitude</code>，<code>Latitude</code>と<code>MapLatitude</code>間のデータ転送方式を<strong>PUSH</strong>に変更してください．<br>
+        変更が完了しましたら，右下のナビゲーションウィンドウから<strong>PUSH/PULLの拡張</strong>を選択していただきます．<br>
+        本ツールによって生成したいJavaプロトタイプのクラス図，及びシーケンス図を以下に示します．<br>
+        操作方法のページを参照し，<strong>各操作の目的，操作によってコードがどのように変化するかを意識しながら</strong>目的のJavaプロトタイプを生成できるようツール上でモデリングを行っていただきます．
+        <br>
+        <div class="img-map">
+            <img class="img-purpose" src="/img/classes/map_class_push_CFD.png">
+            <img class="img-purpose" src="/img/sequences/map_seq_push_refactor.png">
+        </div>
+    </p>
+    <p>
+        テストプログラムが正常に実行されることが確認できましたら，その後，作業結果を自分専用のブランチにcommit & pushしてください．<br>
+        ただし，<span style="color: red; "><strong>main</strong>ブランチには決してマージをしないように，また自分専用のブランチを決して削除しないように</span>注意してください．<br>
+        全ての作業が完了した後，<strong>必ず以下のアンケートにご回答ください．</strong>
+    </p>
     <div class="links-tool-A">
-        <a href="../DescriptionTool.html" target="_blank">ツールの操作説明</a>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfWHRx9hgvdHWiLYaY1BEt-sZ5WJw_UZzMnqDpAZv1JeLXL8g/viewform?usp=sharing" target="_blank">
-            アンケート回答
-        </a>
-        <a href="ImplementationA1.html">【Map 機能追加課題】の説明へ</a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfWHRx9hgvdHWiLYaY1BEt-sZ5WJw_UZzMnqDpAZv1JeLXL8g/viewform?usp=sharing" target="_blank">アンケートフォーム</a>
     </div>
+    <hr>
+    <a href="ImplementationA1.html">【Map 機能追加課題】の説明へ</a>
 </body>
 
 <style>
@@ -63,6 +80,11 @@
     .links-tool-A{
           display: flex;
           flex-direction: column;
+    }
+
+    img.img-purpose{
+        max-width:100%;
+        height: auto;
     }
 </style>
 </html>
