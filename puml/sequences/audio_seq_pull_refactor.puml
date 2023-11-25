@@ -1,5 +1,4 @@
 @startuml audio_seq_pull_refactor 
-title "【Audio】 シーケンス図（リファクタリング後）"
 
 -> OutputBGMVolume : getValue()
 activate OutputBGMVolume

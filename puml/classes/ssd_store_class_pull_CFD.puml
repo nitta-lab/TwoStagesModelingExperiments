@@ -15,12 +15,6 @@ class "SiteA"{
     + addProductToSiteA(capacity : int, price : int) : void
 }
 
-class "SiteB"{
-    - value : List<Map<String, Object>>
-    + getValue() : List<Map<String, Object>>
-    + addProductToSiteB(capacity : int, price : int) : void
-}
-
 class "Capacity"{
     - value : int
     + getValue() : int
@@ -44,7 +38,6 @@ class "SiteWrapper"{
 
 '---------------------------------------------------------
 "SiteA" "1" <---o "SiteWrapper" : "siteA"
-"SiteB" "1" <---o "SiteWrapper" : "siteB"
 
 "SiteWrapper" "1" <---o "ItemsByPrice" : "siteWrapper"
 "Price" "1" <---o "ItemsByPrice" : "price"

@@ -1,0 +1,22 @@
+@startuml ssd_store_seq_pull_refactor_price 
+skinparam SequenceMessageAlignment center
+
+-> ItemsByPrice : getValue() : List<Map<String, Object>>
+activate ItemsByPrice
+
+ItemsByPrice -> Price : getValue() : int
+activate Price
+Price --> ItemsByPrice : price
+deactivate Price
+ItemsByPrice -> SiteWrapper : getSiteValue() : List<Map<String, Object>>
+activate SiteWrapper
+SiteWrapper -> SiteA : getValue() : ist<Map<String, Object>>
+activate SiteA
+SiteA --> SiteWrapper
+deactivate SiteA
+SiteWrapper --> ItemsByPrice : siteValue
+deactivate SiteWrapper
+<-- ItemsByPrice
+deactivate ItemsByPrice
+
+@enduml
