@@ -2,24 +2,135 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>手動課題B1</title>
+    <title>【SSDStore リファクタリング課題】</title>
 </head>
 <body>
-<h1>課題1-(1)の概要</h1>
+<h1>【SSDStore リファクタリング課題】</h1>
+<hr/>
 
-<div class="links-tool-B">
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeTqmSdDGLtdfBmHdUbdmN_90mBs9xMJX-LIXat8Z_HmFuZUg/viewform?usp=sharing" target="_blank">
-    アンケート回答
-    </a>
-    <a href="OperationB1.html">課題1-(2)の操作説明へ</a>
-</div>
-</body>
-</html>
+<h2>SSDStore リファクタリング課題の概要：</h2>
+<p>
+    このSSDStoreプログラムが，サイトA以外のサイトからも商品情報を収集して扱えるようにすることを考えます．<br>
+</p>
+<hr/>
 
-
-<style>
-.links-tool-B{
-    display: flex;
-    flex-direction: column;
+<h2>SSDStore のリファクタリングの作業手順：</h2>
+<p>
+    以下では，リファクタリングに要した時間を測っていただきますので，お手元に時計をご用意ください．
+    時間計測にあたって，急いで作業していただく必要はまったくありません．
+    最初の課題から最後の課題まで一定のペースを保てるよう, <font color="red">正しくリファクタリングを行うこと</font>を意識してください．
+    開発環境を立ち上げてソースコードの確認をしていただいて構いませんが，ソースコードの変更は時間計測の準備ができるまで行わないで下さい．<br>
+    まずは、以下の作業手順を一通り読んでから作業を開始してください．
+</p>
+<p>
+    現在の設計では，以下のクラス図ように <code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトが，それぞれ <code>SiteA</code> オブジェクトから直接SSDの商品情報をPULL型のデータ転送で取得し，
+    さらに <code>Price</code> オブジェクトから価格を，<code>Capacity</code> オブジェクトから容量をPULL型のデータ転送で取得して，それらの値を使って別々に検索を行い検索結果を出力しています．
+</p>
+<img class="before-image-size" src="/img/classes/ssdStore_class_pull.png"><br>
+<p>
+    具体的には以下のコードように，<code>ItemsByPrice</code> オブジェクトの <code>getValue()</code> メソッド内部で，サイトAからSSDのリストを取得してその中から <code>Price</code> オブジェクトで指定された価格以下の商品を検索し，
+    同様に <code>ItemsByCapacity</code> オブジェクトの <code>getValue()</code> メソッド内部で，サイトAからSSDのリストを取得してその中から <code>Capacity</code> オブジェクトで指定された容量以上の商品を検索しています．<br>
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+<pre class="brush:java; gutter:false">
+public class ItemsByPrice {
+	private Price price;
+	private SiteA siteA;
+	  :
+	public double getValue() {
+		List&lt;Map&lt;String, Object&gt;&gt; temp_l1 = new ArrayList&lt;&gt;();
+		{
+			for (Map&lt;String, Object&gt; item: this.siteA.getValue()) {
+				if ((Integer) item.get("price") <= this.price.getValue()) {
+					temp_l1.add(item);
+				}
+			}
+		}
+		return temp_l1;
+	}
 }
+</pre>
+</div>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+<pre class="brush:java; gutter:false">
+public class ItemsByCapacity {
+	private Capacity capacity;
+	private SiteA siteA;
+	  :
+	public double getValue() {
+		List&lt;Map&lt;String, Object&gt;&gt; temp_l1 = new ArrayList&lt;&gt;();
+		{
+			for (Map&lt;String, Object&gt; item: this.siteA.getValue()) {
+				if ((Integer) item.get("capacity") >= this.capacity.getValue()) {
+					temp_l1.add(item);
+				}
+			}
+		}
+		return temp_l1;
+	}
+}
+</pre>
+</div>
+<p>
+    ここで，このSSDStoreプログラムがサイトBからも商品情報を収集して扱えるように拡張することを考えた場合，<code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトの両方の実装を，
+    <code>SiteA</code> オブジェクトと <code>SiteB</code> オブジェクトを同時に扱えるように書き換えなければならなくなります．
+    今後，より多くのサイトを扱えるように拡張していくことを考えると，このように <code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトが直接，個々のサイトのオブジェクトを参照しているような現在の設計では，拡張作業が煩雑になってしまいます．
+</p>
+<p>
+    そこで，以下のクラス図のように複数のサイトを同時に参照することができる <code>SiteWrapper</code> オブジェクトを新たに導入し，
+    <code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトが，<code>SiteWrapper</code> オブジェクトを通じて，間接的に <code>SiteA</code> オブジェクトや <code>SiteB</code> オブジェクトにアクセスするように設計変更を行います．
+    そうすることによって，<code>SiteWrapper</code> にいくつサイトを追加しても，<code>ItemsByPrice</code> オブジェクトや <code>ItemsByCapacity</code> オブジェクトの実装に影響が及ばないようにすることができます．
+</p>
+<img class ="after-image-size" src="/img/classes/ssdStore_class_pull_CFD.png"><br>
+<p>
+    具体的に変更後の設計の中では，以下のように <code>SiteWrapper</code> クラスが <code>SiteA</code> を参照し，
+    <code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトは，この <code>SiteWrapper</code> の <code>getSiteValue()</code> メソッドを呼び出して，最新のSSDの一覧を得るようにします．
+    そして，新しいサイトを追加する際は，この <code>SiteWrapper</code> クラスを変更するようにします．
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+<pre class="brush:java; gutter:false" id="E">
+public class SiteWrapper {
+	private SiteA siteA;
+	public SiteWrapper(SiteA siteA) {
+		this.siteA = siteA;
+	}
+	public List&lt;Map&lt;String, Object&gt;&gt; getSiteValue() {
+		return this.siteA.getValue();
+	}
+}
+</pre>
+</div>
+
+<p>
+    作業に着手する前に，main ブランチから，メッセージでお伝えした自分専用のブランチ（user??Refactor）を切って，一度 push を行ってください．<br>
+    push を行った後，開発環境の準備ができれば，<font color="red">時間計測を開始</font>してください. 時間計測はできる限り，30秒以内の単位での計測をお願いします. <br>
+    テストプログラムが正しく動作するまでは作業完了とは見なされないので注意してください．
+</p>
+<p>
+    リファクタリングの作業が完了したら作業時間を記録し，その後，作業結果を自分専用のブランチに commit ＆ push してください．<br>
+    ただし，<font color="red">main ブランチには決して merge をしないように，また自分専用のブランチを決して削除しないように</font>注意してください． <br>
+    push 後に，以下のアンケートにお答えください．<br>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeTqmSdDGLtdfBmHdUbdmN_90mBs9xMJX-LIXat8Z_HmFuZUg/viewform?usp=sharing" target="_blank" rel="noopener noreferrer">
+        アンケート回答 (別ウィンドウが開きます)
+    </a>
+</p>
+
+<hr>
+<a href="OperationB1.html">【SSDStore ツール課題】の説明へ</a>
+</body>
+<style>
+    .links-manual-A{
+        display: flex;
+        flex-direction: column;
+    }
+    .before-image-size{
+        max-width: 100%;
+        height: auto;
+    }
+    .after-image-size{
+        max-width: 100%;
+        height: auto;
+    }
 </style>
+
+</html>

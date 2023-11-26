@@ -1,54 +1,171 @@
 <!DOCTYPE html>
 <html lang="ja">
-    <head>
-        <meta charset="UTF-8">
-        <title>【Map-機能追加課題】</title>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <title>【Map機能追加課題】</title>
+</head>
 <body>
-<h1 class="title-B">【Map】
+<h1 class="title-A">【Map】
     <br/>
-    機能変更課題
+    機能追加課題
 </h1>
 
 <hr/>
 <h2>課題の概要：</h2>
 <p>
-    本課題では， 先ほど本ツール上で作成したモデルから出力されたプロトタイプを用いて，追加仕様の実装を行っていただきます．
+    先ほどの課題では，（地図の表示位置の）自動更新ON/OFF機能の追加ができるよう，モデリングツールを用いてMapアプリの設計変更を行っていただきました．
+    そこで本課題では，モデリングツールから出力された設計変更後のMapアプリのプログラムに対して，実際に自動更新ON/OFF機能の追加作業を行っていただきます．
 </p>
 <p>
-    出力されるJavaプロトタイプのソースコードについての詳細は以下で説明します．
-    <strong class="purpose-B">
-        「時針を表す"Hour_ang"が現在時刻の分を表す"Min"の状態を利用し，時針が動くように修正すること」
-    </strong>
-    を目的とします。
+    自動更新ON/OFF機能とは，GPSの位置情報に合わせて地図の表示位置を自動更新するか否かを切り替えられる機能のことです．
+    この機能では自動更新をいつでもON/OFFすることができ，自動更新がONのときは常にGPSの位置情報と地図の中心位置が連動するようにし，OFFのときはGPSの位置情報が更新されても地図の中心位置が変わらないようにします．
+    また手動更新ボタンを用意し，自動更新がOFFのときでもこのボタンが押されると，その時点でのGPSの位置情報が地図の表示位置に反映されるようにします．
+    実装に関する作業手順は以下で説明します．
 </p>
-<p>実装に関する作業手順は以下で説明します．</p>
 <hr/>
 
 <h2>実装作業：</h2>
-<hr/>
+<p>
+    まず，追加機能用のテストケース <code>TestManualUpdate</code> のソースコードを以下に示します．機能追加作業の完了後はこのテストケースと <code>TestGPSUpdate</code> の両方が正しく動作する必要があります．
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+    <pre class="brush:java; gutter:false" id="A">
+import static org.junit.Assert.*;
 
-<div class="links-tool-B">
-    <a href="../DescriptionTool.html" target="_blank">ツールの操作説明</a>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSciiz9HIK8JKf5sp1gajQXvV1Ypr3MhKESX0ehqGdZbGZMAJw/viewform?usp=sharing" target="_blank">
-        アンケート回答
-    </a>
-    <a href="../Closing.html">実験終了説明へ</a>
+import org.junit.Test;
+
+public class TestManualUpdate {
+
+	@Test
+	public void test() {
+		// 北緯35.0度，東経135.0度，自動更新モードに設定する
+		Map map = new Map();
+		map.updateGPS(35.0, 135.0);
+		map.setAutoUpdate(true);
+		double lati = map.getLatitude();
+		double longi = map.getLongitude();
+		double mapLati = map.getMapLatitude();
+		double mapLongi = map.getMapLongitude();
+		assertEquals(lati, 35.0, 0.0001);
+		assertEquals(longi, 135.0, 0.0001);
+		assertEquals(mapLati, 35.0, 0.0001);
+		assertEquals(mapLongi, 135.0, 0.0001);
+
+		// 北緯35.1度，東経135.1度に移動する
+		map.updateGPS(35.1, 135.1);
+		lati = map.getLatitude();
+		longi = map.getLongitude();
+		mapLati = map.getMapLatitude();
+		mapLongi = map.getMapLongitude();
+		assertEquals(lati, 35.1, 0.0001);
+		assertEquals(longi, 135.1, 0.0001);
+		assertEquals(mapLati, 35.1, 0.0001);
+		assertEquals(mapLongi, 135.1, 0.0001);
+
+		// 手動更新を行う
+		map.updateManually();
+		lati = map.getLatitude();
+		longi = map.getLongitude();
+		mapLati = map.getMapLatitude();
+		mapLongi = map.getMapLongitude();
+		assertEquals(lati, 35.1, 0.0001);
+		assertEquals(longi, 135.1, 0.0001);
+		assertEquals(mapLati, 35.1, 0.0001);
+		assertEquals(mapLongi, 135.1, 0.0001);
+
+		// 手動更新モードに設定する
+		map.setAutoUpdate(false);
+
+		// 北緯35.0度，東経135.0度に戻る
+		map.updateGPS(35.0, 135.0);
+		lati = map.getLatitude();
+		longi = map.getLongitude();
+		mapLati = map.getMapLatitude();
+		mapLongi = map.getMapLongitude();
+		assertEquals(lati, 35.0, 0.0001);
+		assertEquals(longi, 135.0, 0.0001);
+		assertEquals(mapLati, 35.1, 0.0001);		// 手動更新のため値は変化しない
+		assertEquals(mapLongi, 135.1, 0.0001);		// 手動更新のため値は変化しない
+
+		// 手動更新を行う
+		map.updateManually();
+		lati = map.getLatitude();
+		longi = map.getLongitude();
+		mapLati = map.getMapLatitude();
+		mapLongi = map.getMapLongitude();
+		assertEquals(lati, 35.0, 0.0001);
+		assertEquals(longi, 135.0, 0.0001);
+		assertEquals(mapLati, 35.0, 0.0001);		// 手動更新によって値が更新される
+		assertEquals(mapLongi, 135.0, 0.0001);		// 手動更新によって値が更新される
+	}
+}
+    </pre>
 </div>
+<p>
+    機能追加の手順は次の通りです．
+<ol>
+    <li><code>Presenter</code> クラスに <code>isAutoUpdate</code> フィールドを追加します．型は <code>boolean</code> で初期値は <code>true</code> にします．
+        このフィールドの値が <code>true</code> のときは，GPSの位置情報と地図の中心位置の連動がONとなっていることを示し，<code>false</code> のときは連動がOFFとなっていることを示します．</li>
+    <li><code>Presenter</code> クラスの <code>updateGPS()</code> メソッドを，
+        <code>isAutoUpdate</code> フィールドの値が <code>true</code> のときはGPSの新しい位置情報の値で地図の中心位置を更新するように，<code>false</code> のときは更新しないように書き換えます．
+        すなわち以下のように書き換えます．
+        <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+		    <pre class="brush:java; gutter:false" id="A">
+	public void updateGPS(double cur_lat, double cur_long) {
+		double longitude = this.longitude.updateGPS(cur_lat, cur_long);
+		double latitude = this.latitude.updateGPS(cur_lat, cur_long);
+		if (isAutoUpdate) {
+			this.mapLongitude.updateLongitude(longitude);
+			this.mapLatitude.updateLatitude(latitude);
+		}
+	}
+    		</pre>
+        </div>
+    </li>
+    <li>
+        <code>Presenter</code> クラスに <code>isAutoUpdate</code> フィールドのセッター <code>setAutoUpdate(boolean)</code> を追加します．すなわち，以下のメソッドを追加します．
+        <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+		    <pre class="brush:java; gutter:false" id="B">
+	public void setAutoUpdate(boolean isAutoUpdate) {
+		this.isAutoUpdate = isAutoUpdate;
+	}
+		    </pre>
+        </div>
+    </li>
+    <li>
+        <code>Presenter</code> クラスに <code>updateManually()</code> メソッドを追加します．このメソッドが呼ばれると，その時点でのGPSの位置情報が地図の中心位置に反映されます．
+    </li>
+    <li>アプリ全体のインターフェースの役割を担っている <code>Map</code> クラスに <code>setAutoUpdate(boolean)</code> メソッドと <code>updateManually()</code> メソッドを追加します．
+        これらのメソッドは内部でそれぞれ，<code>Presenter</code> クラスの <code>setAutoUpdate(boolean)</code> メソッドと <code>updateManually()</code> メソッドを呼び出します．
+    <li>最後に，テストケース TestManualUpdate とテストケース TestGPSUpdate の両方が正しく動作することを確認してください．</li>
+    <li>
+        以上の作業が完了したら，以下のアンケートに回答してくだい．<br>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSciiz9HIK8JKf5sp1gajQXvV1Ypr3MhKESX0ehqGdZbGZMAJw/viewform?usp=sharing" target="_blank" rel="noopener noreferrer">
+            アンケート回答 (別ウィンドウで開きます)
+        </a>
+    </li>
+</ol>
+</p>
+
+
+<hr>
+<a href="../Closing.html">実験終了説明へ</a>
 </body>
 
 <style>
-    .title-B{
+    .title-A{
        text-align: center;
     }
 
-    .purpose-B{
+    .purpose-A{
         display: flex;
         justify-content: center;
     }
 
-   .links-tool-B{
+   .links-tool-A{
           display: flex;
           flex-direction: column;
-   }
+    }
 </style>
+
+</html>
