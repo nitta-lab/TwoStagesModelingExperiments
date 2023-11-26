@@ -2,16 +2,22 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>Mapの説明</title>
+    <title>【Mapの概要説明】</title>
 </head>
 <body>
 
-<h1>Mapの概要説明</h1>
+<h1>【Mapの概要説明】</h1>
+<hr/>
+
+<h2>Mapの仕様：</h2>
 <p>
     MapはGPSを利用する地図アプリの一部を，Javaで実装したものです．<br>
     Mapには，UIや地図表示に関わる部分は実装されていません．なお実行はテストケースを使って確認することができます．
     このMapアプリでは，GPSの位置情報が更新されるたびに，それに合わせて地図の表示位置も自動で更新されます．
 </p>
+<hr/>
+
+<h2>Mapの設計：</h2>
 <p>
     Mapは次のように設計されています．
     まず，<code>Map</code> オブジェクトがアプリ全体のインターフェースの役割を担っており，テストケース <code>TestGPSUpdate</code> も，この <code>Map</code> オブジェクトを通じてアプリの操作を行います．<br>
