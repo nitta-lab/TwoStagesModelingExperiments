@@ -4,12 +4,6 @@
     <title>【基本概念の説明】</title>
     <meta charset="UTF-8">
 </head>
-<style>
-    .image_size{
-        width: 800px;
-        height: 550px;
-    }
-</style>
 <body>
 
 <h1>【基本概念の説明】</h1>
@@ -51,16 +45,16 @@
     PUSH型のデータ転送の場合，転送元のオブジェクトが転送先のオブジェクトのメソッドを呼び出してデータを送信するため，<br>
     TempF のインスタンスが TempC のインスタンスを参照するようにします．<br>
     そのため，クラス図は以下のようになります．<br>
-    <img src="../img/classes/temp_class_push.jpg" class = "halfSize"><br>
+    <img class="img-size" src="../img/classes/temp_class_push.jpg"><br>
     ここで，新しい華氏の温度は，TempF クラスの setValue() メソッドで設定されるものとします．<br>
     このときPUSH型のデータ転送では，即座に更新された華氏の温度のデータが TempC のインスタンスに送信され，摂氏の温度も更新されます．<br>
     ここで華氏の温度データを送るために呼び出されるのが，TempC の updateTemp() メソッドです．<br>
     updateTemp() メソッドが呼ばれると送られてきた華氏の温度が即座に摂氏に変換され，TempC 内のフィールド value に記録されます．<br>
     この流れをシーケンス図で表すと以下のようになります．<br>
-    <img src="../img/sequences/temp_seq_push.jpg" class = "halfSize"><br>
+    <img class="img-size" src="../img/sequences/temp_seq_push.jpg"><br>
     全体のソースコードを下記のリンク先に示します．
 <blockquote>
-    <a href="../programs/TempPush.html" target="_blank">PUSH型転送の華氏摂氏変換プログラム(別タブで開きます)</a>
+    <a href="../programs/TempPush.html" target="_blank" rel="noopener noreferrer">PUSH型転送の華氏摂氏変換プログラム (別ウィンドウで開きます)</a>
 </blockquote>
 </p>
 <h4>PULL型転送の場合</h4>
@@ -69,17 +63,17 @@
     PULL型のデータ転送の場合，転送先のオブジェクトが転送元のオブジェクトのメソッドを呼び出してデータを戻り値として受け取るため，<br>
     今度は TempC のインスタンスが TempF のインスタンスを参照するようにします(PUSH型と逆方向になります)．<br>
     そのため，クラス図は以下のようになります．<br>
-    <img src="../img/classes/temp_class_pull.jpg" class = "halfSize"><br>
+    <img class="img-size" src="/img/classes/temp_class_pull.jpg"><br>
     PULL型の場合も新しい華氏の温度は，TempF クラスの setValue() メソッドで設定されるものとします．<br>
     しかしながらPULL型のデータ転送では，華氏の温度が更新された時点で摂氏の温度は更新されません．<br>
     摂氏の温度を調べる TempC クラスの getValue() メソッドが呼ばれたタイミングで TempF クラスの getValue() メソッドが呼び出され，<br>
     戻り値として返された最新の華氏の温度を元に摂氏の温度がその場で計算され，getValue() メソッドの戻り値として返されます．<br>
     そのため，TempC クラスの内部に最新の摂氏を記録するための value フィールドを持つ必要はありません．<br>
     この流れをシーケンス図で表すと以下のようになります．<br>
-    <img src="../img/sequences/temp_seq_pull.jpg" class = "halfSize"><br>
+    <img class="img-size" src="/img/sequences/temp_seq_pull.jpg" ><br>
     全体のソースコードを下記のリンク先に示します．
 <blockquote>
-    <a href="../programs/TempPull.html" target="_blank">PULL型転送の華氏摂氏変換プログラム(別タブで開きます)</a>
+    <a href="../programs/TempPull.html" target="_blank" rel="noopener noreferrer">PULL型転送の華氏摂氏変換プログラム (別ウィンドウで開きます)</a>
 </blockquote>
 </p>
 
@@ -91,6 +85,15 @@
     こちらからお進みください．最初の課題に取り組む前に1つめの実験用プログラムMapの概要の説明を行います．
 </p>
 
+<hr>
 <a href="DescriptionMap.html">【Mapの概要説明】へ進む</a>
 </body>
+
+<style>
+    .img-size{
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+
 </html>
