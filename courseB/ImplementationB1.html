@@ -2,54 +2,166 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>【Audio-機能追加課題】</title>
+    <title>【SSDStore機能追加課題】</title>
 </head>
 <body>
-    <h1 class="title-B">【Audio】
-        <br/>
-        機能変更課題
-    </h1>
+<h1 class="title">
+	【SSDStore】
+    <br/>
+    機能追加課題
+</h1>
+<hr/>
+<h2>課題の概要：</h2>
+<p>
+    先ほどの課題では，商品サイトの追加が容易になるようモデリングツールを用いてSSDのオンライン販売サイトの設計変更を行っていただきました．
+    そこで本課題では，モデリングツールから出力された設計変更後のオンライン販売サイトプログラムに対して，実際に商品サイトの追加作業を行っていただきます．
+</p>
+<p>
+    追加するのは，SSDの商品情報が登録されているサイトBです．サイトB追加後は，サイトAとサイトBの両方のサイトから商品情報を収集して検索ができるようにします．
+    実装に関する作業手順は以下で説明します．
+</p>
+<hr/>
 
-    <hr/>
-    <h2>課題の概要：</h2>
-    <p>
-        本課題では， 先ほど本ツール上で作成したモデルから出力されたプロトタイプを用いて，追加仕様の実装を行っていただきます．
-    </p>
-    <p>
-        出力されるJavaプロトタイプのソースコードについての詳細は以下で説明します．
-        <strong class="purpose-B">
-            「」
-        </strong>
-        を目的とします。
-    </p>
-    <p>実装に関する作業手順は以下で説明します．</p>
-    <hr/>
+<h2>実装作業：</h2>
+<p>
+    まず，追加機能用のテストケース <code>TestMultiSSDStoreUpdate</code> のソースコードを以下に示します．機能追加作業の完了後はこのテストケースと <code>TestSSDStoreUpdate</code> の両方が正しく動作する必要があります．
+</p>
+<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+    <pre class="brush:java; gutter:false" id="A">
+import static org.junit.Assert.*;
 
-    <h2>実装作業：</h2>
-    <hr/>
+import java.util.List;
+import java.util.Map;
 
-    <div class="links-tool-B">
-        <a href="../DescriptionTool.html" target="_blank">ツールの操作説明</a>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSc_4RfxYDFSv8P02hG5JkTc9W_gPPNTSTQY5j4hEELWaPIB1w/viewform?usp=sharing" target="_blank">
-            アンケート回答
-        </a>
-        <a href="DescriptionMap.html">【Clock】の概要説明へ</a>
+import org.junit.Test;
+
+public class TestMultiSSDStoreUpdate {
+
+	@Test
+	public void test() {
+		// 商品を1つずつサイトAとサイトBに登録する
+		SSDStore store = new SSDStore();
+		store.addProductToSiteA(500, 7000);
+		store.addProductToSiteB(1500, 12000);
+
+		// 価格を指定して検索する
+		store.setPrice(7000);
+		List&lt;Map&lt;String, Object&gt;&gt; itemsByPrice = store.getItemsByPrice();
+		assertEquals(itemsByPrice.size(), 1);
+		for (Map&lt;String, Object&gt; item: itemsByPrice) {
+			assertTrue((Integer) item.get("price") <= 7000);
+		}
+		store.setPrice(12000);
+		itemsByPrice = store.getItemsByPrice();
+		assertEquals(itemsByPrice.size(), 2);
+		for (Map&lt;String, Object&gt; item: itemsByPrice) {
+			assertTrue((Integer) item.get("price") <= 12000);
+		}
+
+		// 容量を指定して検索する
+		store.setCapacity(500);
+		List&lt;Map&lt;String, Object&gt;&gt; itemsByCapacity = store.getItemsByCapacity();
+		assertEquals(itemsByCapacity.size(), 2);
+		for (Map&lt;String, Object&gt; item: itemsByCapacity) {
+			assertTrue((Integer) item.get("capacity") >= 500);
+		}
+		store.setCapacity(1500);
+		itemsByCapacity = store.getItemsByCapacity();
+		assertEquals(itemsByCapacity.size(), 1);
+		for (Map&lt;String, Object&gt; item: itemsByCapacity) {
+			assertTrue((Integer) item.get("capacity") >= 1500);
+		}
+
+		// 商品を1つサイトBに追加する
+		store.addProductToSiteB(1000, 10000);
+
+		// 価格を指定して検索する
+		store.setPrice(7000);
+		itemsByPrice = store.getItemsByPrice();
+		assertEquals(itemsByPrice.size(), 1);
+		for (Map&lt;String, Object&gt; item: itemsByPrice) {
+			assertTrue((Integer) item.get("price") <= 7000);
+		}
+		store.setPrice(12000);
+		itemsByPrice = store.getItemsByPrice();
+		assertEquals(itemsByPrice.size(), 3);
+		for (Map&lt;String, Object&gt; item: itemsByPrice) {
+			assertTrue((Integer) item.get("price") <= 12000);
+		}
+
+		// 容量を指定して検索する
+		store.setCapacity(500);
+		itemsByCapacity = store.getItemsByCapacity();
+		assertEquals(itemsByCapacity.size(), 3);
+		for (Map&lt;String, Object&gt; item: itemsByCapacity) {
+			assertTrue((Integer) item.get("capacity") >= 500);
+		}
+		store.setCapacity(1500);
+		itemsByCapacity = store.getItemsByCapacity();
+		assertEquals(itemsByCapacity.size(), 1);
+		for (Map&lt;String, Object&gt; item: itemsByCapacity) {
+			assertTrue((Integer) item.get("capacity") >= 1500);
+		}
+	}
+}
+    </pre>
+</div>
+<p>
+    機能追加の手順は次の通りです．
+<ol>
+    <li><code>SiteA</code> クラスを参考に <code>SiteB</code> クラスを作成します．<code>SiteA</code> に商品を追加するメソッドは <code>addProductToSiteB(int capacity, int price)</code> としてください．
+        それ以外は，<code>SiteA</code>と同様です．</li>
+    <li><code>SiteWrapper</code> クラスに <code>SiteB</code> 型の <code>siteB</code> フィールドを追加します．特に初期化をする必要はありません．
+        また，<code>SiteWrapper</code> のコンストラクタを <code>SiteA</code> 型と <code>SiteB</code> 型の2つの引数を取って，<code>siteA</code> フィールドと <code>siteB</code> フィールドを初期化するように書き換えます．
+        すなわち以下のように書き換えます．</li>
+    <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+			    <pre class="brush:java; gutter:false" id="A">
+	public SiteWrapper(SiteA siteA, SiteB siteB) {
+		this.siteA = siteA;
+		this.siteB = siteB;
+	}
+    			</pre>
     </div>
+    <li><code>SiteWrapper</code> クラスの <code>getSiteAValue()</code> メソッドを <code>getSiteValue()</code> に名称変更し，内容を <code>siteA</code> と <code>siteB</code> から取得した商品リストを合わせた商品リストを返すように書き換えます．
+        すなわち以下のように書き換えます．</li>
+    <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+		    <pre class="brush:java; gutter:false" id="B">
+	public List&lt;Map&lt;String, Object&gt;&gt; getSiteValue() {
+		List&lt;Map&lt;String, Object&gt;&gt; productList = this.siteA.getValue();
+		productList.addAll(this.siteB.getValue());
+		return productList;
+	}
+			</pre>
+    </div>
+    <li>オンライン販売サイト全体のインターフェースの役割を担っている <code>SSDStore</code> クラスに <code>SiteB</code> 型の <code>siteB</code> フィールドを追加します．
+        また，<code>SSDStore</code> のコンストラクタの内部で <code>SiteB</code> のインスタンスを作成し，<code>siteB</code> フィールドに代入します．
+        さらに，<code>SiteWrapper</code> のコンストラクタ呼び出し時に，引数として <code>siteA</code> フィールドの値と <code>siteB</code> フィールドの値を渡すようにします．
+    <li><code>SSDStore</code> クラスに，<code>getSiteA()</code> メソッドを参考に <code>getSiteB()</code> メソッドを追加し，
+        <code>addProductToSiteA()</code> メソッドを参考に <code>addProductToSiteB()</code> メソッドを追加します．</li>
+    <li>最後に，テストケース TestMultiSSDStoreUpdate とテストケース TestSSDStoreUpdate の両方が正しく動作することを確認してください．</li>
+    <li>
+        以上の作業が完了したら，以下のアンケートに回答してくだい．<br>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSc_4RfxYDFSv8P02hG5JkTc9W_gPPNTSTQY5j4hEELWaPIB1w/viewform?usp=sharing" target="_blank" rel="noopener noreferrer">
+            アンケート回答 (別ウィンドウで開きます)
+        </a>
+    </li>
+</ol>
+</p>
+
+<hr>
+<br>
+<a href="DescriptionMap.html">【Mapの説明】へ</a>
+
 </body>
 
 <style>
-    .title-B{
+    .title{
        text-align: center;
     }
 
-    .purpose_B{
-        display: flex;
-        justify-content: center;
-    }
-
-    .links-tool-B{
-        display: flex;
-        flex-direction: column;
+    .purpose-A{
+        text-align: center;
     }
 </style>
+
 </html>

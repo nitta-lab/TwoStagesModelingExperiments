@@ -2,23 +2,48 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>SSDStoreの説明</title>
+    <title>【SSDStoreの概要説明】</title>
 </head>
 <body>
-<h1>SSDStoreの概要説明</h1>
+<h1 class="title">
+    【SSDStore】
+    <br>
+    概要説明
+</h1>
+<hr/>
+
+<h2>SSDStoreの仕様：</h2>
 <p>
     SSDStoreはSSDのオンライン販売サイトのロジック部分を，Javaで実装したものです．<br>
     SSDStoreには，WebページのUIに関わる部分や実際のサイトと接続する部分は実装されていません．実行はテストケースを使って確認することができます．
     SSDStoreでは，ユーザが指定した価格以下の商品一覧と，ユーザが指定した容量以上の商品一覧を得ることができます．
 </p>
+<hr/>
+
+<h2>SSDStoreの設計：</h2>
 <p>
     SSDStoreは次のように設計されています．
     まず，<code>SSDStore</code> オブジェクトがオンライン販売サイト全体のインターフェースの役割を担っており，テストケース <code>TestSSDStoreUpdate</code> も，この <code>SSDStore</code> オブジェクトを通じて販売サイトの操作を行います．<br>
-    <code>SiteA</code> オブジェクトは別のサイトAに登録されているSSDの商品情報を保持しています．
+    <code>SiteA</code> オブジェクトはオンライン販売サイトとは別のサイトAに登録されているSSDの商品情報を保持しています．
     <code>Price</code> オブジェクトにはユーザが指定した商品価格が保持されており，<code>ItemsByPrice</code> オブジェクトが <code>SiteA</code> オブジェクトから最新のSSDの一覧を取得し，指定した価格以下のSSDを検索して結果を一覧で返します．
     <code>Capacity</code> オブジェクトにはユーザが指定した容量が保持されており，<code>ItemsByCapacity</code> オブジェクトが <code>SiteA</code> オブジェクトから最新のSSDの一覧を取得し，指定した容量以上のSSDを検索して結果を一覧で返します．<br>
-    このオンライン販売サイトでは，ユーザが更新ボタンを押すたびに <code>ItemsByPrice</code> オブジェクトもしくは<code>ItemsByCapacity</code> オブジェクトの <code>getValue()</code> のメソッドが呼び出されて検索が行われ，常に最新の検索結果を確認できるようになっています．
+    すなわち，<code>SiteA</code> オブジェクトと <code>Price</code> オブジェクトから <code>ItemsByPrice</code> オブジェクトに，<code>SiteA</code> オブジェクトと <code>Capacity</code> オブジェクトから <code>ItemsByCapacity</code> オブジェクトに，それぞれPULL型のデータ転送が行われます．
+    このオンライン販売サイトでは，ユーザが更新ボタンを押すたびに <code>ItemsByPrice</code> オブジェクトもしくは<code>ItemsByCapacity</code> オブジェクトの <code>getValue()</code> のメソッドが呼び出されて検索が行われ，最新の検索結果が確認できるようになっています．
 </p>
-<a href="EnvironmentStore.html">【SSDStore-環境構築】の説明へ</a>
+<img src="../img/classes/ssdStore_class_pull.png", class ="img-size">
+<hr>
+<br>
+<a href="EnvironmentStore.html">【SSDStoreの環境構築】の説明へ</a>
 </body>
+
+<style>
+    .title{
+        text-align: center;
+    }
+    .img-size{
+        max-width: 100%;
+        height: auto;
+    }
+</style>
+
 </html>
