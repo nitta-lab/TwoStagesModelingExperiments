@@ -15,14 +15,24 @@
     大変お手数をお掛けしますが，ツールはまだ試作段階のものですので，何卒ご理解のほどよろしくお願いいたします．
 </p>
 <hr/>
-<h2>専用モデルファイルの読み込み：</h2>
+<h2>専用モデルファイル：</h2>
+<h3>ダウンロードリンク：</h3>
 <p>
     ソフトウェアの仕様と深くかかわるデータの流れは，専用のアーキテクチャ記述言語（DTRAM）によって記述されます．(実験の範囲を超えるため，ここではDTRAMの説明は省略します．)<br>
     <strong>ビジュアルモデリングツール</strong>ではDTRAMによって記述された<strong>モデルファイル(.dtram)</strong>を読みこみ，ツール上でモデリング（設計）を行います．<br>
+    以下のサンプルモデルファイルをお手元にダウンロードしていただき，各操作を練習してください．
+    <ul>
+        <li><strong>SamplePush.dtram</strong> (<a href="models/SamplePUSH.dtram">DL</a>)</li>
+        <li><strong>SamplePull.dtram</strong> (<a href="models/SamplePULL.dtram">DL</a>)</li>
+    </ul>
+</p>
+
+<h3>モデルファイルの読み込み：</h3>
+<p>
     モデルファイルの読み込み手順は以下の通りです．
     <ol>
         <li>ツールを起動後，上部メニューから<strong>「ファイル>開く」</strong>を選択．</li>
-        <li>ポップアップから<strong>「~/models/*.dtram」</strong>を選択．</li>
+        <li>ポップアップからお手元の<strong>「*.dtram」</strong>を選択．</li>
         <li>モデルファイル選択後，ツール上にグラフが描画されれば完了です．</li>
     </ol>
 </p>
@@ -43,7 +53,10 @@
 <h3>操作方法：</h3>
 <ol>
     <li>図にある赤色の矢印の上にあるプルダウンメニューを選択します．</li>
-    <li>プルダウンから任意のデータ転送方式を選択します．</li>
+    <li>
+        プルダウンから任意のデータ転送方式を選択します．
+        <img class="img-size" src="img/screenshots/ex_select_pushpull.png" />
+    </li>
 </ol>
 <hr/>
 
@@ -64,7 +77,7 @@
     <hr>
     <!-- 仲介オブジェクトの導入 -->
     <li>
-        <h3>仲介オブジェクトの導入：</h3>
+        <h3>仲介者オブジェクトの導入：</h3>
         <!-- 概要 -->
         <h3>概要：</h3>
         <p>オブジェクト間の制御を仲介するだけのオブジェクトを挿入する操作です．</p>
@@ -72,8 +85,14 @@
         <!-- 操作手順 -->
         <h3>操作手順：</h3>
             <ol>
-                <li>仲介オブジェクトを挿入したい呼び出しを右クリック．<br></li>
-                <li>ポップアップメニューから「仲介オブジェクトの導入」を選択．</li>
+                <li>仲介オブジェクトを挿入したい呼び出しを右クリックし，<br>
+                    表示されるポップアップメニューから「仲介者オブジェクトの導入」を選択．
+                    <img class="img-size" src="img/screenshots/ex_intro_2.png" />
+                </li>
+                <li>
+                    操作が完了すると下図のようにグラフが変更されます．
+                    <img class="img-size" src="img/screenshots/ex_intro_3.png" />
+                </li>
             </ol>
         </li>
 
@@ -85,10 +104,10 @@
                 <h3>適用前：(<a href="programs/SamplePush.html" target="_blank">サンプルコード</a>)</h3>
                 <img class="img-size" src="img/classes/tools/ex_introduce_mediator_before.png"/><br>
             </li>
-            <br>
             <li>
                 <h3>適用後：(<a href="programs/AppliedIntroduceMediator.html" target="_blank">サンプルコード</a>)</h3>
-                <img class="img-size" src="img/classes/tools/ex_introduce_mediator_after.png"/><br>
+                <img class="img-size" src="img/classes/tools/ex_introduce_mediator_after.png"/>
+            </li>
         </ul>
     </li>
 
@@ -103,9 +122,15 @@
         <!-- 操作手順 -->
         <h3>操作手順：</h3>
         <ol>
-            <li>呼び出し元を変更したい呼び出しを左でダブルクリックします．<br></li>
-            <li>選択した呼び出しにおいてCFD(本操作)が<strong>適用可能なオブジェクトは緑色，適用不可能なオブジェクトは黒色</strong>で表示されます．</li>
-            <li>呼び出し元にしたい緑色のオブジェクトを左でダブルクリックすることで，呼び出し元が変更されます．</li>
+            <li>呼び出し元を変更したい呼び出しを左でダブルクリック．</li>
+            <li>
+                選択した呼び出しにおいてCFD(本操作)が<strong>適用可能なオブジェクトは緑色，適用不可能なオブジェクトは黒色</strong>で表示されます．
+                <img class="img-size" src="img/screenshots/ex_cfd_2.png" />
+            </li>
+            <li>
+                呼び出し元にしたい緑色のオブジェクトを左でダブルクリックすることで，呼び出し元が変更されます．
+                <img class="img-size" src="img/screenshots/ex_cfd_3.png" />
+            </li>
         </ol>
 
         <!-- コードサンプル -->
@@ -157,9 +182,18 @@
             <!-- 操作手順 -->
             <h3>操作手順：</h3>
             <ol>
-                <li>仲介者オブジェクトの呼び出し先と接続している別の呼び出しの上で右クリック．<br></li>
-                <li>選択した呼び出しにおいて本操作 (仲介者オブジェクトへの依存) が<strong>適用可能な仲介者オブジェクトは緑色，適用不可能なオブジェクトは黒色</strong>で表示されます．</li>
-                <li>呼び出し元にしたい緑色のオブジェクトを左でダブルクリックすることで，呼び出し元が変更されます．</li>
+                <li>
+                    仲介者オブジェクトの呼び出し先と接続している別の呼び出しの上で右クリックし，ポップアップメニューから「仲介者オブジェクトへの依存」を選択．
+                    <img class="img-size" src="img/screenshots/ex_depends_2.png" />
+                </li>
+                <li>
+                    選択した呼び出しにおいて本操作 (仲介者オブジェクトへの依存) が<strong>適用可能な仲介者オブジェクトは緑色，適用不可能なオブジェクトは黒色</strong>で表示されます．
+                    <img class="img-size" src="img/screenshots/ex_depends_3.png" />
+                </li>
+                <li>
+                    呼び出し元にしたい緑色のオブジェクトを左でダブルクリックすることで，呼び出し元が変更されます．
+                    <img class="img-size" src="img/screenshots/ex_depends_4.png" />
+                </li>
             </ol>
 
     <!-- コードサンプル -->
