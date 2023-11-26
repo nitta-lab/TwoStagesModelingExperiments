@@ -2,15 +2,21 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>SSDStoreの説明</title>
+    <title>【SSDStoreの概要説明】</title>
 </head>
 <body>
-<h1>SSDStoreの概要説明</h1>
+<h1>【SSDStoreの概要説明】</h1>
+<hr/>
+
+<h2>SSDStoreの仕様：</h2>
 <p>
     SSDStoreはSSDのオンライン販売サイトのロジック部分を，Javaで実装したものです．<br>
     SSDStoreには，WebページのUIに関わる部分や実際のサイトと接続する部分は実装されていません．実行はテストケースを使って確認することができます．
     SSDStoreでは，ユーザが指定した価格以下の商品一覧と，ユーザが指定した容量以上の商品一覧を得ることができます．
 </p>
+<hr/>
+
+<h2>SSDStoreの設計：</h2>
 <p>
     SSDStoreは次のように設計されています．
     まず，<code>SSDStore</code> オブジェクトがオンライン販売サイト全体のインターフェースの役割を担っており，テストケース <code>TestSSDStoreUpdate</code> も，この <code>SSDStore</code> オブジェクトを通じて販売サイトの操作を行います．<br>
