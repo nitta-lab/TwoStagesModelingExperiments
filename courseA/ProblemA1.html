@@ -37,7 +37,9 @@
     現在の設計では，以下のクラス図のようにGPSの緯度情報を保持している <code>Latitude</code> オブジェクトが地図の中心位置の緯度成分を表す <code>MapLatitude</code> オブジェクトを，
     GPSの経度情報を保持している <code>Longitude</code> オブジェクトが地図の中心位置の経度成分を表す <code>MapLongitude</code> オブジェクトを，それぞれPUSH型のデータ転送で更新するようになっています．<br>
 </p>
-<img src="/img/classes/map_class_push.png", class ="before-image-size"><br>
+<div class="img-center">
+	<img src="/img/classes/map_class_push.png", class ="before-image-size"><br>
+</div>
 <p>
     具体的には以下のコードのように，GPSの位置情報の変化をセンサーが検知するたびに <code>Map</code> クラスの <code>updateGPS()</code> メソッドが呼び出され，
     その中から <code>Longitude</code> クラスの <code>updateGPS()</code> メソッドと <code>Latitude</code> クラスの <code>updateGPS()</code> メソッドが呼ばれて，まずGPSの緯度と経度の情報が更新されます．
@@ -94,7 +96,9 @@ public class Latitude {
     そうすることによって，<code>Longitude</code> オブジェクトや <code>Latitude</code> オブジェクトの状態の更新後に
     <code>MapLatitude</code> オブジェクトや <code>MapLongitude</code> オブジェクトの状態の更新をするか否かを，<code>Presenter</code> オブジェクト上で制御することができるようになります．
 </p>
-<img src="/img/classes/map_class_push_CFD.png", class ="after-image-size"><br>
+<div class="img-center">
+	<img src="/img/classes/map_class_push_CFD.png" class ="after-image-size"><br>
+</div>
 <p>
     具体的に変更後の設計の中では，以下のように <code>Map</code> クラスの <code>updateGPS()</code> メソッドは，
     <code>Longitude</code> クラスと <code>Latitude</code> クラスの <code>updateGPS()</code> メソッドの代わりに <code>Presenter</code> クラスの <code>updateGPS()</code> メソッドを呼び出すようにします．
@@ -133,7 +137,7 @@ public class Presenter {
 	}
 }</pre>
 </div>
-
+<hr>
 <h2>Map のリファクタリング課題の作業手順：</h2>
 <p>
 	本課題では，リファクタリングに要した時間を測っていただきますので，お手元に時計をご用意ください．
@@ -142,7 +146,7 @@ public class Presenter {
 	課題に着手する前に開発環境を立ち上げて現状のソースコードの確認をしていただいて構いませんが，実際のソースコードの変更は時間計測の準備ができるまで行わないで下さい．<br>
 </p>
 <p>
-	作業に着手する前に，<strong>main</strong> ブランチから，メッセージでお伝えした自分専用のブランチ（user??Refactor）を新規作成して，一度 push を行ってください．<br>
+	作業に着手する前に，<strong>main</strong> ブランチから，メッセージでお伝えした自分専用のブランチ（<strong>user??Refactor</strong>）を新規作成して，一度 push を行ってください．<br>
 	push を行った後，開発環境の準備ができれば，<span style="color: red; ">時間計測を開始</span>してください. 時間計測はできる限り，30秒以内の単位での計測をお願いします. <br>
 	ソースコードの変更作業は上記「Map のリファクタリングの概要」にしたがって進めてください．<br>
 	テストプログラム<strong>TestGPSUpdate.java</strong>が正しく動作するまでは作業完了とは見なされないので注意してください．
@@ -151,9 +155,11 @@ public class Presenter {
 	リファクタリングの作業が完了したら作業時間を記録し，その後，作業結果を自分専用のブランチに commit ＆ push してください．<br>
 	ただし，<span style="color: red; "><strong>main</strong> ブランチには決して merge をしないように，また自分専用のブランチを決して削除しないように</span>注意してください． <br>
 	push 後に，以下のアンケートにお答えください．<br>
-	<a href="https://docs.google.com/forms/d/e/1FAIpQLSf9q6nV6QeOgQoArCy-0TUx2xGHWhABn8hiLAHsFOyBpFAWIw/viewform?usp=sharing" target="_blank" rel="noopener noreferrer">
-		アンケートフォーム (別ウィンドウが開きます)
-	</a>
+	<strong>
+		<a href="https://docs.google.com/forms/d/e/1FAIpQLSf9q6nV6QeOgQoArCy-0TUx2xGHWhABn8hiLAHsFOyBpFAWIw/viewform?usp=sharing" target="_blank" rel="noopener noreferrer">
+			アンケートフォーム (別ウィンドウが開きます)
+		</a>
+	</strong>
 </p>
 
 <hr>
@@ -165,19 +171,24 @@ public class Presenter {
 </html>
 
 <style>
-.title{
-	text-align: center;
-}
-.links-manual-A{
-    display: flex;
-    flex-direction: column;
-}
-.before-image-size{
-	max-width: 100%;
-	height: auto;
-}
-.after-image-size{
-	max-width: 100%;
-	height: auto;
-}
+	.title{
+		text-align: center;
+	}
+	.links-manual-A{
+		display: flex;
+		flex-direction: column;
+	}
+	.img-center{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+	.before-image-size{
+		max-width: 100%;
+		height: auto;
+	}
+	.after-image-size{
+		max-width: 100%;
+		height: auto;
+	}
 </style>

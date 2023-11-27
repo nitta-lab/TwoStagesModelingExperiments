@@ -39,7 +39,9 @@
     現在の設計では，以下のクラス図ように <code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトが，それぞれ <code>SiteA</code> オブジェクトから直接SSDの商品情報をPULL型のデータ転送で取得し，
 	さらに <code>Price</code> オブジェクトから価格を，<code>Capacity</code> オブジェクトから容量をPULL型のデータ転送で取得して，それらの値を使って別々に検索を行い検索結果を出力しています．
 </p>
-<img class="before-image-size" src="/img/classes/ssdStore_class_pull.png"><br>
+<div class="img-center">
+	<img class="before-image-size" src="/img/classes/ssdStore_class_pull.png"><br>
+</div>
 <p>
     具体的には以下のコードように，<code>ItemsByPrice</code> オブジェクトの <code>getValue()</code> メソッド内部で，サイトAからSSDのリストを取得してその中から <code>Price</code> オブジェクトで指定された価格以下の商品を検索し，
 	同様に <code>ItemsByCapacity</code> オブジェクトの <code>getValue()</code> メソッド内部で，サイトAからSSDのリストを取得してその中から <code>Capacity</code> オブジェクトで指定された容量以上の商品を検索しています．<br>
@@ -97,7 +99,9 @@ public class ItemsByCapacity {
 	<code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトが，<code>SiteWrapper</code> オブジェクトを通じて，間接的に <code>SiteA</code> オブジェクトや <code>SiteB</code> オブジェクトにアクセスするように設計変更を行います．
     そうすることによって，<code>SiteWrapper</code> にいくつサイトを追加しても，<code>ItemsByPrice</code> オブジェクトや <code>ItemsByCapacity</code> オブジェクトの実装に影響が及ばないようにすることができます．
 </p>
-<img class ="after-image-size" src="/img/classes/ssdStore_class_pull_CFD.png"><br>
+<div class="img-center">
+	<img class ="after-image-size" src="/img/classes/ssdStore_class_pull_CFD.png"><br>
+</div>
 <p>
     具体的に変更後の設計の中では，以下のように <code>SiteWrapper</code> クラスが <code>SiteA</code> を参照し，
 	<code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトは，この <code>SiteWrapper</code> の <code>getSiteValue()</code> メソッドを呼び出して，最新のSSDの一覧を得るようにします．
@@ -126,7 +130,7 @@ public class SiteWrapper {
 	課題に着手する前に開発環境を立ち上げて現状のソースコードの確認をしていただいて構いませんが，実際のソースコードの変更は時間計測の準備ができるまで行わないで下さい．<br>
 </p>
 <p>
-	作業に着手する前に，<strong>main</strong> ブランチから，メッセージでお伝えした自分専用のブランチ（user??Refactor）を新規作成して，一度 push を行ってください．<br>
+	作業に着手する前に，<strong>main</strong> ブランチから，メッセージでお伝えした自分専用のブランチ（<strong>user??Refactor</strong>）を新規作成して，一度 push を行ってください．<br>
 	push を行った後，開発環境の準備ができれば，<span style="color: red; ">時間計測を開始</span>してください. 時間計測はできる限り，30秒以内の単位での計測をお願いします. <br>
 	ソースコードの変更作業は上記「SSDStore のリファクタリングの概要」にしたがって進めてください．<br>
 	テストプログラム<strong>TestSSDStoreUpdate.java</strong>が正しく動作するまでは作業完了とは見なされないので注意してください．
@@ -135,9 +139,11 @@ public class SiteWrapper {
 	リファクタリングの作業が完了したら作業時間を記録し，その後，作業結果を自分専用のブランチに commit ＆ push してください．<br>
 	ただし，<span style="color: red; "><strong>main</strong> ブランチには決して merge をしないように，また自分専用のブランチを決して削除しないように</span>注意してください． <br>
 	push 後に，以下のアンケートにお答えください．<br>
-	<a href="https://docs.google.com/forms/d/e/1FAIpQLSeTqmSdDGLtdfBmHdUbdmN_90mBs9xMJX-LIXat8Z_HmFuZUg/viewform?usp=sharing" target="_blank" rel="noopener noreferrer">
-		アンケート回答 (別ウィンドウが開きます)
-	</a>
+	<strong>
+		<a href="https://docs.google.com/forms/d/e/1FAIpQLSeTqmSdDGLtdfBmHdUbdmN_90mBs9xMJX-LIXat8Z_HmFuZUg/viewform?usp=sharing" target="_blank" rel="noopener noreferrer">
+			アンケートフォーム (別ウィンドウが開きます)
+		</a>
+	</strong>
 </p>
 
 <hr>
@@ -151,6 +157,11 @@ public class SiteWrapper {
 	.links-manual-A{
         display: flex;
         flex-direction: column;
+    }
+    .img-center{
+    	display: flex;
+    	justify-content: center;
+    	align-items: center;
     }
     .before-image-size{
         max-width: 100%;

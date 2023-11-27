@@ -45,7 +45,7 @@
     <h2>ツール作業内容：</h2>
     <h3>はじめに：</h3>
     <p>
-        作業に着手する前に，<strong>「main」</strong>ブランチから，メッセージでお伝えした自分専用のブランチ (<strong>user??Generated</strong>)を新規に作成し，ブランチのpushを行ってください．<br>
+        作業に着手する前に，<strong>main</strong>ブランチから，メッセージでお伝えした自分専用のブランチ (<strong>user??Generated</strong>)を新規に作成し，ブランチのpushを行ってください．<br>
         本課題では本ツールによって出力されたJavaプロトタイプのソースコードに対して，<strong>【Map】</strong>のテストプログラムが通るまでは作業完了とは見なされませんのでご注意ください．
     </p>
 
@@ -56,7 +56,7 @@
         操作方法の詳細については上記の<strong>ビジュアルモデリングツール</strong>の項をご参照ください．<br>
         <br>
         モデルファイルを読み込んだ後，本ツール右下のナビゲーションウィンドウが<strong>「PUSH/PULLの選択」</strong>になっていることを確認してください．<br>
-        確認ができたら，<code>longitude</code>と<code>mapLongitude</code>，<code>latitude</code>と<code>mapLatitude</code>間のデータ転送方式を<strong>PUSH</strong>に変更してください．<br>
+        確認ができたら，<code>longitude</code> と <code>mapLongitude</code>，<code>latitude</code> と <code>mapLatitude</code> 間のデータ転送方式を<span style="color:red"><strong>PUSH</strong></span> に変更してください．<br>
         この時点でのモデルがリファクタリング前の設計に相当しています．変更が完了しましたら，右下のナビゲーションウィンドウから<strong>「PUSH/PULLの拡張」</strong>を選択していただきます．<br>
         <br>
         リファクタリング後のクラス図，及びシーケンス図を以下に示します．このような設計のJavaプロトタイプを生成できるよう，モデリングツール上で操作を行っていきます．<br>
@@ -84,7 +84,7 @@
         <div class="img-map">
             <ol>
                 <li>
-                    <p><strong>「PUSH/PULLの拡張」</strong>において<code>longitude</code>から<code>mapLongitude</code>，<code>latitude</code>から<code>mapLatitude</code>への呼び出しの向きが右方向を向いていることを確認．(PUSH型のデータ転送であるため．)</p>
+                    <p>「PUSH/PULLの拡張」において<code>longitude</code>から<code>mapLongitude</code>，<code>latitude</code>から<code>mapLatitude</code>への呼び出しの向きが右方向を向いていることを確認．(PUSH型のデータ転送であるため．)</p>
                     <div class="img-center">
                         <img class="img-purpose" src="/img/screenshots/map_push_start.png" />
                     </div>
@@ -105,7 +105,7 @@
                 </li>
                 <br>
                 <li>
-                    上部メニューから<strong>「プロトタイプ生成>Javaプロトタイプの生成」</strong>を選択し，<strong>「user??Generated」</strong> ブランチとして clone した<strong>【Map】</strong>プロジェクトのソースフォルダにソースコードを出力．
+                    上部メニューから<strong>「プロトタイプ生成>Javaプロトタイプの生成」</strong>を選択し，<strong>user??Generated</strong> ブランチとして clone した<strong>【Map】</strong>プロジェクトのソースフォルダにソースコードを出力．
                 </li>
                 <br>
             </ol>
@@ -113,11 +113,12 @@
     </p>
     <p>
         テストプログラム<strong>TestGPSUpdate.java</strong>が正常に実行されることが確認できましたら，その後，自分専用のブランチに<span style="color:red"><strong>正常に実行されることが確認されたJavaプロトタイプ</strong>と<strong>dtram.log</strong></span>を commit & pushしてください．<br>
-        ただし，<span style="color: red; "><strong>「main」</strong>ブランチには決して merge をしないように，また自分専用のブランチを決して削除しないように</span>注意してください．<br>
+        ただし，<span style="color: red; "><strong>main</strong>ブランチには決して merge をしないように，また自分専用のブランチを決して削除しないように</span>注意してください．<br>
         全ての作業が完了した後，<strong>必ず以下のアンケートにご回答ください．</strong>
     </p>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfWHRx9hgvdHWiLYaY1BEt-sZ5WJw_UZzMnqDpAZv1JeLXL8g/viewform?usp=sharing" target="_blank" rel="noopener noreferrer">アンケートフォーム (別ウィンドウが開きます)</a>
-
+    <strong>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSfWHRx9hgvdHWiLYaY1BEt-sZ5WJw_UZzMnqDpAZv1JeLXL8g/viewform?usp=sharing" target="_blank" rel="noopener noreferrer">アンケートフォーム (別ウィンドウが開きます)</a>
+    </strong>
     <hr>
     <br>
     <a href="ImplementationA1.html">【Map 機能追加課題】の説明へ</a>
