@@ -15,7 +15,7 @@
     <h2>課題概要：</h2>
     <p>
         先ほどの課題では，機能追加を容易にするリファクタリングを手作業で行っていただきました．本課題では，本研究室で提案している<strong>ビジュアルモデリングツール</strong>を用いて，
-        先ほどのリファクタリングと同等の作業をツールの GUI 上で行っていただきます．
+        先ほどのリファクタリングと同等の作業をツールの GUI 上で行っていただきます．<br>
         本課題は，所定のブランチへの commit & push および <strong>作業完了後アンケートにご回答いただくことで完了</strong>となります．
         本モデリングツール，および作業手順を以下で説明します．
     </p>
@@ -48,33 +48,54 @@
     <h3>はじめに：</h3>
     <p>
         作業に着手する前に，<strong>main</strong>ブランチから，メッセージでお伝えした自分専用のブランチ (user??Generated)を新規に作成し，ブランチのpushを行ってください．<br>
-        本課題では本ツールによって出力されたJavaプロトタイプのソースコードを用いて，<strong>【Map】</strong>のテストプログラムが正常に動作するまでは作業完了とは見なされませんのでご注意ください．
+        本課題では本ツールによって出力されたJavaプロトタイプのソースコードに対して，<strong>【Map】</strong>のテストプログラムが通るまでは作業完了とは見なされませんのでご注意ください．
     </p>
+
     <h3>ビジュアルモデリングツールでの作業：</h3>
     <p>
         はじめに，<a href="/models/Map.dtram">こちら</a>から<strong>【Map】</strong>プログラムのモデルファイルをDLしていただきます．<br>
-        DLしていただいたモデルファイルは，本ツールを起動し読み込んでいただきます．操作方法については上記の<strong>ビジュアルモデリングツール</strong>の項をご参照ください．<br>
-        モデルファイルを読み込んだ後，本ツール右下のナビゲーションウィンドウが<strong>PUSH/PULLの選択</strong>になっていることを確認してください．<br>
-        確認ができたら，<code>Longitude</code>と<code>MapLongitude</code>，<code>Latitude</code>と<code>MapLatitude</code>間のデータ転送方式を<strong>PUSH</strong>に変更してください．<br>
-        変更が完了しましたら，右下のナビゲーションウィンドウから<strong>PUSH/PULLの拡張</strong>を選択していただきます．<br>
-        本ツールによって生成したいJavaプロトタイプのクラス図，及びシーケンス図を以下に示します．<br>
-        操作方法のページを参照し，<strong>各操作の目的，操作によってコードがどのように変化するかを意識しながら</strong>目的のJavaプロトタイプを生成できるようツール上でモデリングを行っていただきます．
+        DLしていただいたモデルファイルは，本ツールを起動し読み込んでください．<br>
+        操作方法については上記の<strong>ビジュアルモデリングツール</strong>の項をご参照ください．<br>
         <br>
+        モデルファイルを読み込んだ後，本ツール右下のナビゲーションウィンドウが<strong>PUSH/PULLの選択</strong>になっていることを確認してください．<br>
+        確認ができたら，<code>longitude</code>と<code>mapLongitude</code>，<code>latitude</code>と<code>mapLatitude</code>間のデータ転送方式を<strong>PUSH</strong>に変更してください．<br>
+        変更が完了しましたら，右下のナビゲーションウィンドウから<strong>PUSH/PULLの拡張</strong>を選択していただきます．<br>
+        <br>
+        本ツールによって生成したいJavaプロトタイプのクラス図，及びシーケンス図を以下に示します．<br>
         <div class="img-map">
-        <ol>
-            <li>
-                <p><strong>【Map】</strong>全体のクラス図</p>
-                <img class="img-purpose" src="/img/classes/map_class_push_CFD.png">
-            </li>
-            <li>
-                <p><code>Presenter.updateGPS(...)</code>を実行した際のシーケンス図</p>
-                <img class="img-purpose" src="/img/sequences/map_seq_push_refactor.png">
-            </li>
-        </ol>
+            <ol>
+                <li>
+                    <p><strong>【Map】</strong>全体のクラス図</p>
+                    <img class="img-purpose" src="/img/classes/map_class_push_CFD.png" />
+                </li>
+                <li>
+                    <p><code>Presenter.updateGPS(...)</code>を実行した際のシーケンス図</p>
+                    <img class="img-purpose" src="/img/sequences/map_seq_push_refactor.png" />
+                </li>
+            </ol>
+        </div>
+
+        操作方法のページを参照し，<strong>各操作の目的，操作によってコードがどのように変化するかを意識しながら</strong>目的のJavaプロトタイプを生成できるようツール上でモデリングを行っていただきます．<br>
+        上のUMLで示した設計を満たすようモデルを変更するため，スクリーンショットで示した形になるよう以下の操作を行ってください．<br>
+        <div class="img-map">
+            <ol>
+                <li>
+                    <p>「PUSH/PULLの拡張」において<code>longitude</code>から<code>mapLongitude</code>，<code>latitude</code>から<code>mapLatitude</code>への呼び出しの向きが右方向を向いていることを確認．</p>
+                    <img class="img-purpose" src="/img/classes/map_class_push_CFD.png" />
+                </li>
+                <li>
+                    <p>「仲介者オブジェクトの導入」を行い，オブジェクト名を<code>presenter</code>として作成．</p>
+                    <img class="img-purpose" src="/img/classes/map_class_push_CFD.png" />
+                </li>
+                <li>
+                    <p>「制御の流れの委譲 (CFD)」を複数回適用し，下図のようになるよう操作．</p>
+                    <img class="img-purpose" src="/img/sequences/map_seq_push_refactor.png" />
+                </li>
+            </ol>
         </div>
     </p>
     <p>
-        テストプログラムが正常に実行されることが確認できましたら，その後，作業結果を自分専用のブランチに commit & pushしてください．<br>
+        テストプログラムが正常に実行されることが確認できましたら，その後，自分専用のブランチに<span style="color:red"><strong>正常に実行されることが確認されたJavaプロトタイプ</strong>と<strong>dtram.log</strong></span>を commit & pushしてください．<br>
         ただし，<span style="color: red; "><strong>main</strong>ブランチには決して merge をしないように，また自分専用のブランチを決して削除しないように</span>注意してください．<br>
         全ての作業が完了した後，<strong>必ず以下のアンケートにご回答ください．</strong>
     </p>
