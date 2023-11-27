@@ -38,7 +38,7 @@
     GPSの経度情報を保持している <code>Longitude</code> オブジェクトが地図の中心位置の経度成分を表す <code>MapLongitude</code> オブジェクトを，それぞれPUSH型のデータ転送で更新するようになっています．<br>
 </p>
 <div class="img-center">
-	<img src="/img/classes/map_class_push.png", class ="before-image-size"><br>
+	<img src="../img/classes/map_class_push.png", class ="before-image-size"><br>
 </div>
 <p>
     具体的には以下のコードのように，GPSの位置情報の変化をセンサーが検知するたびに <code>Map</code> クラスの <code>updateGPS()</code> メソッドが呼び出され，
@@ -97,7 +97,7 @@ public class Latitude {
     <code>MapLatitude</code> オブジェクトや <code>MapLongitude</code> オブジェクトの状態の更新をするか否かを，<code>Presenter</code> オブジェクト上で制御することができるようになります．
 </p>
 <div class="img-center">
-	<img src="/img/classes/map_class_push_CFD.png" class ="after-image-size"><br>
+	<img src="../img/classes/map_class_push_CFD.png" class ="after-image-size"><br>
 </div>
 <p>
     具体的に変更後の設計の中では，以下のように <code>Map</code> クラスの <code>updateGPS()</code> メソッドは，
