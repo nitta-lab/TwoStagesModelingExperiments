@@ -6,14 +6,14 @@ together {
         -value : double
         +Longitude(mapLongitude : MapLongitude)
         +getValue() : double
-        +updateGPS(lat2 : double, long2 : double) : void
+        +updateGPS(cur_lat : double, cur_long : double) : void
     }
 
     class "Latitude"{
         -value : double
         +Latitude(mapLatitude : MapLatitude)
         +getValue() : double
-        +updateGPS(lat2 : double, long2 : double) : void
+        +updateGPS(cur_lat : double, cur_long : double) : void
     }
 }
 
@@ -26,7 +26,7 @@ class "MapLongitude"{
 class "MapLatitude"{
     -value : double
     +getValue() : double
-    +updateLatitude(longitude : double) : void
+    +updateLatitude(latitude : double) : void
 }
 
 
