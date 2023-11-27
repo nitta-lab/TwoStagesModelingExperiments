@@ -51,7 +51,7 @@
     </p>
     <h3>ビジュアルモデリングツールでの作業：</h3>
     <p>
-        はじめに，<strong><a href="/models/SSDStore.dtram">こちら</a></strong>から<strong>【SSDStore】</strong>サイトのモデルファイルをDLしていただきます．<br>
+        はじめに，<strong><a href="../models/SSDStore.dtram">こちら</a></strong>から<strong>【SSDStore】</strong>サイトのモデルファイルをDLしていただきます．<br>
         DLしていただいたモデルファイルは，本ツールを起動して読み込んでください．<br>
         操作方法の詳細については上記の<strong>ビジュアルモデリングツール</strong>の項をご参照ください．<br>
         <br>
@@ -66,21 +66,21 @@
                 <li>
                     <p><strong>【SSDStore】</strong>全体のクラス図：</p>
                     <div class="img-center">
-                        <img class="img-purpose" src="/img/classes/ssdStore_class_pull_CFD.png">
+                        <img class="img-purpose" src="../img/classes/ssdStore_class_pull_CFD.png">
                     </div>
                 </li>
                 <br>
                 <li>
                     <p><code>ItemsByCapacity.getValue()</code>を実行した際のシーケンス図：</p>
                     <div class="img-center">
-                        <img class="img-purpose" src="/img/sequences/ssd_store_seq_pull_refactor_capacity.png">
+                        <img class="img-purpose" src="../img/sequences/ssd_store_seq_pull_refactor_capacity.png">
                     </div>
                 </li>
                 <br>
                 <li>
                     <p><code>ItemsByPrice.getValue()</code>を実行した際のシーケンス図：</p>
                     <div class="img-center">
-                        <img class="img-purpose" src="/img/sequences/ssd_store_seq_pull_refactor_price.png">
+                        <img class="img-purpose" src="../img/sequences/ssd_store_seq_pull_refactor_price.png">
                     </div>
                 </li>
                 <br>
@@ -94,21 +94,21 @@
                 <li>
                     <p>「PUSH/PULLの拡張」において<code>itemsByPrice</code>から<code>price</code>と<code>siteA</code>，<code>itemsByCapacity</code>から<code>capacity</code>と<code>siteA</code>への呼び出しの向きが左方向を向いていることを確認．(PULL型のデータ転送であるため．)</p>
                     <div class="img-center">
-                        <img class="img-purpose" src="/img/screenshots/ssdstore_pull_start.png" />
+                        <img class="img-purpose" src="../img/screenshots/ssdstore_pull_start.png" />
                     </div>
                 </li>
                 <br>
                 <li>
                     <p>「仲介者オブジェクトの導入」を行い，オブジェクト名を<code>siteWrapper</code>として作成．</p>
                     <div class="img-center">
-                        <img class="img-purpose" src="/img/screenshots/ssdstore_pull_introduce_mediator_after.png" />
+                        <img class="img-purpose" src="../img/screenshots/ssdstore_pull_introduce_mediator_after.png" />
                     </div>
                 </li>
                 <br>
                 <li>
                     <p>「仲介者オブジェクトへの依存」を適用し，下図のようになるよう操作．</p>
                     <div class="img-center">
-                        <img class="img-purpose" src="/img/screenshots/ssdstore_pull_depends_on_mediator_after.png" />
+                        <img class="img-purpose" src="../img/screenshots/ssdstore_pull_depends_on_mediator_after.png" />
                     </div>
                 </li>
                 <br>

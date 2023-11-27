@@ -31,7 +31,7 @@
 <p>
 	以下では，リファクタリングに要した時間を測っていただきますので，お手元に時計をご用意ください．
 	時間計測にあたって，急いで作業していただく必要はまったくありません．
-	最初の課題から最後の課題まで一定のペースを保てるよう, <font color="red">正しくリファクタリングを行うこと</font>を意識してください．
+	最初の課題から最後の課題まで一定のペースを保てるよう, <span style="color:red"> 正しくリファクタリングを行うこと</span>を意識してください．
 	開発環境を立ち上げてソースコードの確認をしていただいて構いませんが，ソースコードの変更は時間計測の準備ができるまで行わないで下さい．<br>
 	まずは、以下の作業手順を一通り読んでから作業を開始してください．
 </p>
@@ -40,7 +40,7 @@
 	さらに <code>Price</code> オブジェクトから価格を，<code>Capacity</code> オブジェクトから容量をPULL型のデータ転送で取得して，それらの値を使って別々に検索を行い検索結果を出力しています．
 </p>
 <div class="img-center">
-	<img class="before-image-size" src="/img/classes/ssdStore_class_pull.png"><br>
+	<img class="before-image-size" src="../img/classes/ssdStore_class_pull.png"><br>
 </div>
 <p>
     具体的には以下のコードように，<code>ItemsByPrice</code> オブジェクトの <code>getValue()</code> メソッド内部で，サイトAからSSDのリストを取得してその中から <code>Price</code> オブジェクトで指定された価格以下の商品を検索し，
@@ -100,7 +100,7 @@ public class ItemsByCapacity {
     そうすることによって，<code>SiteWrapper</code> にいくつサイトを追加しても，<code>ItemsByPrice</code> オブジェクトや <code>ItemsByCapacity</code> オブジェクトの実装に影響が及ばないようにすることができます．
 </p>
 <div class="img-center">
-	<img class ="after-image-size" src="/img/classes/ssdStore_class_pull_CFD.png"><br>
+	<img class ="after-image-size" src="../img/classes/ssdStore_class_pull_CFD.png"><br>
 </div>
 <p>
     具体的に変更後の設計の中では，以下のように <code>SiteWrapper</code> クラスが <code>SiteA</code> を参照し，
