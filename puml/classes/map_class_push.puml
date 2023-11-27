@@ -1,8 +1,6 @@
 @startuml map_class_push
 title "【Map】クラス図"
 
-skinparam dpi 300
-
 together {
     class "Longitude"{
         -value : double

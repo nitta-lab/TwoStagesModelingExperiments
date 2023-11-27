@@ -24,14 +24,12 @@
 
     <h2>ビジュアルモデリングツール：</h2>
     <p>
-        ビジュアルモデリングツールは，ソフトウェアの仕様と深くかかわるデータの流れを最初に決定して，パフォーマンスや可変性などの性能に関わる部分を GUI 上で後から自由に設計できるようにしたモデリングツールです．
+        ビジュアルモデリングツールは，ソフトウェアの仕様と深くかかわるデータの流れを最初に決定して，パフォーマンスや可変性などの性能に関わる部分を GUI 上で後から自由に設計できるようにしたモデリングツールです．<br>
         設計は主に，データ転送方式としてPUSH型を選ぶかPULL型を選ぶかによって決定していきます．設計完了後は，実行可能な Java のプロトタイプを自動生成することが可能です．
     </p>
     <h3>DLリンク：</h3>
     ビジュアルモデリングツール（Jarファイル）は，
-    <a href="">
-        こちら
-    </a>
+    <strong><a href="">こちら</a></strong>
     からDLしてください．<br>
     <blockquote>
         <code>java -jar VisualModelingTool.jar</code><br>
@@ -40,7 +38,7 @@
     <br>
 
     <h3>ツールの操作方法：</h3>
-    操作方法は<a href="../Tool.html" target="_blank">こちら</a>からご参照ください．<br>
+    操作方法は<strong><a href="../Tool.html" target="_blank">こちら (別ウィンドウで開きます)</a></strong>からご参照ください．<br>
     本ツールを使用する前に一通り手順，サンプルプログラム，UMLをご確認いただき，
     操作方法を理解した上で課題を進めてください．
     <hr>
@@ -48,12 +46,12 @@
     <h2>ツール作業内容：</h2>
     <h3>はじめに：</h3>
     <p>
-        作業に着手する前に，<strong>main</strong>ブランチから，メッセージでお伝えした自分専用のブランチ (user??ToolGenerated)を新規に作成し，ブランチのpushを行ってください．<br>
-        本課題では本ツールによって出力されたJavaプロトタイプのソースコードを用いて，<strong>【SSDStore】</strong>のテストプログラムが正常に動作するまでは作業完了とは見なされませんのでご注意ください．
+        作業に着手する前に，<strong>「main」</strong>ブランチから，メッセージでお伝えした自分専用のブランチ (<strong>user??Generated</strong>)を新規に作成し，ブランチのpushを行ってください．<br>
+        本課題では本ツールによって出力されたJavaプロトタイプのソースコードを用いて，<strong>【SSDStore】</strong>のテストプログラムが通るまでは作業完了とは見なされませんのでご注意ください．
     </p>
     <h3>ビジュアルモデリングツールでの作業：</h3>
     <p>
-        はじめに，<a href="/models/SSDStore.dtram">こちら</a>から<strong>【SSDStore】</strong>サイトのモデルファイルをDLしていただきます．<br>
+        はじめに，<strong><a href="/models/SSDStore.dtram">こちら</a></strong>から<strong>【SSDStore】</strong>サイトのモデルファイルをDLしていただきます．<br>
         DLしていただいたモデルファイルは，本ツールを起動して読み込んでください．<br>
         操作方法の詳細については上記の<strong>ビジュアルモデリングツール</strong>の項をご参照ください．<br>
         <br>
@@ -61,23 +59,31 @@
         確認ができたら，<code>itemsByPrice</code>から<code>price</code>と<code>siteA</code>，<code>itemsByCapacity</code>から<code>capacity</code>と<code>siteA</code>間のデータ転送方式を<strong>PULL</strong>に変更してください．<br>
         この時点でのモデルがリファクタリング前の設計に相当しています．変更が完了しましたら，右下のナビゲーションウィンドウから<strong>PUSH/PULLの拡張</strong>を選択していただきます．<br>
         <br>
-        リファクタリング後のクラス図，及びシーケンス図を以下に示します．<br>
-        このような設計のJavaプロトタイプを生成できるよう，モデリングツール上で操作を行っていきます．<br>
+        リファクタリング後のクラス図，及びシーケンス図を以下に示します．このような設計のJavaプロトタイプを生成できるよう，モデリングツール上で操作を行っていきます．<br>
         <br>
         <div class="img-map">
             <ul>
                 <li>
                     <p><strong>【SSDStore】</strong>全体のクラス図：</p>
-                    <img class="img-purpose" src="/img/classes/ssdStore_class_pull_CFD.png">
+                    <div class="img-center">
+                        <img class="img-purpose" src="/img/classes/ssdStore_class_pull_CFD.png">
+                    </div>
                 </li>
+                <br>
                 <li>
                     <p><code>ItemsByCapacity.getValue()</code>を実行した際のシーケンス図：</p>
-                    <img class="img-purpose" src="/img/sequences/ssd_store_seq_pull_refactor_capacity.png">
+                    <div class="img-center">
+                        <img class="img-purpose" src="/img/sequences/ssd_store_seq_pull_refactor_capacity.png">
+                    </div>
                 </li>
+                <br>
                 <li>
                     <p><code>ItemsByPrice.getValue()</code>を実行した際のシーケンス図：</p>
-                    <img class="img-purpose" src="/img/sequences/ssd_store_seq_pull_refactor_price.png">
+                    <div class="img-center">
+                        <img class="img-purpose" src="/img/sequences/ssd_store_seq_pull_refactor_price.png">
+                    </div>
                 </li>
+                <br>
             </ul>
         </div>
 
@@ -86,20 +92,30 @@
         <div class="img-map">
             <ol>
                 <li>
-                    <p>「PUSH/PULLの拡張」において<code>itemsByPrice</code>から<code>price</code>と<code>siteA</code>，<code>itemsByCapacity</code>から<code>capacity</code>と<code>siteA</code>への呼び出しの向きが左方向を向いていることを確認．(PULL型のデータ転送であるため．)</p>
-                    <img class="img-purpose" src="/img/screenshots/ssdstore_pull_start.png" />
+                    <p><strong>「PUSH/PULLの拡張」</strong>において<code>itemsByPrice</code>から<code>price</code>と<code>siteA</code>，<code>itemsByCapacity</code>から<code>capacity</code>と<code>siteA</code>への呼び出しの向きが左方向を向いていることを確認．(PULL型のデータ転送であるため．)</p>
+                    <div class="img-center">
+                        <img class="img-purpose" src="/img/screenshots/ssdstore_pull_start.png" />
+                    </div>
                 </li>
+                <br>
                 <li>
                     <p>「仲介者オブジェクトの導入」を行い，オブジェクト名を<code>siteWrapper</code>として作成．</p>
-                    <img class="img-purpose" src="/img/screenshots/ssdstore_pull_introduce_mediator_after.png" />
+                    <div class="img-center">
+                        <img class="img-purpose" src="/img/screenshots/ssdstore_pull_introduce_mediator_after.png" />
+                    </div>
                 </li>
+                <br>
                 <li>
                     <p>「仲介者オブジェクトへの依存」を適用し，下図のようになるよう操作．</p>
-                    <img class="img-purpose" src="/img/screenshots/ssdstore_pull_depends_on_mediator_after.png" />
+                    <div class="img-center">
+                        <img class="img-purpose" src="/img/screenshots/ssdstore_pull_depends_on_mediator_after.png" />
+                    </div>
                 </li>
+                <br>
                 <li>
-                    上部メニューから<strong>「プロトタイプ生成>Javaプロトタイプの生成」</strong>を選択し，user??Generated ブランチとして clone した<strong>【SSDStore】</strong>プロジェクトのソースフォルダにソースコードを出力．
+                    上部メニューから<strong>「プロトタイプ生成>Javaプロトタイプの生成」</strong>を選択し，<strong>「user??Generated」</strong>ブランチとして clone した<strong>【SSDStore】</strong>プロジェクトのソースフォルダにソースコードを出力．
                 </li>
+                <br>
             </ol>
         </div>
     </p>
@@ -108,7 +124,7 @@
         ただし，<span style="color: red; "><strong>「main」</strong>ブランチには決して merge をしないように，また自分専用のブランチを決して削除しないように</span>注意してください．<br>
         全ての作業が完了した後，<strong>必ず以下のアンケートにご回答ください．</strong>
     </p>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfirOmEsbZZ7fsiI8lJ1qiEZBdDpmtpqkH-B1m-GYvmwFHXUA/viewform?usp=sharing" target="_blank" rel="noopener noreferrer">アンケートフォーム（別ウィンドウで開きます）</a>
+    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfWHRx9hgvdHWiLYaY1BEt-sZ5WJw_UZzMnqDpAZv1JeLXL8g/viewform?usp=sharing" target="_blank" rel="noopener noreferrer">アンケートフォーム (別ウィンドウが開きます)</a>
 
     <hr>
     <br>
@@ -119,7 +135,11 @@
     .title{
         text-align: center;
     }
-
+    .img-center{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
     .img-purpose{
         max-width: 100%;
         height: auto;
