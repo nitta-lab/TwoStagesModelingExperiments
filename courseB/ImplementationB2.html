@@ -1,33 +1,43 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <title>【Map機能追加課題】</title>
+	<meta charset="UTF-8">
+	<title>【Map 機能追加課題】</title>
 </head>
 <body>
-<h1 class="title">
-	【Map】
-    <br/>
-    機能追加課題
+<h1 class="title-A">【Map】
+	<br/>
+	機能追加課題
 </h1>
 
 <hr/>
-<h2>課題の概要：</h2>
+<h2>課題概要：</h2>
 <p>
-    先ほどの課題では，（地図の表示位置の）自動更新ON/OFF機能の追加ができるよう，モデリングツールを用いてMapアプリの設計変更を行っていただきました．
-    そこで本課題では，モデリングツールから出力された設計変更後のMapアプリのプログラムに対して，実際に自動更新ON/OFF機能の追加作業を行っていただきます．
+	先ほどの課題では，（地図の表示位置の）自動更新ON/OFF機能の追加ができるよう，モデリングツールを用いてMapアプリの設計変更を行っていただきました．
+	そこで本課題では，モデリングツールから出力された設計変更後のMapアプリのプログラムに対して，実際に自動更新ON/OFF機能の追加作業を行っていただきます．
 </p>
 <p>
-    自動更新ON/OFF機能とは，GPSの位置情報に合わせて地図の表示位置を自動更新するか否かを切り替えられる機能のことです．
-    この機能では自動更新をいつでもON/OFFすることができ，自動更新がONのときは常にGPSの位置情報と地図の中心位置が連動するようにし，OFFのときはGPSの位置情報が更新されても地図の中心位置が変わらないようにします．
-    また手動更新ボタンを用意し，自動更新がOFFのときでもこのボタンが押されると，その時点でのGPSの位置情報が地図の表示位置に反映されるようにします．
-    実装に関する作業手順は以下で説明します．
+	自動更新ON/OFF機能とは，GPSの位置情報に合わせて地図の表示位置を自動更新するか否かを切り替えられる機能のことです．
+	この機能では自動更新をいつでもON/OFFすることができ，自動更新がONのときは常にGPSの位置情報と地図の中心位置が連動するようにし，OFFのときはGPSの位置情報が更新されても地図の中心位置が変わらないようにします．
+	また手動更新ボタンを用意し，自動更新がOFFのときでもこのボタンが押されると，その時点でのGPSの位置情報が地図の表示位置に反映されるようにします．
+	作業手順については以下で説明します．
 </p>
 <hr/>
 
-<h2>実装作業：</h2>
+<h2>機能追加の作業手順：</h2>
 <p>
-    まず，追加機能用のテストケース <code>TestManualUpdate</code> のソースコードを以下に示します．機能追加作業の完了後はこのテストケースと <code>TestGPSUpdate</code> の両方が正しく動作する必要があります．
+	本課題では，機能追加に要した時間を測っていただきますので，お手元に時計をご用意ください．
+	時間計測にあたって，急いで作業していただく必要はまったくありません．
+	最初の課題から最後の課題まで一定のペースを保てるよう, <span style="color: red; ">正しく機能追加を行うこと</span>を意識してください．
+	課題に着手する前に開発環境を立ち上げて現状のソースコードの確認をしていただいて構いませんが，実際のソースコードの変更は時間計測の準備ができるまで行わないで下さい．<br>
+</p>
+<p>
+	作業に着手する前に，<strong>refactored</strong> ブランチに切り替えて，pull を行ってください．<br>
+	その後，このブランチから，メッセージでお伝えした自分専用のブランチ（<strong>user??Added</strong>）を新規作成して，一度 push を行ってください．<br>
+</p>
+<p>
+	最初に，追加機能用のテストケース <code>TestManualUpdate</code> のソースコードを以下に示します．このテストケースは，<strong>refactored</strong> ブランチに含まれていますので，入力していただく必要はありません．<br>
+	機能追加作業の完了後はこのテストケースと <code>TestGPSUpdate</code> の両方が正しく動作する必要があります．
 </p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
     <pre class="brush:java; gutter:false" id="A">
@@ -103,14 +113,14 @@ public class TestManualUpdate {
     </pre>
 </div>
 <p>
-    機能追加の手順は次の通りです．
+	機能追加の手順は次の通りです．
 <ol>
-    <li><code>Presenter</code> クラスに <code>isAutoUpdate</code> フィールドを追加します．型は <code>boolean</code> で初期値は <code>true</code> にします．
-        このフィールドの値が <code>true</code> のときは，GPSの位置情報と地図の中心位置の連動がONとなっていることを示し，<code>false</code> のときは連動がOFFとなっていることを示します．</li>
-    <li><code>Presenter</code> クラスの <code>updateGPS()</code> メソッドを，
-        <code>isAutoUpdate</code> フィールドの値が <code>true</code> のときはGPSの新しい位置情報の値で地図の中心位置を更新するように，<code>false</code> のときは更新しないように書き換えます．
-        すなわち以下のように書き換えます．
-        <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+	<li><code>Presenter</code> クラスに <code>isAutoUpdate</code> フィールドを追加します．型は <code>boolean</code> で初期値は <code>true</code> にします．
+		このフィールドの値が <code>true</code> のときは，GPSの位置情報と地図の中心位置の連動がONとなっていることを示し，<code>false</code> のときは連動がOFFとなっていることを示します．</li>
+	<li><code>Presenter</code> クラスの <code>updateGPS()</code> メソッドを，
+		<code>isAutoUpdate</code> フィールドの値が <code>true</code> のときはGPSの新しい位置情報の値で地図の中心位置を更新するように，<code>false</code> のときは更新しないように書き換えます．
+		すなわち以下のように書き換えます．
+		<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
 		    <pre class="brush:java; gutter:false" id="A">
 	public void updateGPS(double cur_lat, double cur_long) {
 		double longitude = this.longitude.updateGPS(cur_lat, cur_long);
@@ -121,41 +131,44 @@ public class TestManualUpdate {
 		}
 	}
     		</pre>
-        </div>
-    </li>
-    <li>
-        <code>Presenter</code> クラスに <code>isAutoUpdate</code> フィールドのセッター <code>setAutoUpdate(boolean)</code> を追加します．すなわち，以下のメソッドを追加します．
-        <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
+		</div>
+	</li>
+	<li>
+		<code>Presenter</code> クラスに <code>isAutoUpdate</code> フィールドのセッター <code>setAutoUpdate(boolean)</code> を追加します．すなわち，以下のメソッドを追加します．
+		<div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
 		    <pre class="brush:java; gutter:false" id="B">
 	public void setAutoUpdate(boolean isAutoUpdate) {
 		this.isAutoUpdate = isAutoUpdate;
 	}
 		    </pre>
-        </div>
-    </li>
-    <li>
-        <code>Presenter</code> クラスに <code>updateManually()</code> メソッドを追加します．このメソッドが呼ばれると，その時点でのGPSの位置情報が地図の中心位置に反映されます．
-    </li>
-    <li>アプリ全体のインターフェースの役割を担っている <code>Map</code> クラスに <code>setAutoUpdate(boolean)</code> メソッドと <code>updateManually()</code> メソッドを追加します．
-        これらのメソッドは内部でそれぞれ，<code>Presenter</code> クラスの <code>setAutoUpdate(boolean)</code> メソッドと <code>updateManually()</code> メソッドを呼び出します．
-    <li>最後に，テストケース TestManualUpdate とテストケース TestGPSUpdate の両方が正しく動作することを確認してください．</li>
-    <li>
-        以上の作業が完了したら，以下のアンケートに回答してくだい．<br>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSciiz9HIK8JKf5sp1gajQXvV1Ypr3MhKESX0ehqGdZbGZMAJw/viewform?usp=sharing" target="_blank" rel="noopener noreferrer">
-            アンケート回答 (別ウィンドウで開きます)
-        </a>
-    </li>
+		</div>
+	</li>
+	<li>
+		<code>Presenter</code> クラスに <code>updateManually()</code> メソッドを追加します．このメソッドが呼ばれると，その時点でのGPSの位置情報が地図の中心位置に反映されます．
+	</li>
+	<li>アプリ全体のインターフェースの役割を担っている <code>Map</code> クラスに <code>setAutoUpdate(boolean)</code> メソッドと <code>updateManually()</code> メソッドを追加します．
+		これらのメソッドは内部でそれぞれ，<code>Presenter</code> クラスの <code>setAutoUpdate(boolean)</code> メソッドと <code>updateManually()</code> メソッドを呼び出します．
+	<li>最後に，テストケース TestManualUpdate とテストケース TestGPSUpdate の両方が正しく動作することを確認してください．</li>
 </ol>
 </p>
-
+<p>
+	機能追加の作業が完了したら作業時間を記録し，その後，作業結果を自分専用のブランチに commit ＆ push してください．<br>
+	ただし，<span style="color: red; "><strong>main</strong> ブランチや <strong>refactored</strong> ブランチには決して merge をしないように，また自分専用のブランチを決して削除しないように</span>注意してください． <br>
+	push 後に，以下のアンケートにお答えください．<br>
+	<strong>
+		<a href="https://docs.google.com/forms/d/e/1FAIpQLSciiz9HIK8JKf5sp1gajQXvV1Ypr3MhKESX0ehqGdZbGZMAJw/viewform?usp=sharing" target="_blank" rel="noopener noreferrer">
+			アンケートフォーム (別タブで開きます)
+		</a>
+	</strong>
+</p>
 
 <hr>
 <br>
-<a href="../Closing.html">実験終了説明へ</a>
+<a href="../Closing.html">【実験終了説明】へ</a>
 </body>
 
 <style>
-    .title{
+	.title-A{
        text-align: center;
     }
 

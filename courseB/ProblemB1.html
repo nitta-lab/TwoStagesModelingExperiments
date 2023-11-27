@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <title>【SSDStore リファクタリング課題】</title>
+	<meta charset="UTF-8">
+	<title>【SSDStore リファクタリング課題】</title>
 </head>
 <body>
 <h1 class="title">
@@ -12,28 +12,39 @@
 </h1>
 <hr/>
 
-<h2>SSDStore リファクタリング課題の概要：</h2>
+<h2>課題概要：</h2>
 <p>
-    このSSDStoreプログラムが，サイトA以外のサイトからも商品情報を収集して扱えるようにすることを考えます．<br>
+	本課題では，SSDStoreプログラムへの機能追加を容易にするためのリファクタリングを手作業で行っていただきます．<br>
+	後でリファクタリング作業に要した時間を測っていただきますので，お手元に時計をご用意ください．<br>
+	課題に着手する前に開発環境を立ち上げて現状のソースコードの確認をしていただいても構いませんが，<strong>実際のソースコードの変更作業は以下の内容を一通り読み終えるまでは始めないで下さい．</strong><br>
+	本課題は，所定のブランチへの commit & push および <strong>作業完了後アンケートにご回答いただくことで完了</strong>となります．
 </p>
 <hr/>
 
-<h2>SSDStore のリファクタリングの作業手順：</h2>
+<h2>SSDStore リファクタリング課題が想定している機能追加：</h2>
 <p>
-    以下では，リファクタリングに要した時間を測っていただきますので，お手元に時計をご用意ください．
-    時間計測にあたって，急いで作業していただく必要はまったくありません．
-    最初の課題から最後の課題まで一定のペースを保てるよう, <font color="red">正しくリファクタリングを行うこと</font>を意識してください．
-    開発環境を立ち上げてソースコードの確認をしていただいて構いませんが，ソースコードの変更は時間計測の準備ができるまで行わないで下さい．<br>
-    まずは、以下の作業手順を一通り読んでから作業を開始してください．
+	このSSDStoreプログラムが，サイトA以外のサイトからも商品情報を収集して扱えるようにすることを考えます．<br>
+</p>
+<hr/>
+
+<h2>SSDStore のリファクタリングが必要な理由：</h2>
+<p>
+	以下では，リファクタリングに要した時間を測っていただきますので，お手元に時計をご用意ください．
+	時間計測にあたって，急いで作業していただく必要はまったくありません．
+	最初の課題から最後の課題まで一定のペースを保てるよう, <font color="red">正しくリファクタリングを行うこと</font>を意識してください．
+	開発環境を立ち上げてソースコードの確認をしていただいて構いませんが，ソースコードの変更は時間計測の準備ができるまで行わないで下さい．<br>
+	まずは、以下の作業手順を一通り読んでから作業を開始してください．
 </p>
 <p>
-    現在の設計では，以下のクラス図ように <code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトが，それぞれ <code>SiteA</code> オブジェクトから直接SSDの商品情報をPULL型のデータ転送で取得し，
-    さらに <code>Price</code> オブジェクトから価格を，<code>Capacity</code> オブジェクトから容量をPULL型のデータ転送で取得して，それらの値を使って別々に検索を行い検索結果を出力しています．
+	現在の設計では，以下のクラス図ように <code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトが，それぞれ <code>SiteA</code> オブジェクトから直接SSDの商品情報をPULL型のデータ転送で取得し，
+	さらに <code>Price</code> オブジェクトから価格を，<code>Capacity</code> オブジェクトから容量をPULL型のデータ転送で取得して，それらの値を使って別々に検索を行い検索結果を出力しています．
 </p>
-<img class="before-image-size" src="/img/classes/ssdStore_class_pull.png"><br>
+<div class="img-center">
+	<img class="before-image-size" src="/img/classes/ssdStore_class_pull.png"><br>
+</div>
 <p>
-    具体的には以下のコードように，<code>ItemsByPrice</code> オブジェクトの <code>getValue()</code> メソッド内部で，サイトAからSSDのリストを取得してその中から <code>Price</code> オブジェクトで指定された価格以下の商品を検索し，
-    同様に <code>ItemsByCapacity</code> オブジェクトの <code>getValue()</code> メソッド内部で，サイトAからSSDのリストを取得してその中から <code>Capacity</code> オブジェクトで指定された容量以上の商品を検索しています．<br>
+	具体的には以下のコードように，<code>ItemsByPrice</code> オブジェクトの <code>getValue()</code> メソッド内部で，サイトAからSSDのリストを取得してその中から <code>Price</code> オブジェクトで指定された価格以下の商品を検索し，
+	同様に <code>ItemsByCapacity</code> オブジェクトの <code>getValue()</code> メソッド内部で，サイトAからSSDのリストを取得してその中から <code>Capacity</code> オブジェクトで指定された容量以上の商品を検索しています．<br>
 </p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
 <pre class="brush:java; gutter:false">
@@ -76,20 +87,25 @@ public class ItemsByCapacity {
 </pre>
 </div>
 <p>
-    ここで，このSSDStoreプログラムがサイトBからも商品情報を収集して扱えるように拡張することを考えた場合，<code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトの両方の実装を，
-    <code>SiteA</code> オブジェクトと <code>SiteB</code> オブジェクトを同時に扱えるように書き換えなければならなくなります．
-    今後，より多くのサイトを扱えるように拡張していくことを考えると，このように <code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトが直接，個々のサイトのオブジェクトを参照しているような現在の設計では，拡張作業が煩雑になってしまいます．
+	ここで，このSSDStoreプログラムがサイトBからも商品情報を収集して扱えるように拡張することを考えた場合，<code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトの両方の実装を，
+	<code>SiteA</code> オブジェクトと <code>SiteB</code> オブジェクトを同時に扱えるように書き換えなければならなくなります．
+	今後，より多くのサイトを扱えるように拡張していくことを考えると，このように <code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトが直接，個々のサイトのオブジェクトを参照しているような現在の設計では，拡張作業が煩雑になってしまいます．
 </p>
+<hr/>
+
+<h2>SSDStore のリファクタリングの概要：</h2>
 <p>
-    そこで，以下のクラス図のように複数のサイトを同時に参照することができる <code>SiteWrapper</code> オブジェクトを新たに導入し，
-    <code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトが，<code>SiteWrapper</code> オブジェクトを通じて，間接的に <code>SiteA</code> オブジェクトや <code>SiteB</code> オブジェクトにアクセスするように設計変更を行います．
-    そうすることによって，<code>SiteWrapper</code> にいくつサイトを追加しても，<code>ItemsByPrice</code> オブジェクトや <code>ItemsByCapacity</code> オブジェクトの実装に影響が及ばないようにすることができます．
+	そこで，以下のクラス図のように複数のサイトを同時に参照することができる <code>SiteWrapper</code> オブジェクトを新たに導入し，
+	<code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトが，<code>SiteWrapper</code> オブジェクトを通じて，間接的に <code>SiteA</code> オブジェクトや <code>SiteB</code> オブジェクトにアクセスするように設計変更を行います．
+	そうすることによって，<code>SiteWrapper</code> にいくつサイトを追加しても，<code>ItemsByPrice</code> オブジェクトや <code>ItemsByCapacity</code> オブジェクトの実装に影響が及ばないようにすることができます．
 </p>
-<img class ="after-image-size" src="/img/classes/ssdStore_class_pull_CFD.png"><br>
+<div class="img-center">
+	<img class ="after-image-size" src="/img/classes/ssdStore_class_pull_CFD.png"><br>
+</div>
 <p>
-    具体的に変更後の設計の中では，以下のように <code>SiteWrapper</code> クラスが <code>SiteA</code> を参照し，
-    <code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトは，この <code>SiteWrapper</code> の <code>getSiteValue()</code> メソッドを呼び出して，最新のSSDの一覧を得るようにします．
-    そして，新しいサイトを追加する際は，この <code>SiteWrapper</code> クラスを変更するようにします．
+	具体的に変更後の設計の中では，以下のように <code>SiteWrapper</code> クラスが <code>SiteA</code> を参照し，
+	<code>ItemsByPrice</code> オブジェクトと <code>ItemsByCapacity</code> オブジェクトは，この <code>SiteWrapper</code> の <code>getSiteValue()</code> メソッドを呼び出して，最新のSSDの一覧を得るようにします．
+	そして，新しいサイトを追加する際は，この <code>SiteWrapper</code> クラスを変更するようにします．
 </p>
 <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
 <pre class="brush:java; gutter:false" id="E">
@@ -104,32 +120,48 @@ public class SiteWrapper {
 }
 </pre>
 </div>
+<hr/>
 
+<h2>SSDStore のリファクタリング課題の作業手順：</h2>
 <p>
-    作業に着手する前に，main ブランチから，メッセージでお伝えした自分専用のブランチ（user??Refactor）を切って，一度 push を行ってください．<br>
-    push を行った後，開発環境の準備ができれば，<font color="red">時間計測を開始</font>してください. 時間計測はできる限り，30秒以内の単位での計測をお願いします. <br>
-    テストプログラムが正しく動作するまでは作業完了とは見なされないので注意してください．
+	本課題では，リファクタリングに要した時間を測っていただきますので，お手元に時計をご用意ください．
+	時間計測にあたって，急いで作業していただく必要はまったくありません．
+	最初の課題から最後の課題まで一定のペースを保てるよう, <span style="color: red; ">正しくリファクタリングを行うこと</span>を意識してください．
+	課題に着手する前に開発環境を立ち上げて現状のソースコードの確認をしていただいて構いませんが，実際のソースコードの変更は時間計測の準備ができるまで行わないで下さい．<br>
 </p>
 <p>
-    リファクタリングの作業が完了したら作業時間を記録し，その後，作業結果を自分専用のブランチに commit ＆ push してください．<br>
-    ただし，<font color="red">main ブランチには決して merge をしないように，また自分専用のブランチを決して削除しないように</font>注意してください． <br>
-    push 後に，以下のアンケートにお答えください．<br>
-    <a href="https://docs.google.com/forms/d/e/1FAIpQLSeTqmSdDGLtdfBmHdUbdmN_90mBs9xMJX-LIXat8Z_HmFuZUg/viewform?usp=sharing" target="_blank" rel="noopener noreferrer">
-        アンケート回答 (別ウィンドウが開きます)
-    </a>
+	作業に着手する前に，<strong>main</strong> ブランチから，メッセージでお伝えした自分専用のブランチ（<strong>user??Refactor</strong>）を新規作成して，一度 push を行ってください．<br>
+	push を行った後，開発環境の準備ができれば，<span style="color: red; ">時間計測を開始</span>してください. 時間計測はできる限り，30秒以内の単位での計測をお願いします. <br>
+	ソースコードの変更作業は上記「SSDStore のリファクタリングの概要」にしたがって進めてください．<br>
+	テストプログラム<strong>TestSSDStoreUpdate.java</strong>が正しく動作するまでは作業完了とは見なされないので注意してください．
+</p>
+<p>
+	リファクタリングの作業が完了したら作業時間を記録し，その後，作業結果を自分専用のブランチに commit ＆ push してください．<br>
+	ただし，<span style="color: red; "><strong>main</strong> ブランチには決して merge をしないように，また自分専用のブランチを決して削除しないように</span>注意してください． <br>
+	push 後に，以下のアンケートにお答えください．<br>
+	<strong>
+		<a href="https://docs.google.com/forms/d/e/1FAIpQLSeTqmSdDGLtdfBmHdUbdmN_90mBs9xMJX-LIXat8Z_HmFuZUg/viewform?usp=sharing" target="_blank" rel="noopener noreferrer">
+			アンケートフォーム (別タブが開きます)
+		</a>
+	</strong>
 </p>
 
 <hr>
 <br>
-<a href="OperationB1.html">【SSDStore ツール課題】の説明へ</a>
+<a href="OperationB1.html">【SSDStore ツール課題】へ</a>
 </body>
 <style>
 	.title{
 		text-align: center;
 	}
-    .links-manual-A{
+	.links-manual-A{
         display: flex;
         flex-direction: column;
+    }
+    .img-center{
+    	display: flex;
+    	justify-content: center;
+    	align-items: center;
     }
     .before-image-size{
         max-width: 100%;

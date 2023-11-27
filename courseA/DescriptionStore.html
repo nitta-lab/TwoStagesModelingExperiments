@@ -30,15 +30,22 @@
     すなわち，<code>SiteA</code> オブジェクトと <code>Price</code> オブジェクトから <code>ItemsByPrice</code> オブジェクトに，<code>SiteA</code> オブジェクトと <code>Capacity</code> オブジェクトから <code>ItemsByCapacity</code> オブジェクトに，それぞれPULL型のデータ転送が行われます．
     このオンライン販売サイトでは，ユーザが更新ボタンを押すたびに <code>ItemsByPrice</code> オブジェクトもしくは<code>ItemsByCapacity</code> オブジェクトの <code>getValue()</code> のメソッドが呼び出されて検索が行われ，最新の検索結果が確認できるようになっています．
 </p>
-<img src="../img/classes/ssdStore_class_pull.png", class ="img-size">
+<div class="img-center">
+    <img src="../img/classes/ssdStore_class_pull.png" class ="img-size">
+</div>
 <hr>
 <br>
-<a href="EnvironmentStore.html">【SSDStoreの環境構築】の説明へ</a>
+<a href="EnvironmentStore.html">【SSDStoreの環境構築】へ</a>
 </body>
 
 <style>
     .title{
         text-align:center;
+    }
+    .img-center{
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     .img-size{
         max-width: 100%;
