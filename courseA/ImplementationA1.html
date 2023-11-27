@@ -11,7 +11,7 @@
     </h1>
 
     <hr/>
-    <h2>課題の概要：</h2>
+    <h2>課題概要：</h2>
     <p>
         先ほどの課題では，（地図の表示位置の）自動更新ON/OFF機能の追加ができるよう，モデリングツールを用いてMapアプリの設計変更を行っていただきました．
         そこで本課題では，モデリングツールから出力された設計変更後のMapアプリのプログラムに対して，実際に自動更新ON/OFF機能の追加作業を行っていただきます．
@@ -20,13 +20,24 @@
         自動更新ON/OFF機能とは，GPSの位置情報に合わせて地図の表示位置を自動更新するか否かを切り替えられる機能のことです．
         この機能では自動更新をいつでもON/OFFすることができ，自動更新がONのときは常にGPSの位置情報と地図の中心位置が連動するようにし，OFFのときはGPSの位置情報が更新されても地図の中心位置が変わらないようにします．
         また手動更新ボタンを用意し，自動更新がOFFのときでもこのボタンが押されると，その時点でのGPSの位置情報が地図の表示位置に反映されるようにします．
-        実装に関する作業手順は以下で説明します．
+        作業手順については以下で説明します．
     </p>
     <hr/>
 
-    <h2>実装作業：</h2>
+    <h2>機能追加の作業手順：</h2>
+	<p>
+		本課題では，機能追加に要した時間を測っていただきますので，お手元に時計をご用意ください．
+		時間計測にあたって，急いで作業していただく必要はまったくありません．
+		最初の課題から最後の課題まで一定のペースを保てるよう, <span style="color: red; ">正しく機能追加を行うこと</span>を意識してください．
+		課題に着手する前に開発環境を立ち上げて現状のソースコードの確認をしていただいて構いませんが，実際のソースコードの変更は時間計測の準備ができるまで行わないで下さい．<br>
+	</p>
     <p>
-        まず，追加機能用のテストケース <code>TestManualUpdate</code> のソースコードを以下に示します．機能追加作業の完了後はこのテストケースと <code>TestGPSUpdate</code> の両方が正しく動作する必要があります．
+		作業に着手する前に，<strong>refactored</strong> ブランチに切り替えて，pull を行ってください．<br>
+		その後，このブランチから，メッセージでお伝えした自分専用のブランチ（user??Added）を新規作成して，一度 push を行ってください．<br>
+	</p>
+	<p>
+        最初に，追加機能用のテストケース <code>TestManualUpdate</code> のソースコードを以下に示します．このテストケースは，<strong>refactored</strong> ブランチに含まれていますので，入力していただく必要はありません．<br>
+		機能追加作業の完了後はこのテストケースと <code>TestGPSUpdate</code> の両方が正しく動作する必要があります．
     </p>
     <div style="padding: 10px; margin-bottom: 10px; border: 1px solid #333333; border-radius: 10px;">
     <pre class="brush:java; gutter:false" id="A">
@@ -138,13 +149,15 @@ public class TestManualUpdate {
 		<li>アプリ全体のインターフェースの役割を担っている <code>Map</code> クラスに <code>setAutoUpdate(boolean)</code> メソッドと <code>updateManually()</code> メソッドを追加します．
 			これらのメソッドは内部でそれぞれ，<code>Presenter</code> クラスの <code>setAutoUpdate(boolean)</code> メソッドと <code>updateManually()</code> メソッドを呼び出します．
 		<li>最後に，テストケース TestManualUpdate とテストケース TestGPSUpdate の両方が正しく動作することを確認してください．</li>
-		<li>
-			以上の作業が完了したら，以下のアンケートに回答してくだい．<br>
-			<a href="https://docs.google.com/forms/d/e/1FAIpQLSciiz9HIK8JKf5sp1gajQXvV1Ypr3MhKESX0ehqGdZbGZMAJw/viewform?usp=sharing" target="_blank" rel="noopener noreferrer">
-				アンケート回答 (別ウィンドウで開きます)
-			</a>
-		</li>
 		</ol>
+	</p>
+	<p>
+		機能追加の作業が完了したら作業時間を記録し，その後，作業結果を自分専用のブランチに commit ＆ push してください．<br>
+		ただし，<span style="color: red; "><strong>main</strong> ブランチや <strong>refactored</strong> ブランチには決して merge をしないように，また自分専用のブランチを決して削除しないように</span>注意してください． <br>
+		push 後に，以下のアンケートにお答えください．<br>
+		<a href="https://docs.google.com/forms/d/e/1FAIpQLSciiz9HIK8JKf5sp1gajQXvV1Ypr3MhKESX0ehqGdZbGZMAJw/viewform?usp=sharing" target="_blank" rel="noopener noreferrer">
+			アンケート回答 (別ウィンドウで開きます)
+		</a>
 	</p>
 
 	<hr>
