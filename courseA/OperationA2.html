@@ -92,7 +92,7 @@
         <div class="img-map">
             <ol>
                 <li>
-                    <p>「PUSH/PULLの拡張」において<code>itemsByPrice</code>から<code>price</code>と<code>siteA</code>，<code>itemsByCapacity</code>から<code>capacity</code>と<code>siteA</code>への呼び出しの向きが左方向を向いていることを確認．(PULL型のデータ転送であるため．)</p>
+                    <p>「PUSH/PULLの拡張」ステージにおいて<code>itemsByPrice</code>から<code>price</code>と<code>siteA</code>，<code>itemsByCapacity</code>から<code>capacity</code>と<code>siteA</code>への呼び出しの向きが左方向を向いていることを確認．(PULL型のデータ転送であるため．)</p>
                     <div class="img-center">
                         <img class="img-purpose" src="../img/screenshots/ssdstore_pull_start.png" />
                     </div>
@@ -121,7 +121,8 @@
     </p>
     <p>
         テストプログラム<strong>TestSSDStoreUpdate.java</strong>が正常に実行されることが確認できましたら，その後，自分専用のブランチに<span style="color:red"><strong>正常に実行されることが確認されたJavaプロトタイプ</strong>と<strong>dtram.log</strong></span>を commit & pushしてください．<br>
-        ただし，<span style="color: red; "><strong>main</strong> ブランチには決して merge をしないように，また自分専用のブランチを決して削除しないように</span>注意してください．<br>
+        <strong>dtram.log</strong>はツールの操作履歴を記録したログファイルで，ツールのJarファイルと同じフォルダに出力されます．プロジェクトのルートディレクトリに移動させてから， commit & pushしてください．<br>
+        なお，<span style="color: red; "><strong>main</strong> ブランチには決して merge をしないように，また自分専用のブランチを決して削除しないように</span>注意してください．<br>
         全ての作業が完了した後，<strong>必ず以下のアンケートにご回答ください．</strong>
     </p>
     <strong>
